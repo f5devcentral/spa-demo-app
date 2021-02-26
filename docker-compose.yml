@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+
+  mongo_seed:
+    image: mongo
+    links:
+      - mongodb
+    volumes:
+      - ./mongo-seed:/mongo-seed
+    command:
+      - /mongo-seed/import.sh
+
+  back-end:
+    build: ./back-end
+    ports:
+      - "8000:8000"
+    links:
+      - mongodb
+    environment:
+      - MONGO_URL=mongodb
+  # front-end:
+  #   build: ./front-end
+  #   ports:
+  #     - "8080:80"
+  #   links:
+  #     - back-end
+  #   environment:
+  #     - API_URL=back-end

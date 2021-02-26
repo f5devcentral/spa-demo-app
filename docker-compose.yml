@@ -24,11 +24,13 @@ services:
       - mongodb
     environment:
       - MONGO_URL=mongodb
-  # front-end:
-  #   build: ./front-end
-  #   ports:
-  #     - "8080:80"
-  #   links:
-  #     - back-end
-  #   environment:
-  #     - API_URL=back-end
+
+  front-end:
+    build:
+      context: ./front-end
+      args:
+        VUE_APP_API_URL: "http://localhost:8000"
+    ports:
+      - "8080:80"
+    links:
+      - back-end

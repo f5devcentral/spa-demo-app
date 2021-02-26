@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     async addToCart() {
-      await axios.post("/api/users/12345/cart", {
+      await axios.post(`${process.env.VUE_APP_API_URL}/api/users/12345/cart`, {
         productId: this.$route.params.id,
       });
       this.showSuccessMessage = true;

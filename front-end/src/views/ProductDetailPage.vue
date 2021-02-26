@@ -1,7 +1,7 @@
 <template>
   <div id="page-wrap" v-if="product">
     <div id="img-wrap">
-      <img v-bind:src="product.imageUrl" />
+      <img v-bind:src="API_URL + product.imageUrl" />
     </div>
     <div id="product-details">
       <h1>{{ product.name }}</h1>
@@ -45,6 +45,7 @@ export default {
       product: {},
       cartItems: [],
       showSuccessMessage: false,
+      API_URL: process.env.VUE_APP_API_URL,
     };
   },
   computed: {

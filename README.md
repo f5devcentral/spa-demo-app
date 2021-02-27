@@ -1,5 +1,5 @@
-# 3 Tier Demo App
-This application demos a modern 3-tier application build on:
+# Single-Page Application Demo 
+This application demos a modern single-page application build on:
 - Vue.js (front-end)
 - Node.js (back-end)
 - MongoDB (database)

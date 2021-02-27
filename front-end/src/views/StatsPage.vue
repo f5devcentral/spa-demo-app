@@ -1,69 +1,54 @@
 <template>
   <div class="container">
-    <div class="card card-1">
-      <i class="material-icons md-120">cloud</i>
-      <h3>Frontend</h3>
-      <div class="info">
-        <p class="url">{{ FRONTEND }}</p>
-        <p class="latency">{{ FRONTEND_TIME }}<span class="unit">ms</span></p>
-      </div>
-    </div>
-    <div class="card card-2" v-bind:class="{ error: !apiIsActive }">
-      <i class="material-icons md-120">api</i>
-      <h3>API</h3>
-      <div class="info">
-        <p class="url">{{ API_URL }}</p>
-        <p class="latency">{{ API_TIME }}<span class="unit">ms</span></p>
-      </div>
-    </div>
-    <div class="card card-3" v-bind:class="{ error: !dbIsActive }">
-      <i class="material-icons md-120">storage</i>
-      <h3>Database</h3>
-      <div class="info">
-        <p class="url">{{ DB_HOST }}</p>
-        <p class="latency">{{ DB_TIME }}<span class="unit">ms</span></p>
-      </div>
-    </div>
-    <div class="card card-3" v-bind:class="{ error: !recIsActive }">
-      <i class="material-icons md-120">add_shopping_cart</i>
-      <h3>Recommendations</h3>
-      <div class="info">
-        <p class="url">{{ RECOMMENDATIONS_URL }}</p>
-        <p class="latency">
-          {{ RECOMMENDATIONS_TIME }}<span class="unit">ms</span>
-        </p>
-      </div>
-    </div>
-    <div class="card card-3" v-bind:class="{ error: !inventoryIsActive }">
-      <i class="material-icons md-120">inventory</i>
-      <h3>Inventory</h3>
-      <div class="info">
-        <p class="url">{{ INVENTORY_URL }}</p>
-        <p class="latency">{{ INVENTORY_TIME }}<span class="unit">ms</span></p>
-      </div>
-    </div>
+    <StatsCard
+      :title="'Frontend'"
+      :host="frontend_host"
+      :time="frontend_time"
+      :icon="'cloud'"
+    />
+    <StatsCard :title="'API'" :host="api_host" :time="api_time" :icon="'api'" />
+    <StatsCard
+      :title="'Database'"
+      :host="db_host"
+      :time="db_time"
+      :icon="'storage'"
+    />
+    <StatsCard
+      :title="'Recommendations'"
+      :host="recommendations_host"
+      :time="recommendations_time"
+      :icon="'add_shopping_cart'"
+    />
+    <StatsCard
+      :title="'Inventory'"
+      :host="inventory_host"
+      :time="inventory_time"
+      :icon="'inventory'"
+    />
   </div>
 </template>
 
 <script>
+import StatsCard from "../components/StatsCard";
 export default {
   name: "Stats",
+  components: { StatsCard },
   data() {
     return {
-      FRONTEND: window.location.protocol + "//" + window.location.host,
-      FRONTEND_TIME: 0,
+      frontend_host: window.location.protocol + "//" + window.location.host,
+      frontend_time: 0,
       apiIsActive: true,
-      API_URL: process.env.VUE_APP_API_URL,
-      API_TIME: 0,
+      api_host: process.env.VUE_APP_API_URL,
+      api_time: 0,
       dbIsActive: true,
-      DB_HOST: null,
-      DB_TIME: 0,
+      db_host: null,
+      db_time: 0,
       recIsActive: true,
-      RECOMMENDATIONS_URL: process.env.VUE_APP_REC_URL,
-      RECOMMENDATIONS_TIME: 0,
+      recommendations_host: process.env.VUE_APP_REC_URL,
+      recommendations_time: 0,
       inventoryIsActive: true,
-      INVENTORY_URL: process.env.VUE_APP_INVENTORY_URL,
-      INVENTORY_TIME: 0,
+      inventory_host: null,
+      inventory_time: 0,
     };
   },
   methods: {
@@ -74,13 +59,18 @@ export default {
       fetch(api_url)
         .then((resp) => resp.json())
         .then((data) => {
-          this.API_TIME = new Date() - api_start;
-          console.log(data);
+          this.api_time = new Date() - api_start;
           if (data["db_host"]) {
-            this.DB_HOST = data["db_host"];
-            this.DB_TIME = data["db_latency"];
+            this.db_host = data["db_host"];
+            this.db_time = data["db_latency"];
           } else {
             this.dbIsActive = false;
+          }
+          if (data["inventory_host"]) {
+            this.inventory_host = data["inventory_host"];
+            this.inventory_time = data["inventory_latency"];
+          } else {
+            this.inventoryIsActive = false;
           }
         })
         .catch((error) => {
@@ -93,7 +83,7 @@ export default {
         window.location.protocol + "//" + window.location.host;
       const frontend_start = new Date();
       fetch(frontend_url).then(() => {
-        this.FRONTEND_TIME = new Date() - frontend_start;
+        this.frontend_time = new Date() - frontend_start;
       });
 
       // recommendations
@@ -101,22 +91,10 @@ export default {
       const recommendations_start = new Date();
       fetch(rec_url)
         .then(() => {
-          this.RECOMMENDATIONS_TIME = new Date() - recommendations_start;
+          this.recommendations_time = new Date() - recommendations_start;
         })
         .catch((error) => {
           this.recIsActive = false;
-          console.log(error);
-        });
-
-      // inventory
-      const inventory_url = process.env.VUE_APP_INVENTORY_URL + "/api/stats";
-      const inventory_start = new Date();
-      fetch(inventory_url)
-        .then(() => {
-          this.INVENTORY_TIME = new Date() - inventory_start;
-        })
-        .catch((error) => {
-          this.inventoryIsActive = false;
           console.log(error);
         });
     },
@@ -128,8 +106,6 @@ export default {
 </script>
 
 <style>
-@import "https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,900";
-@import "https://fonts.googleapis.com/icon?family=Material+Icons";
 body {
   font-family: "Nunito", sans-serif;
   padding: 50px;
@@ -139,54 +115,5 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 16px;
-}
-.card {
-  border-radius: 4px;
-  background: #fff;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
-    0.3s box-shadow,
-    0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
-  padding: 14px 80px 18px 36px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: 32%;
-  margin-bottom: 2%;
-}
-.error {
-  background: red;
-}
-.card h3 {
-  font-weight: 600;
-}
-
-.card i {
-  position: absolute;
-  top: 20px;
-  right: 15px;
-  max-height: 120px;
-}
-
-.card .info .latency {
-  margin-top: 8px;
-  color: #212121;
-  font-size: 45px;
-  font-weight: 400;
-  line-height: 40px;
-}
-
-.card .info .latency .unit {
-  font-size: 15px;
-}
-
-@media (max-width: 990px) {
-  .card {
-    margin: 20px;
-  }
-}
-.material-icons.md-120 {
-  font-size: 120px;
 }
 </style>

@@ -6,6 +6,9 @@
     <router-link to="/cart" id="cart-link">
       <button>Shopping Cart</button>
     </router-link>
+    <router-link to="/stats" id="stats-link">
+      <span class="material-icons md-48"> info </span>
+    </router-link>
   </div>
 </template>
 
@@ -41,5 +44,14 @@ export default {
   position: absolute;
   right: 16px;
   top: 16px;
+}
+#stats-link {
+  position: absolute;
+  right: 180px;
+  top: 16px;
+  color: black;
+}
+.material-icons.md-48 {
+  font-size: 48px;
 }
 </style>

@@ -34,3 +34,8 @@ services:
       - "8080:80"
     links:
       - back-end
+
+  recommendations:
+    build: ./recommendations
+    ports:
+      - "8001:8001"

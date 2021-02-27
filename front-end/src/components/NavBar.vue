@@ -1,7 +1,7 @@
 <template>
   <div id="nav-bar">
     <router-link to="/products" id="products-link">
-      <h1>DEMO FOOTWEAR</h1>
+      <h1>DEMO BREWS</h1>
     </router-link>
     <router-link to="/cart" id="cart-link">
       <button>Shopping Cart</button>

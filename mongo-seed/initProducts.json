@@ -1,88 +1,88 @@
 [{
         "id": "123",
-        "name": "Running Shoes",
+        "name": "ELYSIAN SPACE DUST IPA",
         "price": "60.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-1.jpg",
-        "averageRating": "5.0"
+        "description": "10.49",
+        "imageUrl": "/images/elysian.webp",
+        "averageRating": "4.5"
     }, {
         "id": "234",
-        "name": "Basketball Shoes",
-        "price": "120.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-2.jpg",
-        "averageRating": "5.0"
+        "name": "NEW BELGIUM VOODOO RANGER IMPERIAL IPA",
+        "price": "8.99",
+        "description": "Colorado & NC- American Double/Imperial IPA- 9% ABV. 85 IBUs. A bold imperial IPA with a rare blend of Mosaic, Calypso, Bravo, and Delta hops creating an explosion of fresh cut pine and citrus flavors.",
+        "imageUrl": "/images/voodoo.webp",
+        "averageRating": "4.6"
     }, {
         "id": "345",
-        "name": "Bright Red Shoes",
-        "price": "90.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-3.jpg",
-        "averageRating": "5.0"
+        "name": "DOGFISH HEAD 90-MINUTE IPA",
+        "price": "12.99",
+        "description": "Delaware- American Double / Imperial IPA- 9% ABV. Extremely complex; there is plenty of malt in this brew to match up with the extreme hopping program, leaving citrus, raisin and brandied fruitcake aromas and flavors. A hophead joy!",
+        "imageUrl": "/images/dogfish.webp",
+        "averageRating": "4.7"
     }, {
         "id": "456",
-        "name": "Fancy Shoes",
-        "price": "190.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-4.jpg",
-        "averageRating": "5.0"
+        "name": "FOUNDERS KBS (KENTUCKY BREAKFAST STOUT)",
+        "price": "17.99",
+        "description": "Michigan- American Double/Imperial Stout- 11.2% ABV. BARREL AGED. An imperial stout brewed with a massive amount of coffee and chocolates, then cave-aged in oak bourbon barrels for an entire year to make sure wonderful bourbon undertones come through in the finish. Awesome!",
+        "imageUrl": "/images/founders.webp",
+        "averageRating": "4.6"
     }, {
         "id": "567",
-        "name": "Skateboard Shoes",
-        "price": "75.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-5.jpg",
-        "averageRating": "5.0"
+        "name": "WEIHENSTEPHANER HEFE WEISSBIER",
+        "price": "10.99",
+        "description": "Germany- Hefeweizen- Nothing refreshes you more than this quintessential wheat beer with its wonderful yeasty fragrance and taste. It goes well with dishes that do not have too intensive a flavor, especially the Bavarian specialty Weisswurst. BeerAdvocate's #18 Top Beer on Planet Earth",
+        "imageUrl": "/images/weihenstephaner.webp",
+        "averageRating": "4.9"
     }, {
         "id": "678",
-        "name": "High Heels",
-        "price": "200.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-6.jpg",
-        "averageRating": "5.0"
+        "name": "ST BERNARDUS ABT 12",
+        "price": "23.49",
+        "description": "Belgium- Quadrupel- 10.5% ABV. Here's a traditional Abbey Ale brewed in the classic style of Belgium's Trappist Monks. It is almost ebony in color, smooth, creamy and full-bodied, with big richness of texture that is oily and assertive.",
+        "imageUrl": "/images/stbernardus.webp",
+        "averageRating": "4.5"
     }, {
         "id": "789",
-        "name": "Dark Shoes",
-        "price": "100.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-7.jpg",
-        "averageRating": "5.0"
+        "name": "CHIMAY GRANDE RESERVE BLUE",
+        "price": "24.99",
+        "description": "Belgium- Belgian Strong Dark Ale- 9% ABV. TRAPPIST ALE. The color of this beer is dark and inviting. A rich and lively sweetness gives way to a drier finish. A peppery spiciness is balanced by thyme, cedar & a touch of nutmeg. BeerAdvocate's #25 of 25 All-Time Top Beers 2008.",
+        "imageUrl": "/images/chimay.webp",
+        "averageRating": "4.9"
     }, {
         "id": "890",
-        "name": "Classic Shoes",
-        "price": "40.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-8.jpg",
-        "averageRating": "5.0"
+        "name": "UNIBROUE - LA FIN DU MONDE",
+        "price": "11.99",
+        "description": "Canada- Tripel- 9% ABV. La Fin du Monde has a brilliant golden color with vigorously effervescent foam. It is mildly yeasty with a pleasingly complex palate of malt, fruit and spice notes followed by a smooth, dry finish. BeerAdvocate's #13 of 25 All-Time Top Beers 2008.",
+        "imageUrl": "/images/unibroue.webp",
+        "averageRating": "4.6"
     }, {
         "id": "901",
-        "name": "Plain Shoes",
-        "price": "54.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-9.jpg",
-        "averageRating": "5.0"
+        "name": "BALLAST POINT SCULPIN IPA",
+        "price": "13.99",
+        "description": "California- American India Pale Ale (IPA)- 7% ABV. World Beer Cup Gold medal 2014. Aromas of apricot, peach, mango and lemon. Its lighter body also brings out the crispness of the hops. Though not categorized as an Imperial IPA, this beer has a very strong hop character.",
+        "imageUrl": "/images/ballast.webp",
+        "averageRating": "4.8"
     },
     {
         "id": "112",
-        "name": "Teal Dress Shoes",
-        "price": "330.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-10.jpg",
-        "averageRating": "5.0"
+        "name": "SAMUEL ADAMS UTOPIAS",
+        "price": "239.99",
+        "description": "Massachusetts- American Strong Ale- 28% ABV. BARREL AGED. 2019 vintage is a blend of batches, some aged up to 26 years in a variety of barrels. The '19 recipe includes Utopias aged in Aquavit, Carcavelos and Ruby Port barrels as well as Cognac and Madeira finishing barrels.",
+        "imageUrl": "/images/samueladams.webp",
+        "averageRating": "4.6"
     },
     {
         "id": "223",
-        "name": "Fancy Boots",
-        "price": "230.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-11.jpg",
-        "averageRating": "5.0"
+        "name": "KENTUCKY BOURBON BARREL ALE",
+        "price": "11.99",
+        "description": "Kentucky- American Strong Ale- 8+%ABV. A unique sipping beer with the distinctive nose of a well-crafted bourbon. Aged for up to 6 weeks in freshly decanted bourbon barrels from some of Kentucky's finest distilleries. Subtle flavors of vanilla and oak. Pleasantly smooth and robust.",
+        "imageUrl": "/images/kentucky.webp",
+        "averageRating": "4.3"
     }, {
         "id": "334",
-        "name": "Gold Shoes",
-        "price": "180.00",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel enim quam. Mauris nisl tellus, fringilla sed cursus eu, convallis non diam. Mauris quis fringilla nunc. Aenean leo lacus, lobortis sit amet venenatis a, aliquet tristique erat. Etiam laoreet mauris ut dapibus tincidunt. Pellentesque non ex at nisl ornare aliquam sed non ante. Nam lobortis magna id massa cursus, sit amet condimentum metus facilisis. Donec eu tortor at est tempor cursus et sed velit. Morbi rutrum elementum est vitae fringilla. Phasellus dignissim purus turpis, ac varius enim auctor vulputate. In ullamcorper vestibulum mauris. Nulla malesuada pretium mauris, lobortis eleifend dolor iaculis vitae.",
-        "imageUrl": "/images/shoes-12.jpg",
-        "averageRating": "5.0"
+        "name": "AYINGER CELEBRATOR DOPPELBOCK",
+        "price": "11.99",
+        "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.",
+        "imageUrl": "/images/ayinger.webp",
+        "averageRating": "4.3"
     }
 ]

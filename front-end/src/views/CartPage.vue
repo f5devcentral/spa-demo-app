@@ -26,7 +26,9 @@ export default {
   },
   computed: {
     totalPrice() {
-      return this.cartItems.reduce((sum, item) => sum + Number(item.price), 0);
+      return this.cartItems
+        .reduce((sum, item) => sum + Number(item.price), 0)
+        .toFixed(2);
     },
   },
   methods: {

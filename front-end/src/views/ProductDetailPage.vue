@@ -1,5 +1,5 @@
 <template>
-  <div id="page-wrap" v-if="product">
+  <div id="page-wrap" v-if="product" :key="product.id">
     <div id="img-wrap">
       <img v-bind:src="API_URL + product.imageUrl" />
     </div>
@@ -27,6 +27,7 @@
       <h4>Description</h4>
       <p>{{ product.description }}</p>
     </div>
+    <Recommendations />
   </div>
   <NotFoundPage v-else />
 </template>
@@ -34,11 +35,13 @@
 <script>
 import axios from "axios";
 import NotFoundPage from "./NotFoundPage";
+import Recommendations from "../components/Recommendations";
 
 export default {
   name: "ProductDetailPage",
   components: {
     NotFoundPage,
+    Recommendations,
   },
   data() {
     return {

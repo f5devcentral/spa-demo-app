@@ -30,7 +30,7 @@ services:
       context: ./front-end
       args:
         VUE_APP_API_URL: "http://localhost:8000"
-        VUE_APP_API_URL: "http://localhost:8001"
+        VUE_APP_REC_URL: "http://localhost:8001"
     ports:
       - "8080:80"
     links:

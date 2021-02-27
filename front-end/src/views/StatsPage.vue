@@ -20,15 +20,14 @@
       <i class="material-icons md-120">storage</i>
       <h3>Database</h3>
       <div class="info">
-        <p class="url">10.1.1.4</p>
-        <p class="latency">45<span class="unit">ms</span></p>
+        <p class="url">{{ DB_HOST }}</p>
+        <p class="latency">{{ DB_TIME }}<span class="unit">ms</span></p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-const navEntries = performance.getEntriesByType("navigation");
 export default {
   name: "Stats",
   data() {
@@ -37,23 +36,35 @@ export default {
       FRONTEND_TIME: 0,
       API_URL: process.env.VUE_APP_API_URL,
       API_TIME: 0,
-      TTFB: Math.round(navEntries.responseStart - navEntries.fetchStart),
+      DB_HOST: null,
+      DB_TIME: 0,
     };
   },
   methods: {
     async getStatus() {
+      // frontend
       const api_url = process.env.VUE_APP_API_URL + "/api/products";
       const api_start = new Date();
       fetch(api_url, { mode: "no-cors" }).then(() => {
         this.API_TIME = new Date() - api_start;
       });
 
+      // api
       const frontend_url =
         window.location.protocol + "//" + window.location.host;
       const frontend_start = new Date();
       fetch(frontend_url, { mode: "no-cors" }).then(() => {
         this.FRONTEND_TIME = new Date() - frontend_start;
       });
+
+      // database
+      const db_url = process.env.VUE_APP_API_URL + "/api/stats";
+      console.log(db_url);
+      fetch(db_url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          (this.DB_HOST = data["db_host"]), (this.DB_TIME = data["db_latency"]);
+        });
     },
   },
   async mounted() {

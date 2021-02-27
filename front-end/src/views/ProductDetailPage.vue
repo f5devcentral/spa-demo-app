@@ -6,7 +6,9 @@
     <div id="product-details">
       <h1>{{ product.name }}</h1>
       <h3 id="price">${{ product.price }}</h3>
-      <p>Average rating: {{ product.averageRating }}</p>
+      <p><b>Average rating</b>: {{ product.averageRating }}</p>
+      <p>{{ product.description }}</p>
+      <Inventory :id="this.product.id" />
       <button
         id="add-to-cart"
         v-if="!itemIsInCart && !showSuccessMessage"
@@ -24,10 +26,8 @@
       <button id="add-to-cart" class="grey-button" v-if="itemIsInCart">
         Item is already in cart
       </button>
-      <h4>Description</h4>
-      <p>{{ product.description }}</p>
     </div>
-    <Recommendations />
+    <Recommendations />"
   </div>
   <NotFoundPage v-else />
 </template>
@@ -36,12 +36,14 @@
 import axios from "axios";
 import NotFoundPage from "./NotFoundPage";
 import Recommendations from "../components/Recommendations";
+import Inventory from "../components/Inventory";
 
 export default {
   name: "ProductDetailPage",
   components: {
     NotFoundPage,
     Recommendations,
+    Inventory,
   },
   data() {
     return {

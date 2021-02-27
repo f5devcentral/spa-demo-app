@@ -110,21 +110,27 @@ app.get('/api/inventory', async (req, res) => {
 });
 
 app.get('/api/stats', async (req, res) => {
-  const start = new Date();
-  var end = 0;
+  var payload = {};
 
-  fetch(`http://${process.env.MONGO_URL}:27017`)
-      .then(() => {
-        end = new Date() - start;
-        res.status(200).json({
-          "db_host": process.env.MONGO_URL,
-          "db_latency": end
-        })
-      })
-      .catch(error => {
-        console.log(error);
-        res.status(200).json({});
-      });
+  try {
+    const db_start = new Date();
+    const db_resp = await axios.get(
+      `http://${process.env.MONGO_URL}:27017`
+    );
+    payload["db_host"] = process.env.MONGO_URL;
+    payload["db_latency"] = new Date() - db_start;
+
+    const inv_start = new Date();
+    const inv_resp = await axios.get(
+      `${process.env.INVENTORY_URL}/api/stats`, {timeout:5}
+    );
+    payload["inventory_host"] = process.env.INVENTORY_URL;
+    payload["inventory_latency"] = new Date() - inv_start;
+
+  } catch(err) {
+    console.log(err);
+  }
+  res.status(200).json(payload);
 })
 
 app.listen(8000, () => {

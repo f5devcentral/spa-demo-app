@@ -6,6 +6,19 @@ This application demos a modern single-page application build on:
 
 ![Demo Footwear Site](./demo_brews.png)
 
+# Components
+### Frontend
+Vue.JS application that simulates a shopping cart application.
+
+### API
+Node.JS application running on Express.JS that provides the primary API and access to the database. 
+
+### Database
+MongoDB database that stores information about the user and the products.  This database is seeded with user and product data on launch. 
+
+### Recommendations
+Node.JS microservice that will recommend products.
+
 # Deploy 
 ```bash
 docker-compose up -d
@@ -47,3 +60,5 @@ I have extended his demo to:
 - run components in docker containers
 - abstract API and image URLs 
 - seed MongoDB 
+- recommendations microservice 
+- stats page for all services

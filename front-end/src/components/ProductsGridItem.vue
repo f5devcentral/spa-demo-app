@@ -36,6 +36,7 @@ export default {
 
 .product-name {
   margin-bottom: 0;
+  height: 15%;
 }
 
 img {

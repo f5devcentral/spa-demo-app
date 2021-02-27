@@ -8,7 +8,7 @@
         <p class="latency">{{ FRONTEND_TIME }}<span class="unit">ms</span></p>
       </div>
     </div>
-    <div class="card card-2">
+    <div class="card card-2" v-bind:class="{ error: !apiIsActive }">
       <i class="material-icons md-120">api</i>
       <h3>API</h3>
       <div class="info">
@@ -16,7 +16,7 @@
         <p class="latency">{{ API_TIME }}<span class="unit">ms</span></p>
       </div>
     </div>
-    <div class="card card-3">
+    <div class="card card-3" v-bind:class="{ error: !dbIsActive }">
       <i class="material-icons md-120">storage</i>
       <h3>Database</h3>
       <div class="info">
@@ -36,8 +36,10 @@ export default {
       FRONTEND_TIME: 0,
       API_URL: process.env.VUE_APP_API_URL,
       API_TIME: 0,
+      apiIsActive: false,
       DB_HOST: null,
       DB_TIME: 0,
+      dbIsActive: false,
     };
   },
   methods: {
@@ -47,6 +49,7 @@ export default {
       const api_start = new Date();
       fetch(api_url, { mode: "no-cors" }).then(() => {
         this.API_TIME = new Date() - api_start;
+        this.apiIsActive = true;
       });
 
       // api
@@ -63,7 +66,9 @@ export default {
       fetch(db_url)
         .then((resp) => resp.json())
         .then((data) => {
-          (this.DB_HOST = data["db_host"]), (this.DB_TIME = data["db_latency"]);
+          this.DB_HOST = data["db_host"];
+          this.DB_TIME = data["db_latency"];
+          this.dbIsActive = true;
         });
     },
   },
@@ -99,6 +104,9 @@ body {
   flex-direction: column;
   position: relative;
   width: 32%;
+}
+.error {
+  background: red;
 }
 .card h3 {
   font-weight: 600;

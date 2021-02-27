@@ -34,6 +34,14 @@
         </p>
       </div>
     </div>
+    <div class="card card-3" v-bind:class="{ error: !inventoryIsActive }">
+      <i class="material-icons md-120">inventory</i>
+      <h3>Inventory</h3>
+      <div class="info">
+        <p class="url">{{ INVENTORY_URL }}</p>
+        <p class="latency">{{ INVENTORY_TIME }}<span class="unit">ms</span></p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,15 +52,18 @@ export default {
     return {
       FRONTEND: window.location.protocol + "//" + window.location.host,
       FRONTEND_TIME: 0,
+      apiIsActive: true,
       API_URL: process.env.VUE_APP_API_URL,
       API_TIME: 0,
-      apiIsActive: true,
+      dbIsActive: true,
       DB_HOST: null,
       DB_TIME: 0,
-      dbIsActive: true,
+      recIsActive: true,
       RECOMMENDATIONS_URL: process.env.VUE_APP_REC_URL,
       RECOMMENDATIONS_TIME: 0,
-      recIsActive: true,
+      inventoryIsActive: true,
+      INVENTORY_URL: process.env.VUE_APP_INVENTORY_URL,
+      INVENTORY_TIME: 0,
     };
   },
   methods: {
@@ -94,6 +105,18 @@ export default {
         })
         .catch((error) => {
           this.recIsActive = false;
+          console.log(error);
+        });
+
+      // inventory
+      const inventory_url = process.env.VUE_APP_INVENTORY_URL + "/api/stats";
+      const inventory_start = new Date();
+      fetch(inventory_url)
+        .then(() => {
+          this.INVENTORY_TIME = new Date() - inventory_start;
+        })
+        .catch((error) => {
+          this.inventoryIsActive = false;
           console.log(error);
         });
     },

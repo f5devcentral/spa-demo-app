@@ -31,6 +31,7 @@ services:
       args:
         VUE_APP_API_URL: "http://localhost:8000"
         VUE_APP_REC_URL: "http://localhost:8001"
+        VUE_APP_INVENTORY_URL: "http://localhost:8002"
     ports:
       - "8080:80"
     links:

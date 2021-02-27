@@ -4,7 +4,7 @@ This application demos a modern single-page application build on:
 - Node.js (back-end)
 - MongoDB (database)
 
-![Demo Footwear Site](./demo_footwear.png)
+![Demo Footwear Site](./demo_brews.png)
 
 # Deploy 
 ```bash

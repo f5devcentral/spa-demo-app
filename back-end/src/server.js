@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import path from 'path';
 import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
 app.use(bodyParser.json());
@@ -94,6 +95,19 @@ app.delete('/api/users/:userId/cart/:productId', async (req, res) => {
   res.status(200).json(cartItems);
   client.close();
 });
+
+app.get('/api/stats', async (req, res) => {
+  const start = new Date();
+  var end = 0;
+
+  fetch(`http://${process.env.MONGO_URL}:27017`, { mode: "no-cors" }).then(() => {
+        end = new Date() - start;
+        res.status(200).json({
+        "db_host": process.env.MONGO_URL,
+        "db_latency": end
+      })
+  });
+})
 
 app.listen(8000, () => {
     console.log('Server is listening on port 8000');

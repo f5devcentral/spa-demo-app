@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar />
-    <router-view />
+    <router-view :key="$route.name + ($route.params.id || '')" />
   </div>
 </template>
 

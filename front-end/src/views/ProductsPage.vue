@@ -26,7 +26,5 @@ export default {
     this.products = products;
   },
 };
-
-console.log(process.env.VUE_APP_API_URL);
 </script>
 

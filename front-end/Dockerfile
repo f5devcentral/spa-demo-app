@@ -16,6 +16,9 @@ COPY ./nginx.conf ./nginx.conf
 ARG VUE_APP_API_URL
 ENV VUE_APP_API_URL $VUE_APP_API_URL
 
+ARG VUE_APP_REC_URL
+ENV VUE_APP_REC_URL $VUE_APP_REC_URL
+
 RUN npm run build
 
 # --------- Release ---------

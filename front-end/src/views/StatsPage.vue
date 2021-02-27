@@ -24,6 +24,16 @@
         <p class="latency">{{ DB_TIME }}<span class="unit">ms</span></p>
       </div>
     </div>
+    <div class="card card-3" v-bind:class="{ error: !recIsActive }">
+      <i class="material-icons md-120">add_shopping_cart</i>
+      <h3>Recommendations</h3>
+      <div class="info">
+        <p class="url">{{ RECOMMENDATIONS_URL }}</p>
+        <p class="latency">
+          {{ RECOMMENDATIONS_TIME }}<span class="unit">ms</span>
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,6 +50,9 @@ export default {
       DB_HOST: null,
       DB_TIME: 0,
       dbIsActive: true,
+      RECOMMENDATIONS_URL: process.env.VUE_APP_REC_URL,
+      RECOMMENDATIONS_TIME: 0,
+      recIsActive: true,
     };
   },
   methods: {
@@ -71,6 +84,18 @@ export default {
       fetch(frontend_url).then(() => {
         this.FRONTEND_TIME = new Date() - frontend_start;
       });
+
+      // recommendations
+      const rec_url = process.env.VUE_APP_REC_URL + "/api/stats";
+      const recommendations_start = new Date();
+      fetch(rec_url)
+        .then(() => {
+          this.RECOMMENDATIONS_TIME = new Date() - recommendations_start;
+        })
+        .catch((error) => {
+          this.recIsActive = false;
+          console.log(error);
+        });
     },
   },
   async mounted() {
@@ -105,6 +130,7 @@ body {
   flex-direction: column;
   position: relative;
   width: 32%;
+  margin-bottom: 2%;
 }
 .error {
   background: red;

@@ -100,13 +100,18 @@ app.get('/api/stats', async (req, res) => {
   const start = new Date();
   var end = 0;
 
-  fetch(`http://${process.env.MONGO_URL}:27017`, { mode: "no-cors" }).then(() => {
+  fetch(`http://${process.env.MONGO_URL}:27017`)
+      .then(() => {
         end = new Date() - start;
         res.status(200).json({
-        "db_host": process.env.MONGO_URL,
-        "db_latency": end
+          "db_host": process.env.MONGO_URL,
+          "db_latency": end
+        })
       })
-  });
+      .catch(error => {
+        console.log(error);
+        res.status(200).json({});
+      });
 })
 
 app.listen(8000, () => {

@@ -36,40 +36,41 @@ export default {
       FRONTEND_TIME: 0,
       API_URL: process.env.VUE_APP_API_URL,
       API_TIME: 0,
-      apiIsActive: false,
+      apiIsActive: true,
       DB_HOST: null,
       DB_TIME: 0,
-      dbIsActive: false,
+      dbIsActive: true,
     };
   },
   methods: {
     async getStatus() {
       // frontend
-      const api_url = process.env.VUE_APP_API_URL + "/api/products";
+      const api_url = process.env.VUE_APP_API_URL + "/api/stats";
       const api_start = new Date();
-      fetch(api_url, { mode: "no-cors" }).then(() => {
-        this.API_TIME = new Date() - api_start;
-        this.apiIsActive = true;
-      });
+      fetch(api_url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          this.API_TIME = new Date() - api_start;
+          console.log(data);
+          if (data["db_host"]) {
+            this.DB_HOST = data["db_host"];
+            this.DB_TIME = data["db_latency"];
+          } else {
+            this.dbIsActive = false;
+          }
+        })
+        .catch((error) => {
+          this.apiIsActive = false;
+          console.log(error);
+        });
 
       // api
       const frontend_url =
         window.location.protocol + "//" + window.location.host;
       const frontend_start = new Date();
-      fetch(frontend_url, { mode: "no-cors" }).then(() => {
+      fetch(frontend_url).then(() => {
         this.FRONTEND_TIME = new Date() - frontend_start;
       });
-
-      // database
-      const db_url = process.env.VUE_APP_API_URL + "/api/stats";
-      console.log(db_url);
-      fetch(db_url)
-        .then((resp) => resp.json())
-        .then((data) => {
-          this.DB_HOST = data["db_host"];
-          this.DB_TIME = data["db_latency"];
-          this.dbIsActive = true;
-        });
     },
   },
   async mounted() {

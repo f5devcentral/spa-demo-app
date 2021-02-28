@@ -39,12 +39,14 @@
 </template>
 
 <script>
+import axios from "axios";
 import StatsCard from "../components/StatsCard";
 export default {
   name: "Stats",
   components: { StatsCard },
   data() {
     return {
+      frontendIsActive: true,
       frontend_host: window.location.protocol + "//" + window.location.host,
       frontend_time: 0,
       apiIsActive: true,
@@ -62,77 +64,64 @@ export default {
     };
   },
   methods: {
+    async getLatency(url) {
+      const start_time = new Date();
+      try {
+        await axios.get(url);
+        return [new Date() - start_time, true];
+      } catch {
+        return [null, false];
+      }
+    },
+    async getStats(url) {
+      const resp = await axios.get(url);
+      const data = resp.data;
+      if (data["host"] && data["latency"])
+        return [data["host"], data["latency"], true];
+      else return [null, null, false];
+    },
     async getStatus() {
       // frontend
       const frontend_url =
         window.location.protocol + "//" + window.location.host;
-      const frontend_start = new Date();
-      fetch(frontend_url).then(() => {
-        this.frontend_time = new Date() - frontend_start;
-      });
+      [this.frontend_time, this.frontendIsActive] = await this.getLatency(
+        frontend_url
+      );
 
       // api
       const api_url = process.env.VUE_APP_API_URL + "/api/stats";
-      const api_start = new Date();
-      fetch(api_url).then(() => {
-        this.api_time = new Date() - api_start;
-      });
+      [this.api_time, this.apiIsActive] = await this.getLatency(api_url);
 
       // db
       const db_url = process.env.VUE_APP_API_URL + "/api/stats/db";
-      // const db_start = new Date();
-      fetch(db_url)
-        .then((resp) => resp.json())
-        .then((data) => {
-          // this.db_time = new Date() - db_start;
-          if (!data["db_host"] || !data["db_latency"]) this.dbIsActive = false;
-          if (data["db_host"]) this.db_host = data["db_host"];
-          if (data["db_latency"]) this.db_time = data["db_latency"];
-        })
-        .catch((error) => {
-          this.dbIsActive = false;
-          console.log(error);
-        });
+      [this.db_host, this.db_time, this.dbIsActive] = await this.getStats(
+        db_url
+      );
 
       // inventory
       const inv_url = process.env.VUE_APP_API_URL + "/api/stats/inventory";
-      fetch(inv_url)
-        .then((resp) => resp.json())
-        .then((data) => {
-          if (!data["inventory_host"] || !data["inventory_latency"])
-            this.inventoryIsActive = false;
-          if (data["inventory_host"])
-            this.inventory_host = data["inventory_host"];
-          if (data["inventory_latency"])
-            this.inventory_time = data["inventory_latency"];
-        })
-        .catch((error) => {
-          this.inventoryIsActive = false;
-          console.log(error);
-        });
-
-      // if (data["inventory_host"]) {
-      //     this.inventory_host = data["inventory_host"];
-      //     this.inventory_time = data["inventory_latency"];
-      //   } else {
-      //     this.inventoryIsActive = false;
-      //   }
+      [
+        this.inventory_host,
+        this.inventory_time,
+        this.inventoryIsActive,
+      ] = await this.getStats(inv_url);
 
       // recommendations
       const rec_url = process.env.VUE_APP_REC_URL + "/api/stats";
-      const recommendations_start = new Date();
-      fetch(rec_url)
-        .then(() => {
-          this.recommendations_time = new Date() - recommendations_start;
-        })
-        .catch((error) => {
-          this.recIsActive = false;
-          console.log(error);
-        });
+      [this.recommendations_time, this.recIsActive] = await this.getLatency(
+        rec_url
+      );
     },
   },
   async mounted() {
     this.getStatus();
+  },
+  async created() {
+    this.$nextTick(function () {
+      window.setInterval(() => {
+        this.getStatus();
+      }, 6000);
+    });
   },
 };
 </script>

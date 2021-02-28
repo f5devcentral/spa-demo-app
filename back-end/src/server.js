@@ -114,15 +114,15 @@ app.get('/api/stats', async (req, res) => {
 })
 
 app.get('/api/stats/db', async (req, res) => {
-  var payload = {"db_host": `http://${process.env.MONGO_URL}:27017`};
+  var payload = {"host": `http://${process.env.MONGO_URL}:27017`};
 
   try {
     const db_start = new Date();
     const db_resp = await axios.get(
       `http://${process.env.MONGO_URL}:27017`
     );
-    payload["db_host"] = `http://${process.env.MONGO_URL}:27017`;
-    payload["db_latency"] = new Date() - db_start;
+    payload["host"] = `http://${process.env.MONGO_URL}:27017`;
+    payload["latency"] = new Date() - db_start;
 
   } catch(err) {
     console.log(err);
@@ -138,8 +138,8 @@ app.get('/api/stats/inventory', async (req, res) => {
     const inv_resp = await axios.get(
       `${process.env.INVENTORY_URL}/api/stats`, {timeout:15}
     );
-    payload["inventory_host"] = process.env.INVENTORY_URL;
-    payload["inventory_latency"] = new Date() - inv_start;
+    payload["host"] = process.env.INVENTORY_URL;
+    payload["latency"] = new Date() - inv_start;
 
   } catch(err) {
     console.log(err);

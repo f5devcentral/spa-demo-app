@@ -19,6 +19,9 @@ MongoDB database that stores information about the user and the products.  This 
 ### Recommendations
 Node.JS microservice that will recommend products.
 
+### Inventory
+Node.JS microservice that will tell the local store inventory.  Note, this microservice is access through the API and simulates the API server talking to an internal service. 
+
 # Deploy 
 ```bash
 docker-compose up -d
@@ -29,6 +32,7 @@ docker-compose up -d
 ```bash
 cd back-end
 export MONGO_URL="http://localhost:8000"
+export INVENTORY_URL="http://localhost:8002"
 npm run dev
 ```
 
@@ -60,5 +64,6 @@ I have extended his demo to:
 - run components in docker containers
 - abstract API and image URLs 
 - seed MongoDB 
-- recommendations microservice 
+- recommendations microservice
+- store inventory simulation  
 - stats page for all services

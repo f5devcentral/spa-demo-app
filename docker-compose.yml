@@ -24,6 +24,7 @@ services:
       - mongodb
     environment:
       - MONGO_URL=mongodb
+      - INVENTORY_URL=http://inventory:8002
 
   front-end:
     build:
@@ -40,3 +41,10 @@ services:
     build: ./recommendations
     ports:
       - "8001:8001"
+
+  inventory:
+    build: ./inventory
+    ports:
+      - "8002:8002"
+    links:
+      - back-end

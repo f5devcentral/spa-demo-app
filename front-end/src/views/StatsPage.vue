@@ -168,15 +168,15 @@ export default {
       window.setInterval(() => {
         this.getStatus();
         this.writeStats(
-          this.frontend_time,
-          this.api_time,
-          this.db_time,
-          this.recommendations_time,
-          this.inventory_time
+          this.frontend_time || 0,
+          this.api_time || 0,
+          this.db_time || 0,
+          this.recommendations_time || 0,
+          this.inventory_time || 0
         );
         this.chartdata = this.getChartData();
-      }, 60000);
-      // }, 6000);
+        // }, 60000);
+      }, 6000);
     });
   },
 };

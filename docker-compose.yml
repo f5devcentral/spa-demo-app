@@ -24,6 +24,7 @@ services:
       - mongodb
     environment:
       - MONGO_URL=mongodb
+      - INVENTORY_URL=http://inventory:8002
 
   front-end:
     build:
@@ -31,7 +32,6 @@ services:
       args:
         VUE_APP_API_URL: "http://localhost:8000"
         VUE_APP_REC_URL: "http://localhost:8001"
-        VUE_APP_INVENTORY_URL: "http://localhost:8002"
     ports:
       - "8080:80"
     links:
@@ -41,3 +41,10 @@ services:
     build: ./recommendations
     ports:
       - "8001:8001"
+
+  inventory:
+    build: ./inventory
+    ports:
+      - "8002:8002"
+    links:
+      - back-end

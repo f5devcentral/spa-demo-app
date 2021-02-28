@@ -1,25 +1,35 @@
 <template>
   <div class="container">
     <StatsCard
+      :active="'true'"
       :title="'Frontend'"
       :host="frontend_host"
       :time="frontend_time"
       :icon="'cloud'"
     />
-    <StatsCard :title="'API'" :host="api_host" :time="api_time" :icon="'api'" />
     <StatsCard
+      :active="apiIsActive"
+      :title="'API'"
+      :host="api_host"
+      :time="api_time"
+      :icon="'api'"
+    />
+    <StatsCard
+      :active="dbIsActive"
       :title="'Database'"
       :host="db_host"
       :time="db_time"
       :icon="'storage'"
     />
     <StatsCard
+      :active="recIsActive"
       :title="'Recommendations'"
       :host="recommendations_host"
       :time="recommendations_time"
       :icon="'add_shopping_cart'"
     />
     <StatsCard
+      :active="inventoryIsActive"
       :title="'Inventory'"
       :host="inventory_host"
       :time="inventory_time"
@@ -54,37 +64,59 @@ export default {
   methods: {
     async getStatus() {
       // frontend
-      const api_url = process.env.VUE_APP_API_URL + "/api/stats";
-      const api_start = new Date();
-      fetch(api_url)
-        .then((resp) => resp.json())
-        .then((data) => {
-          this.api_time = new Date() - api_start;
-          if (data["db_host"]) {
-            this.db_host = data["db_host"];
-            this.db_time = data["db_latency"];
-          } else {
-            this.dbIsActive = false;
-          }
-          if (data["inventory_host"]) {
-            this.inventory_host = data["inventory_host"];
-            this.inventory_time = data["inventory_latency"];
-          } else {
-            this.inventoryIsActive = false;
-          }
-        })
-        .catch((error) => {
-          this.apiIsActive = false;
-          console.log(error);
-        });
-
-      // api
       const frontend_url =
         window.location.protocol + "//" + window.location.host;
       const frontend_start = new Date();
       fetch(frontend_url).then(() => {
         this.frontend_time = new Date() - frontend_start;
       });
+
+      // api
+      const api_url = process.env.VUE_APP_API_URL + "/api/stats";
+      const api_start = new Date();
+      fetch(api_url).then(() => {
+        this.api_time = new Date() - api_start;
+      });
+
+      // db
+      const db_url = process.env.VUE_APP_API_URL + "/api/stats/db";
+      // const db_start = new Date();
+      fetch(db_url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          // this.db_time = new Date() - db_start;
+          if (!data["db_host"] || !data["db_latency"]) this.dbIsActive = false;
+          if (data["db_host"]) this.db_host = data["db_host"];
+          if (data["db_latency"]) this.db_time = data["db_latency"];
+        })
+        .catch((error) => {
+          this.dbIsActive = false;
+          console.log(error);
+        });
+
+      // inventory
+      const inv_url = process.env.VUE_APP_API_URL + "/api/stats/inventory";
+      fetch(inv_url)
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (!data["inventory_host"] || !data["inventory_latency"])
+            this.inventoryIsActive = false;
+          if (data["inventory_host"])
+            this.inventory_host = data["inventory_host"];
+          if (data["inventory_latency"])
+            this.inventory_time = data["inventory_latency"];
+        })
+        .catch((error) => {
+          this.inventoryIsActive = false;
+          console.log(error);
+        });
+
+      // if (data["inventory_host"]) {
+      //     this.inventory_host = data["inventory_host"];
+      //     this.inventory_time = data["inventory_latency"];
+      //   } else {
+      //     this.inventoryIsActive = false;
+      //   }
 
       // recommendations
       const rec_url = process.env.VUE_APP_REC_URL + "/api/stats";

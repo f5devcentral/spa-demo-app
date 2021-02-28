@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-bind:class="{ error: !active }">
     <i class="material-icons md-120">{{ icon }}</i>
     <h3>{{ title }}</h3>
     <div class="info">
@@ -11,7 +11,7 @@
 <script>
 export default {
   name: "StatsCard",
-  props: ["title", "host", "time", "icon"],
+  props: ["active", "title", "host", "time", "icon"],
 };
 </script>
 <style scoped>

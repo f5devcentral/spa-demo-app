@@ -38,9 +38,8 @@ export default {
     try {
       // get data
       const { data: inventory } = await axios.get(
-        `${process.env.VUE_APP_INVENTORY_URL}/api/inventory`
+        `${process.env.VUE_APP_API_URL}/api/inventory`
       );
-
       // find inventory for product
       inventory.forEach((item) => {
         if (item.id === this.id) this.inventory = item["quantity"];

@@ -6,7 +6,9 @@
       <p class="url">{{ host }}</p>
       <p class="latency">{{ time }}<span class="unit">ms</span></p>
     </div>
-    <StatsGraph :chartdata="chartData" />
+    <v-container class="chart-container">
+      <StatsGraph :chartdata="chartData" />
+    </v-container>
   </div>
 </template>
 <script>
@@ -96,5 +98,14 @@ export default {
 }
 .material-icons.md-120 {
   font-size: 120px;
+}
+.chart-container {
+  flex-grow: 1;
+  min-height: 0;
+}
+.chart-container div {
+  position: relative;
+  width: 100%;
+  height: 200px;
 }
 </style>

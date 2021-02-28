@@ -6,6 +6,7 @@
       :host="frontend_host"
       :time="frontend_time"
       :icon="'cloud'"
+      :chartdata="chartdata[0]"
     />
     <StatsCard
       :active="apiIsActive"
@@ -13,6 +14,7 @@
       :host="api_host"
       :time="api_time"
       :icon="'api'"
+      :chartdata="chartdata[1]"
     />
     <StatsCard
       :active="dbIsActive"
@@ -20,6 +22,7 @@
       :host="db_host"
       :time="db_time"
       :icon="'storage'"
+      :chartdata="chartdata[2]"
     />
     <StatsCard
       :active="recIsActive"
@@ -27,6 +30,7 @@
       :host="recommendations_host"
       :time="recommendations_time"
       :icon="'add_shopping_cart'"
+      :chartdata="chartdata[3]"
     />
     <StatsCard
       :active="inventoryIsActive"
@@ -34,6 +38,7 @@
       :host="inventory_host"
       :time="inventory_time"
       :icon="'inventory'"
+      :chartdata="chartdata[4]"
     />
   </div>
 </template>
@@ -61,6 +66,11 @@ export default {
       inventoryIsActive: true,
       inventory_host: null,
       inventory_time: 0,
+      chartdata: this.getChartData(),
+      testdata: [
+        [0, 1, 2, 3, 4],
+        [6, 7, 2, 99, 2],
+      ],
     };
   },
   methods: {
@@ -112,6 +122,43 @@ export default {
         rec_url
       );
     },
+    writeStats(frontend, api, db, recommendations, inventory) {
+      var stats = JSON.parse(localStorage.getItem("stats")) || [];
+      if (!(stats instanceof Array)) stats = [stats];
+
+      // only store 10 elements
+      var new_stats = stats.slice(Math.max(stats.length - 20, 0));
+      new_stats.push([frontend, api, db, recommendations, inventory]);
+      localStorage.setItem("stats", JSON.stringify(new_stats));
+    },
+    getChartData() {
+      const stats = JSON.parse(localStorage.getItem("stats")) || [];
+
+      var lables = [];
+      var data1 = [];
+      var data2 = [];
+      var data3 = [];
+      var data4 = [];
+      var data5 = [];
+      var i = 0;
+      stats.forEach((stat) => {
+        lables.push(i);
+        i++;
+        data1.push(stat[0]);
+        data2.push(stat[1]);
+        data3.push(stat[2]);
+        data4.push(stat[3]);
+        data5.push(stat[4]);
+      });
+
+      return [
+        [lables, data1],
+        [lables, data2],
+        [lables, data3],
+        [lables, data4],
+        [lables, data5],
+      ];
+    },
   },
   async mounted() {
     this.getStatus();
@@ -120,7 +167,16 @@ export default {
     this.$nextTick(function () {
       window.setInterval(() => {
         this.getStatus();
-      }, 6000);
+        this.writeStats(
+          this.frontend_time,
+          this.api_time,
+          this.db_time,
+          this.recommendations_time,
+          this.inventory_time
+        );
+        this.chartdata = this.getChartData();
+      }, 60000);
+      // }, 6000);
     });
   },
 };

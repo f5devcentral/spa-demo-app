@@ -6,12 +6,45 @@
       <p class="url">{{ host }}</p>
       <p class="latency">{{ time }}<span class="unit">ms</span></p>
     </div>
+    <v-container class="chart-container">
+      <StatsGraph :chartdata="chartData" />
+    </v-container>
   </div>
 </template>
 <script>
+import StatsGraph from "../components/StatsGraph";
 export default {
   name: "StatsCard",
-  props: ["active", "title", "host", "time", "icon"],
+  components: { StatsGraph },
+  props: ["active", "title", "host", "time", "icon", "chartdata"],
+  data() {
+    return {
+      chartData: [],
+    };
+  },
+  methods: {
+    buildChartData(labels, data) {
+      this.chartData = {
+        labels: labels,
+        datasets: [
+          {
+            // label: "Data One",
+            backgroundColor: "#000",
+            data: data,
+          },
+        ],
+      };
+    },
+  },
+  created() {
+    this.buildChartData(this.$props.chartdata[0], this.$props.chartdata[1]);
+  },
+  watch: {
+    chartdata: function (newVal) {
+      // console.log("Prop changed: ", newVal, " | was: ", oldVal);
+      this.buildChartData(newVal[0], newVal[1]);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -65,5 +98,14 @@ export default {
 }
 .material-icons.md-120 {
   font-size: 120px;
+}
+.chart-container {
+  flex-grow: 1;
+  min-height: 0;
+}
+.chart-container div {
+  position: relative;
+  width: 100%;
+  height: 200px;
 }
 </style>

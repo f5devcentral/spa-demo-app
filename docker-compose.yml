@@ -5,16 +5,9 @@ services:
     container_name: mongodb
     ports:
       - 27017:27017
-    restart: unless-stopped
-
-  mongo_seed:
-    image: mongo
-    links:
-      - mongodb
     volumes:
-      - ./mongo-seed:/mongo-seed
-    command:
-      - /mongo-seed/import.sh
+      - ./mongo-seed:/docker-entrypoint-initdb.d
+    restart: unless-stopped
 
   back-end:
     build: ./back-end

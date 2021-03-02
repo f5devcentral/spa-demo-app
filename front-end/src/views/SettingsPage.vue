@@ -88,7 +88,7 @@ export default {
     this.populateLocalStorage();
   },
   mounted() {
-    this.populateComponentUrls();
+    this.populateServiceUrls();
   },
 };
 </script>

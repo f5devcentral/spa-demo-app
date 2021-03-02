@@ -21,7 +21,8 @@ export default {
                 const start_time = new Date();
                 const resp = await axios.get(url, {timeout:timeout});
                 if (byLatency) {
-                    return [url, new Date() - start_time, true];
+                    // byLatency endpoints don't return their url, calculate it
+                    return [url.split("/api")[0], new Date() - start_time, true];
                 }
                 else {
                     const data = resp.data;
@@ -38,8 +39,10 @@ export default {
         async getAllStatus() {
             for (const service of this.services) {
                 if(service.statsUrl)
-                    [service.url, service.latency, service.isActive] = 
+                    var url = null;
+                    [url, service.latency, service.isActive] = 
                     await this.getStats(service.statsUrl, service.statsByLantency);
+                    if(url) service.url = url;
                     // console.log(`${service.name}:${service.latency}:${service.isActive}`);
             }
         }

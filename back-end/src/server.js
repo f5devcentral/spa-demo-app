@@ -114,16 +114,19 @@ app.get('/api/stats', async (req, res) => {
 })
 
 app.get('/api/stats/db', async (req, res) => {
-  var payload = {"host": `http://${process.env.MONGO_URL}:27017`};
-
+  var payload = {};
+  
   try {
-    const db_start = new Date();
-    const db_resp = await axios.get(
-      `http://${process.env.MONGO_URL}:27017`
+    const db_start = new Date()
+    const client = await MongoClient.connect(
+      `mongodb://${process.env.MONGO_URL}:27017`,
+      { useNewUrlParser: true, useUnifiedTopology: true },
     );
-    payload["host"] = `http://${process.env.MONGO_URL}:27017`;
+    const db = client.db('vue-db');
+    const products = await db.collection('products').find({}).toArray();
+    client.close();
+    payload["host"] = `mongodb://${process.env.MONGO_URL}:27017`;
     payload["latency"] = new Date() - db_start;
-
   } catch(err) {
     console.log(err);
   }

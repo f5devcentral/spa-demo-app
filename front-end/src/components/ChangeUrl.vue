@@ -9,17 +9,17 @@
         </li>
       </ul>
     </p>
-      <!-- <label> Change {{ service.title }} URL:</label> -->
-      <input type="text" v-model="service.url" />
+      <input type="text" v-model="service.url" :disabled="showSuccessMessage" />
+      <span class="material-icons" 
+      v-on:click="onSubmit"
+      v-if="!showSuccessMessage">
+        check_circle
+      </span>
+      <span class="material-icons green-button" 
+      v-if="showSuccessMessage">
+        check_circle
+      </span>
       
-      <button v-if="!showSuccessMessage">Submit</button>
-      <button
-        class="green-button"
-        v-if="showSuccessMessage"
-        disabled
-      >
-        Saved!
-      </button>
     </form>
   </div>
 </template>
@@ -58,7 +58,18 @@ input[type="text"] {
   box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
   /* border-radius: 10px; */
 }
+button {
+  width: 20px;
+  height: 20px;
+}
 .green-button {
-  background-color: green;
+  color: green;
+}
+span {
+  position: absolute;
+  /* bottom: 20px;
+  right: 15px; */
+  top: 222px;
+  right: 40px;
 }
 </style>

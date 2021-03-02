@@ -9,7 +9,7 @@
         </li>
       </ul>
     </p>
-      <input type="text" v-model="service.url" :disabled="showSuccessMessage" />
+      <input type="text" v-model.lazy="service.url" :disabled="showSuccessMessage" />
       <span class="material-icons" 
       v-on:click="onSubmit"
       v-if="!showSuccessMessage">

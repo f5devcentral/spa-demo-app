@@ -7,6 +7,7 @@
       :time="frontend_time"
       :icon="'cloud'"
       :chartdata="chartdata[0]"
+      :settings="false"
     />
     <StatsCard
       :active="apiIsActive"
@@ -15,6 +16,7 @@
       :time="api_time"
       :icon="'api'"
       :chartdata="chartdata[1]"
+      :settings="true"
     />
     <StatsCard
       :active="dbIsActive"
@@ -23,6 +25,7 @@
       :time="db_time"
       :icon="'storage'"
       :chartdata="chartdata[2]"
+      :settings="true"
     />
     <StatsCard
       :active="recIsActive"
@@ -31,6 +34,7 @@
       :time="recommendations_time"
       :icon="'add_shopping_cart'"
       :chartdata="chartdata[3]"
+      :settings="true"
     />
     <StatsCard
       :active="inventoryIsActive"
@@ -39,6 +43,7 @@
       :time="inventory_time"
       :icon="'inventory'"
       :chartdata="chartdata[4]"
+      :settings="true"
     />
   </div>
 </template>

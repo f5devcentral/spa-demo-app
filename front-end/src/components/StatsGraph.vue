@@ -1,6 +1,7 @@
 <script>
 import { Line } from "vue-chartjs";
 export default {
+  name: "StatsGraph",
   extends: Line,
   props: ["chartdata"],
   data() {

@@ -2,16 +2,16 @@
   <div class="card" v-bind:class="{ error: !active }">
     <i class="material-icons md-120">{{ icon }}</i>
     <router-link v-bind:to="'/settings'">
-      <span class="material-icons settings">settings</span>
+      <span class="material-icons settings" v-if="settings">settings</span>
     </router-link>
     <h3>{{ title }}</h3>
     <div class="info">
       <p class="url">{{ host }}</p>
       <p class="latency">{{ time }}<span class="unit">ms</span></p>
     </div>
-    <v-container class="chart-container">
+    <div class="chart-container">
       <StatsGraph :chartdata="chartData" />
-    </v-container>
+    </div>
   </div>
 </template>
 <script>
@@ -19,7 +19,7 @@ import StatsGraph from "../components/StatsGraph";
 export default {
   name: "StatsCard",
   components: { StatsGraph },
-  props: ["active", "title", "host", "time", "icon", "chartdata"],
+  props: ["active", "title", "host", "time", "icon", "chartdata", "settings"],
   data() {
     return {
       chartData: [],

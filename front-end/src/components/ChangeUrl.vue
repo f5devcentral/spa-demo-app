@@ -24,6 +24,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "ChangeUrl",
   props: ["service"],
@@ -31,10 +32,22 @@ export default {
     return {
       showSuccessMessage: false,
       errors: [],
+      api_url: localStorage.api_url,
     };
   },
   methods: {
-    onSubmit() {
+    async onSubmit() {
+      //TODO: if database or inteventory, send the new URL to the API config endpoint
+      const service = this.$props.service.name;
+      if (service == "database" || service == "inventory") {
+        try {
+          await axios.post(this.api_url + "/api/config/" + service, {
+            url: this.$props.service.url,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
       this.showSuccessMessage = true;
       setTimeout(() => {
         this.$emit("hide");

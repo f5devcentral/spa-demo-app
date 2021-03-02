@@ -28,8 +28,10 @@
   </div>
 </template>
 <script>
+import storage from "../mixins/storage";
 export default {
   name: "settings",
+  mixins: [storage],
   data() {
     return {
       api_url: process.env.VUE_APP_API_URL,
@@ -81,15 +83,12 @@ export default {
       if (str) return true;
     },
   },
+  created() {
+    // populate local storage with component URLs
+    this.populateLocalStorage();
+  },
   mounted() {
-    // check for service urls in local storage
-    if (localStorage.api_url) this.api_url = localStorage.api_url;
-    if (localStorage.database_url)
-      this.database_url = localStorage.database_url;
-    if (localStorage.recommendations_url)
-      this.recommendations_url = localStorage.recommendations_url;
-    if (localStorage.inventory_url)
-      this.inventory_url = localStorage.inventory_url;
+    this.populateComponentUrls();
   },
 };
 </script>

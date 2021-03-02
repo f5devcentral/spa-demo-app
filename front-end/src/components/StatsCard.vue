@@ -1,13 +1,15 @@
 <template>
-  <div class="card" v-bind:class="{ error: !active }">
-    <i class="material-icons md-120">{{ icon }}</i>
+  <div class="card" v-bind:class="{ error: !service.isActive }">
+    <i class="material-icons md-120">{{ service.icon }}</i>
     <router-link v-bind:to="'/settings'">
-      <span class="material-icons settings" v-if="settings">settings</span>
+      <span class="material-icons settings" v-if="service.isConfigurable"
+        >settings</span
+      >
     </router-link>
-    <h3>{{ title }}</h3>
+    <h3>{{ service.title }}</h3>
     <div class="info">
-      <p class="url">{{ host }}</p>
-      <p class="latency">{{ time }}<span class="unit">ms</span></p>
+      <p class="url">{{ service.url }}</p>
+      <p class="latency">{{ service.latency }}<span class="unit">ms</span></p>
     </div>
     <div class="chart-container">
       <StatsGraph :chartdata="chartData" />
@@ -19,34 +21,45 @@ import StatsGraph from "../components/StatsGraph";
 export default {
   name: "StatsCard",
   components: { StatsGraph },
-  props: ["active", "title", "host", "time", "icon", "chartdata", "settings"],
+  props: ["service"],
   data() {
     return {
       chartData: [],
     };
   },
   methods: {
-    buildChartData(labels, data) {
+    buildChartData(data) {
+      console.log(data);
       this.chartData = {
-        labels: labels,
+        labels: data[0],
         datasets: [
           {
             // label: "Data One",
             backgroundColor: "#000",
-            data: data,
+            data: data[1],
           },
         ],
       };
     },
   },
   created() {
-    this.buildChartData(this.$props.chartdata[0], this.$props.chartdata[1]);
+    console.log(this.$props.service);
+    this.buildChartData(this.getChartData);
+  },
+  computed: {
+    getChartData: function () {
+      return this.service.chartData;
+    },
   },
   watch: {
-    chartdata: function (newVal) {
-      // console.log("Prop changed: ", newVal, " | was: ", oldVal);
-      this.buildChartData(newVal[0], newVal[1]);
+    getChartData(newVar) {
+      console.log("chart data changed");
+      this.buildChartData(newVar);
     },
+    service: function (newVal) {
+      this.buildChartData(newVal.chartData[0], newVal.chartData[1]);
+    },
+    deep: true,
   },
 };
 </script>

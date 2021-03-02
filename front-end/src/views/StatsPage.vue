@@ -28,7 +28,7 @@ export default {
           isConfigurable: false,
           tite: "Single Page Application",
           url: null,
-          statsByLantency: true,
+          monitorLocal: true,
           statsUrl: window.location.protocol + "//" + window.location.host,
         },
         {
@@ -40,8 +40,10 @@ export default {
           isConfigurable: true,
           tite: "API",
           url: null,
-          statsByLantency: true,
-          statsUrl: process.env.VUE_APP_API_URL + "/api/stats",
+          monitorLocal: true,
+          get statsUrl() {
+            return this.url + "/api/stats";
+          },
         },
         {
           name: "database",
@@ -52,7 +54,7 @@ export default {
           isConfigurable: true,
           tite: "Database",
           url: null,
-          statsByLantency: false,
+          monitorLocal: false,
           statsUrl: process.env.VUE_APP_API_URL + "/api/stats/db",
         },
         {
@@ -64,8 +66,10 @@ export default {
           isConfigurable: true,
           tite: "Recommendations",
           url: null,
-          statsByLantency: true,
-          statsUrl: process.env.VUE_APP_REC_URL + "/api/stats",
+          monitorLocal: true,
+          get statsUrl() {
+            return this.url + "/api/stats";
+          },
         },
         {
           name: "inventory",
@@ -76,7 +80,7 @@ export default {
           isConfigurable: true,
           tite: "Inventory",
           url: null,
-          statsByLantency: false,
+          monitorLocal: false,
           statsUrl: process.env.VUE_APP_API_URL + "/api/stats/inventory",
         },
       ],

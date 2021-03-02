@@ -2,6 +2,7 @@ export default {
     methods: {
         populateLocalStorage() {
             // set service urls if not present
+            if(!localStorage.spa_url) localStorage.spa_url = this.spa_url || window.location.protocol + "//" + window.location.host;
             if (!localStorage.api_url)
                 localStorage.api_url = this.api_url || process.env.VUE_APP_API_URL;
             if (!localStorage.database_url)
@@ -15,6 +16,7 @@ export default {
 
         populateServiceUrls() {
             // check for service urls in local storage
+            if (localStorage.spa_url) this.spa_url = localStorage.spa_url;
             if (localStorage.api_url) this.api_url = localStorage.api_url;
             if (localStorage.database_url)
             this.database_url = localStorage.database_url;
@@ -24,14 +26,12 @@ export default {
             this.inventory_url = localStorage.inventory_url;
         },
         populateServices() {
-            for (const service in this.services) {
-                console.log(service);
+            for (const service of this.services) {
                 // load chart data
                 if(localStorage.name) service.chartData = localStorage.name;
-                
+
                 // load url
-                const name = service.name + "_url";
-                console.log(`${name}: ${localStorage.getItem(name)}`);
+                service.url = localStorage.getItem(service.name + "_url");
             }
         },
         writeStats() {

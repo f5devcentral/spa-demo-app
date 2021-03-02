@@ -21,6 +21,7 @@ export default {
   },
   data() {
     return {
+      api_url: localStorage.api_url,
       cartItems: [],
     };
   },
@@ -34,17 +35,18 @@ export default {
   methods: {
     async removeFromCart(productId) {
       const result = await axios.delete(
-        `${process.env.VUE_APP_API_URL}/api/users/12345/cart/${productId}`
+        `${this.api_url}/api/users/12345/cart/${productId}`
       );
       this.cartItems = result.data;
     },
   },
   async created() {
-    const result = await axios.get(
-      `${process.env.VUE_APP_API_URL}/api/users/12345/cart`
-    );
-    const cartItems = result.data;
-    this.cartItems = cartItems;
+    if (!this.api_url) this.$router.push("/stats?config=first");
+    else {
+      const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
+      const cartItems = result.data;
+      this.cartItems = cartItems;
+    }
   },
 };
 </script>

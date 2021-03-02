@@ -1,6 +1,6 @@
 <template>
   <div class="product-item">
-    <img v-bind:src="API_URL + product.imageUrl" />
+    <img v-bind:src="api_url + product.imageUrl" />
     <h3 class="product-name">{{ product.name }}</h3>
     <p class="product-price">${{ product.price }}</p>
     <router-link v-bind:to="'/products/' + product.id">
@@ -15,7 +15,7 @@ export default {
   props: ["product"],
   data() {
     return {
-      API_URL: process.env.VUE_APP_API_URL,
+      api_url: localStorage.api_url,
     };
   },
 };

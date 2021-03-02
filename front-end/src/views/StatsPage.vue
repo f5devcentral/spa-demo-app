@@ -1,5 +1,9 @@
 <template>
   <div class="container">
+    <h3 id="config" v-if="this.$route.query.config == 'first'">
+      Please configure your service URLs.
+    </h3>
+
     <StatsCard
       v-for="service in services"
       :key="service.name"
@@ -71,7 +75,9 @@ export default {
             localStorage.setItem("database_url", value);
           },
           monitorLocal: false,
-          statsUrl: process.env.VUE_APP_API_URL + "/api/stats/database",
+          get statsUrl() {
+            return localStorage.getItem("api_url") + "/api/stats/database";
+          },
         },
         {
           name: "recommendations",
@@ -107,24 +113,11 @@ export default {
             localStorage.setItem("inventory_url", value);
           },
           monitorLocal: false,
-          statsUrl: process.env.VUE_APP_API_URL + "/api/stats/inventory",
+          get statsUrl() {
+            return localStorage.getItem("api_url") + "/api/stats/inventory";
+          },
         },
       ],
-      // api_url: null,
-      // database_url: null,
-      // recommendations_url: null,
-      // inventory_url: null,
-      // frontendIsActive: true,
-      // frontend_url: window.location.protocol + "//" + window.location.host,
-      // frontend_time: 0,
-      // apiIsActive: true,
-      // api_time: 0,
-      // dbIsActive: true,
-      // db_time: 0,
-      // recIsActive: true,
-      // recommendations_time: 0,
-      // inventoryIsActive: true,
-      // inventory_time: 0,
     };
   },
   async mounted() {
@@ -159,5 +152,11 @@ body {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 16px;
+}
+#config {
+  color: red;
+  position: absolute;
+  top: 90px;
+  left: 80px;
 }
 </style>

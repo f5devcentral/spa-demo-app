@@ -158,7 +158,7 @@ app.get('/api/stats', async (req, res) => {
   res.status(200).json({});
 })
 
-app.get('/api/stats/db', async (req, res) => {
+app.get('/api/stats/database', async (req, res) => {
   var payload = {};
   
   try {
@@ -183,10 +183,11 @@ app.get('/api/stats/inventory', async (req, res) => {
 
   try {
     const inv_start = new Date();
+    const service = getService("inventory");
     const inv_resp = await axios.get(
-      `${inventoryUrl}/api/stats`, {timeout:15}
+      `${service.url}/api/stats`, {timeout:15}
     );
-    payload["host"] = inventoryUrl;
+    payload["host"] = service.url;
     payload["latency"] = new Date() - inv_start;
 
   } catch(err) {

@@ -1,16 +1,24 @@
 <template>
   <div class="card" v-bind:class="{ error: !service.isActive }">
     <i class="material-icons md-120">{{ service.icon }}</i>
-    <router-link v-bind:to="'/settings'">
-      <span class="material-icons settings" v-if="service.isConfigurable"
-        >settings</span
-      >
-    </router-link>
+    <!-- <router-link v-bind:to="'/settings'"> -->
+    <span
+      class="material-icons settings"
+      v-if="service.isConfigurable"
+      v-on:click="toggleShowSettings"
+      >settings</span
+    >
+    <!-- </router-link> -->
     <h3>{{ service.title }}</h3>
     <div class="info">
       <p class="url">{{ service.url }}</p>
       <p class="latency">{{ service.latency }}<span class="unit">ms</span></p>
     </div>
+    <ChangeUrl
+      v-if="settingsVisible"
+      v-on:hide="toggleShowSettings"
+      :service="service"
+    />
     <div class="chart-container">
       <StatsGraph :chartdata="chartData" />
     </div>
@@ -18,17 +26,19 @@
 </template>
 <script>
 import StatsGraph from "../components/StatsGraph";
+import ChangeUrl from "../components/ChangeUrl";
 export default {
   name: "StatsCard",
-  components: { StatsGraph },
+  components: { ChangeUrl, StatsGraph },
   props: ["service"],
   data() {
     return {
       chartData: [],
+      settingsVisible: false,
     };
   },
   methods: {
-    buildChartData(data) {
+    buildChartData: function (data) {
       this.chartData = {
         labels: data[0],
         datasets: [
@@ -39,6 +49,15 @@ export default {
           },
         ],
       };
+    },
+    showSettings: function () {
+      this.settingsVisible = true;
+    },
+    hideSettings: function () {
+      this.settingsVisible = false;
+    },
+    toggleShowSettings: function () {
+      this.settingsVisible = !this.settingsVisible;
     },
   },
   created() {

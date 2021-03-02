@@ -5,7 +5,6 @@ import ProductDetailPage from '../views/ProductDetailPage.vue';
 import ProductsPage from '../views/ProductsPage.vue';
 import NotFoundPage from '../views/NotFoundPage.vue';
 import StatsPage from '../views/StatsPage.vue';
-import SettingsPage from '../views/SettingsPage.vue'
 
 Vue.use(VueRouter)
 
@@ -33,11 +32,6 @@ const routes = [
     path: '/stats',
     name: 'Stats',
     component: StatsPage,
-  },
-  {
-    path: '/settings',
-    name: 'Settings',
-    component: SettingsPage,
   },
   {
     path: '*',

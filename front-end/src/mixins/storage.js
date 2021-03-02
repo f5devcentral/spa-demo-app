@@ -1,30 +1,31 @@
+import axios from "axios";
+
 export default {
     methods: {
-        populateLocalStorage() {
+        async populateLocalStorage() {
             // set service urls if not present
             if(!localStorage.spa_url) localStorage.spa_url = this.spa_url || window.location.protocol + "//" + window.location.host;
             if (!localStorage.api_url)
                 localStorage.api_url = this.api_url || process.env.VUE_APP_API_URL;
-            if (!localStorage.database_url)
-                localStorage.database_url = this.database_url || "";
+            
             if (!localStorage.recommendations_url)
                 localStorage.recommendations_url =
                     this.recommendations_url || process.env.VUE_APP_REC_URL;
-            if (!localStorage.inventory_url)
-                localStorage.inventory_url = this.inventory_url || "";
+            
+
+            // get remotly monitored service urls
+            if (!localStorage.database_url) {
+                    localStorage.database_url = this.database_url || 
+                 await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database");
+            }
+            if (!localStorage.inventory_url) {
+                localStorage.inventory_url = this.inventory_url || 
+                 await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/inventory");
+            }
+
+            
         },
 
-        populateServiceUrls() {
-            // check for service urls in local storage
-            if (localStorage.spa_url) this.spa_url = localStorage.spa_url;
-            if (localStorage.api_url) this.api_url = localStorage.api_url;
-            if (localStorage.database_url)
-            this.database_url = localStorage.database_url;
-            if (localStorage.recommendations_url)
-            this.recommendations_url = localStorage.recommendations_url;
-            if (localStorage.inventory_url)
-            this.inventory_url = localStorage.inventory_url;
-        },
         populateServices() {
             for (const service of this.services) {
                 // load chart data
@@ -60,6 +61,18 @@ export default {
                     data.push(stat);
                 })
                 service.chartData = [lables, data];
+            }
+        },
+        async getRemoteServiceUrl(statsUrl) {
+            try {
+                const resp = await axios.get(statsUrl, {timeout: 10000});
+                const data = resp.data;
+                if(data["url"])
+                    return data["url"];
+                else
+                    return null;
+            } catch (error) {
+                console.log(error);
             }
         }
     }

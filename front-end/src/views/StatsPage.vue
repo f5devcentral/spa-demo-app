@@ -12,6 +12,7 @@
 import stats from "../mixins/stats";
 import storage from "../mixins/storage";
 import StatsCard from "../components/StatsCard";
+
 export default {
   name: "Stats",
   components: { StatsCard },
@@ -26,8 +27,13 @@ export default {
           icon: "cloud",
           isActive: true,
           isConfigurable: false,
-          tite: "Single Page Application",
-          url: null,
+          title: "Single Page Application",
+          get url() {
+            return localStorage.getItem("spa_url") || null;
+          },
+          set url(value) {
+            localStorage.setItem("spa_url", value);
+          },
           monitorLocal: true,
           statsUrl: window.location.protocol + "//" + window.location.host,
         },
@@ -38,11 +44,16 @@ export default {
           icon: "api",
           isActive: true,
           isConfigurable: true,
-          tite: "API",
-          url: null,
+          title: "API",
+          get url() {
+            return localStorage.getItem("api_url") || null;
+          },
           monitorLocal: true,
           get statsUrl() {
             return this.url + "/api/stats";
+          },
+          set url(value) {
+            localStorage.setItem("api_url", value);
           },
         },
         {
@@ -52,10 +63,15 @@ export default {
           icon: "storage",
           isActive: true,
           isConfigurable: true,
-          tite: "Database",
-          url: null,
+          title: "Database",
+          get url() {
+            return localStorage.getItem("database_url") || null;
+          },
+          set url(value) {
+            localStorage.setItem("database_url", value);
+          },
           monitorLocal: false,
-          statsUrl: process.env.VUE_APP_API_URL + "/api/stats/db",
+          statsUrl: process.env.VUE_APP_API_URL + "/api/stats/database",
         },
         {
           name: "recommendations",
@@ -64,8 +80,13 @@ export default {
           icon: "add_shopping_cart",
           isActive: true,
           isConfigurable: true,
-          tite: "Recommendations",
-          url: null,
+          title: "Recommendations",
+          get url() {
+            return localStorage.getItem("recommendations_url") || null;
+          },
+          set url(value) {
+            localStorage.setItem("recommendations_url", value);
+          },
           monitorLocal: true,
           get statsUrl() {
             return this.url + "/api/stats";
@@ -78,27 +99,32 @@ export default {
           icon: "inventory",
           isActive: true,
           isConfigurable: true,
-          tite: "Inventory",
-          url: null,
+          title: "Inventory",
+          get url() {
+            return localStorage.getItem("inventory_url") || null;
+          },
+          set url(value) {
+            localStorage.setItem("inventory_url", value);
+          },
           monitorLocal: false,
           statsUrl: process.env.VUE_APP_API_URL + "/api/stats/inventory",
         },
       ],
-      api_url: null,
-      database_url: null,
-      recommendations_url: null,
-      inventory_url: null,
-      frontendIsActive: true,
-      frontend_url: window.location.protocol + "//" + window.location.host,
-      frontend_time: 0,
-      apiIsActive: true,
-      api_time: 0,
-      dbIsActive: true,
-      db_time: 0,
-      recIsActive: true,
-      recommendations_time: 0,
-      inventoryIsActive: true,
-      inventory_time: 0,
+      // api_url: null,
+      // database_url: null,
+      // recommendations_url: null,
+      // inventory_url: null,
+      // frontendIsActive: true,
+      // frontend_url: window.location.protocol + "//" + window.location.host,
+      // frontend_time: 0,
+      // apiIsActive: true,
+      // api_time: 0,
+      // dbIsActive: true,
+      // db_time: 0,
+      // recIsActive: true,
+      // recommendations_time: 0,
+      // inventoryIsActive: true,
+      // inventory_time: 0,
     };
   },
   async mounted() {

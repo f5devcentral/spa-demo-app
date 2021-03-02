@@ -1,6 +1,9 @@
 <template>
   <div class="card" v-bind:class="{ error: !active }">
     <i class="material-icons md-120">{{ icon }}</i>
+    <router-link v-bind:to="'/settings'">
+      <span class="material-icons settings">settings</span>
+    </router-link>
     <h3>{{ title }}</h3>
     <div class="info">
       <p class="url">{{ host }}</p>
@@ -99,6 +102,16 @@ export default {
 .material-icons.md-120 {
   font-size: 120px;
 }
+.settings {
+  position: absolute;
+  /* bottom: 20px;
+  right: 15px; */
+  top: 10px;
+  right: 5px;
+  max-height: 120px;
+  color: black;
+}
+
 .chart-container {
   flex-grow: 1;
   min-height: 0;

@@ -1,18 +1,14 @@
+print('Start #################################################################');
+
 var products = JSON.parse(cat('/docker-entrypoint-initdb.d/initProducts.json'))
 var users = JSON.parse(cat('/docker-entrypoint-initdb.d/initUsers.json'))
 
-let error = true
+db = db.getSiblingDB('vue-db');
 
-db = db.getSiblingDB('vue-db') 
+db.createCollection('products');
+db.products.insert(products);
 
-let res = [
-  db.products.insert(products),
-  db.users.insert(users)
-]
+db.createCollection('users');
+db.users.insert(users);
 
-printjson(res)
-
-if (error) {
-  print('Error, exiting.')
-  quit(1)
-}
+print('END #################################################################');

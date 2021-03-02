@@ -27,7 +27,7 @@
         Item is already in cart
       </button>
     </div>
-    <Recommendations />"
+    <Recommendations />
   </div>
   <NotFoundPage v-else />
 </template>

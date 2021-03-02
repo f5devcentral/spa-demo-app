@@ -40,7 +40,7 @@ export default {
                 if(service.statsUrl)
                     [service.url, service.latency, service.isActive] = 
                     await this.getStats(service.statsUrl, service.statsByLantency);
-                    console.log(`${service.name}:${service.latency}:${service.isActive}`);
+                    // console.log(`${service.name}:${service.latency}:${service.isActive}`);
             }
         }
     }

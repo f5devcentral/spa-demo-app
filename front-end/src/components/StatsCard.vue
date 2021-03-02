@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     buildChartData(data) {
-      console.log(data);
       this.chartData = {
         labels: data[0],
         datasets: [
@@ -43,7 +42,6 @@ export default {
     },
   },
   created() {
-    console.log(this.$props.service);
     this.buildChartData(this.getChartData);
   },
   computed: {
@@ -53,7 +51,6 @@ export default {
   },
   watch: {
     getChartData(newVar) {
-      console.log("chart data changed");
       this.buildChartData(newVar);
     },
     service: function (newVal) {

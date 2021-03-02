@@ -13,7 +13,7 @@ export default {
                 localStorage.inventory_url = this.inventory_url || "";
         },
 
-        populateComponentUrls() {
+        populateServiceUrls() {
             // check for service urls in local storage
             if (localStorage.api_url) this.api_url = localStorage.api_url;
             if (localStorage.database_url)
@@ -22,6 +22,17 @@ export default {
             this.recommendations_url = localStorage.recommendations_url;
             if (localStorage.inventory_url)
             this.inventory_url = localStorage.inventory_url;
+        },
+        populateServices() {
+            for (const service in this.services) {
+                console.log(service);
+                // load chart data
+                if(localStorage.name) service.chartData = localStorage.name;
+                
+                // load url
+                const name = service.name + "_url";
+                console.log(`${name}: ${localStorage.getItem(name)}`);
+            }
         },
         writeStats() {
             for (const service of this.services) {

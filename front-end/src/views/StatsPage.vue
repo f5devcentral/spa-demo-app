@@ -76,7 +76,7 @@ export default {
           isConfigurable: true,
           tite: "Inventory",
           url: null,
-          statsByLantency: true,
+          statsByLantency: false,
           statsUrl: process.env.VUE_APP_API_URL + "/api/stats/inventory",
         },
       ],
@@ -98,8 +98,8 @@ export default {
     };
   },
   async mounted() {
-    this.populateComponentUrls();
     // get service status
+    this.populateServices();
     this.getAllStatus();
   },
   async created() {

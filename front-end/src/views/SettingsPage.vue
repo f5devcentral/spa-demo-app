@@ -23,7 +23,14 @@
         <label id="header">Inventory Url: </label>
         <input type="text" v-model="inventory_url" />
       </p>
-      <button>Submit</button>
+      <button v-if="!showSuccessMessage">Submit</button>
+      <button
+        class="green-button"
+        v-if="showSuccessMessage"
+        disabled
+      >
+        Successfully saved settings!
+      </button>
     </form>
   </div>
 </template>
@@ -37,6 +44,7 @@ export default {
       api_url: process.env.VUE_APP_API_URL,
       database_url: null,
       recommendations_url: process.env.VUE_APP_REC_URL,
+      showSuccessMessage: false,
       inventory_url: null,
       errors: [],
     };
@@ -122,6 +130,7 @@ input[type="text"] {
 #errors {
   color: red;
 }
-#header {
+.green-button {
+  background-color: green;
 }
 </style>

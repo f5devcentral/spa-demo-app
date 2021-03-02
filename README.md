@@ -59,7 +59,7 @@ docker-compose up -d
 ## back-end
 ```bash
 cd back-end
-export MONGO_URL="http://localhost:8000"
+export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
 npm run dev
 ```

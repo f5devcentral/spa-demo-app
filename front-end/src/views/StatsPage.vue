@@ -51,6 +51,10 @@ export default {
   components: { StatsCard },
   data() {
     return {
+      api_url: null,
+      database_url: null,
+      recommendations_url: null,
+      inventory_url: null,
       frontendIsActive: true,
       frontend_host: window.location.protocol + "//" + window.location.host,
       frontend_time: 0,
@@ -67,10 +71,6 @@ export default {
       inventory_host: null,
       inventory_time: 0,
       chartdata: this.getChartData(),
-      testdata: [
-        [0, 1, 2, 3, 4],
-        [6, 7, 2, 99, 2],
-      ],
     };
   },
   methods: {
@@ -161,9 +161,28 @@ export default {
     },
   },
   async mounted() {
+    // check for service urls in local storage
+    if (localStorage.api_url) this.api_url = localStorage.api_url;
+    if (localStorage.database_url)
+      this.database_url = localStorage.database_url;
+    if (localStorage.recommendations_url)
+      this.recommendations_url = localStorage.recommendations_url;
+    if (localStorage.inventory_url)
+      this.inventory_url = localStorage.inventory_url;
+
+    // get service status
     this.getStatus();
   },
   async created() {
+    // set service urls if not present
+    if (!localStorage.api_url) localStorage.api_url = this.api_url;
+    if (!localStorage.database_url)
+      localStorage.database_url = this.database_url;
+    if (!localStorage.recommendations_url)
+      localStorage.recommendations_url = this.recommendations_url;
+    if (!localStorage.inventory_url)
+      localStorage.inventory = this.inventory_url;
+
     this.$nextTick(function () {
       window.setInterval(() => {
         this.getStatus();
@@ -178,6 +197,20 @@ export default {
         // }, 60000);
       }, 6000);
     });
+  },
+  watch: {
+    api_url(new_val) {
+      localStorage.api_url = new_val;
+    },
+    database_url(new_val) {
+      localStorage.database_url = new_val;
+    },
+    recommendations_url(new_val) {
+      localStorage.recommendations_url = new_val;
+    },
+    inventory_url(new_val) {
+      localStorage.inventory_url = new_val;
+    },
   },
 };
 </script>

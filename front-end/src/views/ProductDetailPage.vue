@@ -1,7 +1,7 @@
 <template>
   <div id="page-wrap" v-if="product" :key="product.id">
     <div id="img-wrap">
-      <img v-bind:src="API_URL + product.imageUrl" />
+      <img v-bind:src="this.api_url + product.imageUrl" />
     </div>
     <div id="product-details">
       <h1>{{ product.name }}</h1>
@@ -50,7 +50,7 @@ export default {
       product: {},
       cartItems: [],
       showSuccessMessage: false,
-      API_URL: process.env.VUE_APP_API_URL,
+      api_url: localStorage.api_url,
     };
   },
   computed: {
@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     async addToCart() {
-      await axios.post(`${process.env.VUE_APP_API_URL}/api/users/12345/cart`, {
+      await axios.post(`${this.api_url}/api/users/12345/cart`, {
         productId: this.$route.params.id,
       });
       this.showSuccessMessage = true;
@@ -70,15 +70,18 @@ export default {
     },
   },
   async created() {
-    const { data: product } = await axios.get(
-      `${process.env.VUE_APP_API_URL}/api/products/${this.$route.params.id}`
-    );
-    this.product = product;
+    if (!this.api_url) this.$router.push("/stats?config=first");
+    else {
+      const { data: product } = await axios.get(
+        `${this.api_url}/api/products/${this.$route.params.id}`
+      );
+      this.product = product;
 
-    const { data: cartItems } = await axios.get(
-      `${process.env.VUE_APP_API_URL}/api/users/12345/cart`
-    );
-    this.cartItems = cartItems;
+      const { data: cartItems } = await axios.get(
+        `${this.api_url}/api/users/12345/cart`
+      );
+      this.cartItems = cartItems;
+    }
   },
 };
 </script>

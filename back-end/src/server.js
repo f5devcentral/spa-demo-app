@@ -3,18 +3,32 @@ import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
 import path from 'path';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import axios from 'axios';
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+var services = [
+  {
+    name: "database",
+    url: process.env.MONGO_URL
+  },
+  {
+    name: "inventory",
+    url: process.env.INVENTORY_URL
+  }
+]
+
+const getService = function(serviceName) {
+  return services.find(service => service.name === serviceName);
+};
+
 app.use('/images', express.static(path.join(__dirname, '../assets')));
 
 app.get('/api/products', async (req, res) => {
   const client = await MongoClient.connect(
-    `mongodb://${process.env.MONGO_URL}:27017`,
+    `mongodb://${getService("database").url}:27017`,
     { useNewUrlParser: true, useUnifiedTopology: true },
   );
   const db = client.db('vue-db');
@@ -26,7 +40,7 @@ app.get('/api/products', async (req, res) => {
 app.get('/api/users/:userId/cart', async (req, res) => {
   const { userId } = req.params;
   const client = await MongoClient.connect(
-    `mongodb://${process.env.MONGO_URL}:27017`,
+    `mongodb://${getService("database").url}:27017`,
     { useNewUrlParser: true, useUnifiedTopology: true },
   );
   const db = client.db('vue-db');  
@@ -43,7 +57,7 @@ app.get('/api/users/:userId/cart', async (req, res) => {
 app.get('/api/products/:productId', async (req, res) => {
     const { productId } = req.params;
     const client = await MongoClient.connect(
-      `mongodb://${process.env.MONGO_URL}:27017`,
+      `mongodb://${getService("database").url}:27017`,
       { useNewUrlParser: true, useUnifiedTopology: true },
     );
     const db = client.db('vue-db');
@@ -60,7 +74,7 @@ app.post('/api/users/:userId/cart', async (req, res) => {
   const { userId } = req.params;
   const { productId } = req.body;
   const client = await MongoClient.connect(
-    `mongodb://${process.env.MONGO_URL}:27017`,
+    `mongodb://${getService("database").url}:27017`,
     { useNewUrlParser: true, useUnifiedTopology: true },
   );
   const db = client.db('vue-db');
@@ -79,7 +93,7 @@ app.post('/api/users/:userId/cart', async (req, res) => {
 app.delete('/api/users/:userId/cart/:productId', async (req, res) => {
   const { userId, productId } = req.params;
   const client = await MongoClient.connect(
-    `mongodb://${process.env.MONGO_URL}:27017`,
+    `mongodb://${getService("database").url}:27017`,
     { useNewUrlParser: true, useUnifiedTopology: true },
   );
   const db = client.db('vue-db');
@@ -100,7 +114,7 @@ app.delete('/api/users/:userId/cart/:productId', async (req, res) => {
 app.get('/api/inventory', async (req, res) => {
   try {
     const { data: inventory } = await axios.get(
-    `${process.env.INVENTORY_URL}/api/inventory`
+    `${getService("inventory").url}/api/inventory`
     );
 
     res.status(200).json(inventory);
@@ -109,23 +123,54 @@ app.get('/api/inventory', async (req, res) => {
   }
 });
 
+// get the remote services urls
+app.get('/api/config', async (req, res) => {
+  res.status(200).json(services);
+})
+
+app.get('/api/config/:serviceName', async (req, res) => {
+  const { serviceName } = req.params;
+  const service = getService(serviceName)
+  if(service)
+    res.status(200).json(service);
+  else 
+    res.status(404).json({"error": "service not found"});
+})
+
+app.post('/api/config/:serviceName', async (req, res) => {
+  const { serviceName } = req.params;
+  const { url } = req.body;
+
+  if(!url)
+    res.status(404).json({"error": "a service url is required"});
+
+  const service = getService(serviceName)
+
+  if(service) {
+    service.url = url;
+    res.status(200).json(service);
+  } else {
+    res.status(404).json({"error": "service not found"});
+  }
+});
+
 app.get('/api/stats', async (req, res) => {
   res.status(200).json({});
 })
 
-app.get('/api/stats/db', async (req, res) => {
+app.get('/api/stats/database', async (req, res) => {
   var payload = {};
   
   try {
     const db_start = new Date()
     const client = await MongoClient.connect(
-      `mongodb://${process.env.MONGO_URL}:27017`,
+      `mongodb://${getService("database").url}:27017`,
       { useNewUrlParser: true, useUnifiedTopology: true },
     );
     const db = client.db('vue-db');
     const products = await db.collection('products').find({}).toArray();
     client.close();
-    payload["host"] = `mongodb://${process.env.MONGO_URL}:27017`;
+    payload["host"] = `mongodb://${getService("database").url}:27017`;
     payload["latency"] = new Date() - db_start;
   } catch(err) {
     console.log(err);
@@ -138,10 +183,11 @@ app.get('/api/stats/inventory', async (req, res) => {
 
   try {
     const inv_start = new Date();
+    const service = getService("inventory");
     const inv_resp = await axios.get(
-      `${process.env.INVENTORY_URL}/api/stats`, {timeout:15}
+      `${service.url}/api/stats`, {timeout:15}
     );
-    payload["host"] = process.env.INVENTORY_URL;
+    payload["host"] = service.url;
     payload["latency"] = new Date() - inv_start;
 
   } catch(err) {

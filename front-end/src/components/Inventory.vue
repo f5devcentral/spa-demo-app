@@ -32,13 +32,14 @@ export default {
       products: [],
       inventoryIsActive: true,
       inventory: 0,
+      api_url: localStorage.api_url,
     };
   },
   async created() {
     try {
       // get data
       const { data: inventory } = await axios.get(
-        `${process.env.VUE_APP_API_URL}/api/inventory`
+        `${this.api_url}/api/inventory`
       );
       // find inventory for product
       inventory.forEach((item) => {

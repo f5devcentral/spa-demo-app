@@ -1,49 +1,82 @@
 <template>
-  <div class="card" v-bind:class="{ error: !active }">
-    <i class="material-icons md-120">{{ icon }}</i>
-    <h3>{{ title }}</h3>
+  <div class="card" v-bind:class="{ error: !service.isActive }">
+    <i class="material-icons md-120">{{ service.icon }}</i>
+    <!-- <router-link v-bind:to="'/settings'"> -->
+    <span
+      class="material-icons settings"
+      v-if="service.isConfigurable"
+      v-on:click="toggleShowSettings"
+      >settings</span
+    >
+    <!-- </router-link> -->
+    <h3>{{ service.title }}</h3>
     <div class="info">
-      <p class="url">{{ host }}</p>
-      <p class="latency">{{ time }}<span class="unit">ms</span></p>
+      <p class="url">{{ service.url }}</p>
+      <p class="latency">{{ service.latency }}<span class="unit">ms</span></p>
     </div>
-    <v-container class="chart-container">
-      <StatsGraph :chartdata="chartData" />
-    </v-container>
+    <ChangeUrl
+      v-if="settingsVisible"
+      v-on:hide="toggleShowSettings"
+      :service="service"
+    />
+    <div class="chart-container">
+      <div class="lds-dual-ring" v-if="service.chartData.length == 0"></div>
+      <StatsGraph :chartdata="chartData" v-if="service.chartData.length > 0" />
+    </div>
   </div>
 </template>
 <script>
 import StatsGraph from "../components/StatsGraph";
+import ChangeUrl from "../components/ChangeUrl";
 export default {
   name: "StatsCard",
-  components: { StatsGraph },
-  props: ["active", "title", "host", "time", "icon", "chartdata"],
+  components: { ChangeUrl, StatsGraph },
+  props: ["service"],
   data() {
     return {
       chartData: [],
+      settingsVisible: false,
     };
   },
   methods: {
-    buildChartData(labels, data) {
+    buildChartData: function (data) {
       this.chartData = {
-        labels: labels,
+        labels: data[0],
         datasets: [
           {
             // label: "Data One",
             backgroundColor: "#000",
-            data: data,
+            data: data[1],
           },
         ],
       };
     },
+    showSettings: function () {
+      this.settingsVisible = true;
+    },
+    hideSettings: function () {
+      this.settingsVisible = false;
+    },
+    toggleShowSettings: function () {
+      this.settingsVisible = !this.settingsVisible;
+    },
   },
   created() {
-    this.buildChartData(this.$props.chartdata[0], this.$props.chartdata[1]);
+    this.buildChartData(this.getChartData);
+  },
+  computed: {
+    getChartData: function () {
+      return this.service.chartData;
+    },
   },
   watch: {
-    chartdata: function (newVal) {
-      // console.log("Prop changed: ", newVal, " | was: ", oldVal);
-      this.buildChartData(newVal[0], newVal[1]);
+    getChartData(newVar) {
+      this.buildChartData(newVar);
     },
+    service: function (newVal) {
+      this.buildChartData(newVal.chartData[0], newVal.chartData[1]);
+    },
+    deep: true,
   },
 };
 </script>
@@ -99,6 +132,16 @@ export default {
 .material-icons.md-120 {
   font-size: 120px;
 }
+.settings {
+  position: absolute;
+  /* bottom: 20px;
+  right: 15px; */
+  top: 10px;
+  right: 5px;
+  max-height: 120px;
+  color: black;
+}
+
 .chart-container {
   flex-grow: 1;
   min-height: 0;
@@ -107,5 +150,29 @@ export default {
   position: relative;
   width: 100%;
   height: 200px;
+}
+.lds-dual-ring {
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: auto;
+  border-radius: 50%;
+  border: 6px solid #000;
+  border-color: #000 transparent #000 transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

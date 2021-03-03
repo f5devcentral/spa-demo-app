@@ -18,11 +18,12 @@ export default {
     return {
       products: [],
       recIsActive: true,
+      recommendations_url: localStorage.recommendations_url,
     };
   },
   async created() {
     axios
-      .get(`${process.env.VUE_APP_REC_URL}/api/recommendations`)
+      .get(`${this.recommendations_url}/api/recommendations`)
       .then((result) => {
         const products = result.data;
         this.products = products;

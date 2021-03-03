@@ -32,14 +32,14 @@ export default {
       products: [],
       inventoryIsActive: true,
       inventory: 0,
-      inventory_url: localStorage.inventory_url,
+      api_url: localStorage.api_url,
     };
   },
   async created() {
     try {
       // get data
       const { data: inventory } = await axios.get(
-        `${this.inventory_url}/api/inventory`
+        `${this.api_url}/api/inventory`
       );
       // find inventory for product
       inventory.forEach((item) => {

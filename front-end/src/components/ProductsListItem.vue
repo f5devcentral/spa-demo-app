@@ -1,6 +1,6 @@
 <template>
   <div class="product-container">
-    <img class="product-image" :src="API_URL + product.imageUrl" />
+    <img class="product-image" :src="api_url + product.imageUrl" />
     <div class="details-wrap">
       <h3>{{ product.name }}</h3>
       <p>${{ product.price }}</p>
@@ -20,7 +20,7 @@ export default {
   props: ["product"],
   data() {
     return {
-      API_URL: process.env.VUE_APP_API_URL,
+      api_url: localStorage.api_url,
     };
   },
 };

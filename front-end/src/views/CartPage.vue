@@ -41,7 +41,8 @@ export default {
     },
   },
   async created() {
-    if (!this.api_url) this.$router.push("/stats?config=first");
+    if (!this.api_url || this.api_url == "null")
+      this.$router.push("/stats?config=first");
     else {
       const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
       const cartItems = result.data;

@@ -70,7 +70,8 @@ export default {
     },
   },
   async created() {
-    if (!this.api_url) this.$router.push("/stats?config=first");
+    if (!this.api_url || this.api_url == "null")
+      this.$router.push("/stats?config=first");
     else {
       const { data: product } = await axios.get(
         `${this.api_url}/api/products/${this.$route.params.id}`

@@ -8,7 +8,7 @@
       <h3 id="price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <Inventory :id="this.product.id" />
+      <Inventory :id="this.product.id" v-if="showService('inventory')" />
       <button
         id="add-to-cart"
         v-if="!itemIsInCart && !showSuccessMessage"
@@ -27,7 +27,7 @@
         Item is already in cart
       </button>
     </div>
-    <Recommendations />
+    <Recommendations v-if="showService('recommendations')" />
   </div>
   <NotFoundPage v-else />
 </template>
@@ -68,9 +68,21 @@ export default {
         this.$router.push("/products");
       }, 1500);
     },
+    showService(serviceName) {
+      switch (localStorage.getItem(serviceName + "_url")) {
+        case null:
+        case "null":
+        case "":
+        case undefined:
+          return false;
+        default:
+          return true;
+      }
+    },
   },
   async created() {
-    if (!this.api_url) this.$router.push("/stats?config=first");
+    if (!this.api_url || this.api_url == "null")
+      this.$router.push("/stats?config=first");
     else {
       const { data: product } = await axios.get(
         `${this.api_url}/api/products/${this.$route.params.id}`

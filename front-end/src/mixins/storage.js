@@ -8,19 +8,9 @@ export default {
             if(!localStorage.spa_url) localStorage.spa_url = window.location.protocol + "//" + window.location.host || null;
             if (!localStorage.api_url)
                 localStorage.api_url = process.env.VUE_APP_API_URL || null;
-            
+
             if (!localStorage.recommendations_url)
                 localStorage.recommendations_url = process.env.VUE_APP_REC_URL || null;
-            
-
-            // get remotly monitored service urls
-            if (!localStorage.database_url && localStorage.api_url != "null") {
-                    localStorage.database_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database") || null;
-            }
-            if (!localStorage.inventory_url && localStorage.api_url != "null") {
-                localStorage.inventory_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/inventory") || null;
-            }
-            
         },
 
         populateServices() {

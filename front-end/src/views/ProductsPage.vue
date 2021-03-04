@@ -23,7 +23,8 @@ export default {
   },
   async created() {
     // if the app is not configured yet
-    if (!this.api_url) this.$router.push("/stats?config=first");
+    if (!this.api_url || this.api_url == "null")
+      this.$router.push("/stats?config=first");
     else {
       const result = await axios.get(`${this.api_url}/api/products`);
       const products = result.data;

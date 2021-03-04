@@ -50,11 +50,6 @@ export default {
         default:
           service.isActive = true;
       }
-      // if (service.url && service.url != "null") {
-      //   service.isActive = true;
-      // } else {
-      //   service.isActive = false;
-      // }
 
       // update database and inventory
       if (service.name == "database" || service.name == "inventory") {
@@ -100,7 +95,7 @@ span {
   position: absolute;
   /* bottom: 20px;
   right: 15px; */
-  top: 222px;
+  top: 245px;
   right: 40px;
 }
 </style>

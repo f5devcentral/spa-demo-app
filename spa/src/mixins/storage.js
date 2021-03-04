@@ -6,11 +6,15 @@ export default {
             // set service urls if not present
             // This should only happen on first load
             if(!localStorage.spa_url) localStorage.spa_url = window.location.protocol + "//" + window.location.host || null;
-            if (!localStorage.api_url)
-                localStorage.api_url = process.env.VUE_APP_API_URL || null;
+            if (!localStorage.api_url) {
+                // default to the spa service so we can do url based pool selection
+                localStorage.api_url = localStorage.spa_url || null;
+            }
 
-            if (!localStorage.recommendations_url)
-                localStorage.recommendations_url = process.env.VUE_APP_REC_URL || null;
+            // hack for 1st load
+            if(!localStorage.database_url) localStorage.database_url = "mongodb";
+            if (localStorage.api_url != "null")
+                localStorage.database_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database") || null;
         },
 
         populateServices() {

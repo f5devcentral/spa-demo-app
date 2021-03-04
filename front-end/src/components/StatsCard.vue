@@ -1,7 +1,13 @@
 <template>
-  <div class="card" v-bind:class="{ error: !service.isActive }">
+  <div class="card" v-bind:class="getClassStatus">
     <i class="material-icons md-120">{{ service.icon }}</i>
-    <!-- <router-link v-bind:to="'/settings'"> -->
+    <span
+      class="material-icons active on"
+      v-if="service.isActive && service.isConfigurable"
+      v-on:click="turnServiceOff"
+    >
+      toggle_on
+    </span>
     <span
       class="material-icons settings"
       v-if="service.isConfigurable"
@@ -40,16 +46,19 @@ export default {
   },
   methods: {
     buildChartData: function (data) {
-      this.chartData = {
-        labels: data[0],
-        datasets: [
-          {
-            // label: "Data One",
-            backgroundColor: "#000",
-            data: data[1],
-          },
-        ],
-      };
+      // ensure we have lables and data
+      if (data && data.length == 2) {
+        this.chartData = {
+          labels: data[0],
+          datasets: [
+            {
+              // label: "Data One",
+              backgroundColor: "#000",
+              data: data[1],
+            },
+          ],
+        };
+      }
     },
     showSettings: function () {
       this.settingsVisible = true;
@@ -60,6 +69,10 @@ export default {
     toggleShowSettings: function () {
       this.settingsVisible = !this.settingsVisible;
     },
+    turnServiceOff: function () {
+      this.service.isActive = false;
+      localStorage.setItem(this.service.name + "_url", null);
+    },
   },
   created() {
     this.buildChartData(this.getChartData);
@@ -67,6 +80,11 @@ export default {
   computed: {
     getChartData: function () {
       return this.service.chartData;
+    },
+    getClassStatus: function () {
+      if (!this.service.isActive) return "disabled";
+      else if (!this.service.isHealthy) return "error";
+      else return "";
     },
   },
   watch: {
@@ -97,6 +115,9 @@ export default {
   position: relative;
   width: 32%;
   margin-bottom: 2%;
+}
+.disabled {
+  background: grey;
 }
 .error {
   background: red;
@@ -134,12 +155,17 @@ export default {
 }
 .settings {
   position: absolute;
-  /* bottom: 20px;
-  right: 15px; */
   top: 10px;
   right: 5px;
   max-height: 120px;
   color: black;
+}
+
+.active {
+}
+
+.active.on {
+  color: green;
 }
 
 .chart-container {

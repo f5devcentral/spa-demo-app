@@ -22,9 +22,9 @@ services:
   front-end:
     build:
       context: ./front-end
-      args:
-        VUE_APP_API_URL: "http://localhost:8000"
-        VUE_APP_REC_URL: "http://localhost:8001"
+      # args:
+      #   VUE_APP_API_URL: "http://localhost:8000"
+      #   VUE_APP_REC_URL: "http://localhost:8001"
     ports:
       - "8081:80"
     links:

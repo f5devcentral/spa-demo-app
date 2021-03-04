@@ -4,25 +4,22 @@ export default {
     methods: {
         async populateLocalStorage() {
             // set service urls if not present
-            if(!localStorage.spa_url) localStorage.spa_url = this.spa_url || window.location.protocol + "//" + window.location.host;
+            // This should only happen on first load
+            if(!localStorage.spa_url) localStorage.spa_url = window.location.protocol + "//" + window.location.host || null;
             if (!localStorage.api_url)
-                localStorage.api_url = this.api_url || process.env.VUE_APP_API_URL;
+                localStorage.api_url = process.env.VUE_APP_API_URL || null;
             
             if (!localStorage.recommendations_url)
-                localStorage.recommendations_url =
-                    this.recommendations_url || process.env.VUE_APP_REC_URL;
+                localStorage.recommendations_url = process.env.VUE_APP_REC_URL || null;
             
 
             // get remotly monitored service urls
-            if (!localStorage.database_url) {
-                    localStorage.database_url = this.database_url || 
-                 await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database");
+            if (!localStorage.database_url && localStorage.api_url != "null") {
+                    localStorage.database_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database") || null;
             }
-            if (!localStorage.inventory_url) {
-                localStorage.inventory_url = this.inventory_url || 
-                 await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/inventory");
+            if (!localStorage.inventory_url && localStorage.api_url != "null") {
+                localStorage.inventory_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/inventory") || null;
             }
-
             
         },
 
@@ -30,13 +27,28 @@ export default {
             for (const service of this.services) {
                 // load chart data
                 if(localStorage.name) service.chartData = localStorage.name;
+                // service.chartData = localStorage.getItem(service.name) || null;
 
                 // load url
-                service.url = localStorage.getItem(service.name + "_url");
+                const url = localStorage.getItem(service.name + "_url")
+                switch(url) {
+                    case null:
+                    case "null":
+                    case "":
+                        service.url = null;
+                        service.isActive = false;
+                        break;
+                    default:
+                        service.url = url;
+                        service.isActive = true;
+                }
             }
         },
         writeStats() {
             for (const service of this.services) {
+                // only write stats for active services
+                if(! service.isActive) return
+
                 // get stats history
                 var stats = JSON.parse(localStorage.getItem(service.name)) || [];
                 if (!(stats instanceof Array)) stats = [stats];

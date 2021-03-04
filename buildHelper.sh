@@ -10,7 +10,7 @@ bp () {
     docker push ${REGISTRY}/${1}
 }
 
-bp "spa" "front-end"
-bp "api" "back-end"
+bp "spa" "spa"
+bp "api" "api"
 bp "inv" "inventory"
 bp "recs" "recommendations"

@@ -11,6 +11,7 @@ services:
 
   api:
     build: ./api
+    container_name: api
     ports:
       - "8000:8000"
     links:
@@ -20,11 +21,8 @@ services:
       - INVENTORY_URL=http://inventory:8002
 
   spa:
-    build:
-      context: ./spa
-      # args:
-      #   VUE_APP_API_URL: "http://localhost:8000"
-      #   VUE_APP_REC_URL: "http://localhost:8001"
+    build: ./spa
+    container_name: spa
     ports:
       - "8081:80"
     links:
@@ -32,11 +30,13 @@ services:
 
   recommendations:
     build: ./recommendations
+    container_name: recs
     ports:
       - "8001:8001"
 
   inventory:
     build: ./inventory
+    container_name: inv
     ports:
       - "8002:8002"
     links:

@@ -1,9 +1,5 @@
 <template>
   <div class="container">
-    <h3 id="config" v-if="this.$route.query.config == 'first'">
-      Please configure your service URLs.
-    </h3>
-
     <StatsCard
       v-for="service in services"
       :key="service.name"

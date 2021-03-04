@@ -31,6 +31,7 @@ export default {
           icon: "cloud",
           isActive: true,
           isConfigurable: false,
+          isHealthy: true,
           title: "Single Page Application",
           get url() {
             return localStorage.getItem("spa_url") || null;
@@ -46,8 +47,9 @@ export default {
           chartData: [],
           latency: null,
           icon: "api",
-          isActive: true,
+          isActive: false,
           isConfigurable: true,
+          isHealthy: true,
           title: "API",
           get url() {
             return localStorage.getItem("api_url") || null;
@@ -65,8 +67,9 @@ export default {
           chartData: [],
           latency: null,
           icon: "storage",
-          isActive: true,
+          isActive: false,
           isConfigurable: true,
+          isHealthy: true,
           title: "Database",
           get url() {
             return localStorage.getItem("database_url") || null;
@@ -84,8 +87,9 @@ export default {
           chartData: [],
           latency: null,
           icon: "add_shopping_cart",
-          isActive: true,
+          isActive: false,
           isConfigurable: true,
+          isHealthy: true,
           title: "Recommendations",
           get url() {
             return localStorage.getItem("recommendations_url") || null;
@@ -103,8 +107,9 @@ export default {
           chartData: [],
           latency: null,
           icon: "inventory",
-          isActive: true,
+          isActive: false,
           isConfigurable: true,
+          isHealthy: true,
           title: "Inventory",
           get url() {
             return localStorage.getItem("inventory_url") || null;

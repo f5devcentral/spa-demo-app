@@ -1,5 +1,8 @@
 <template>
-  <div class="card" v-bind:class="{ error: !service.isActive }">
+  <div class="card" v-bind:class="getClassStatus">
+    <p>isActive: {{ service.isActive }}</p>
+    <p>URL: {{ service.url }}</p>
+    <p>isHealthy: {{ service.isHealthy }}</p>
     <i class="material-icons md-120">{{ service.icon }}</i>
     <!-- <router-link v-bind:to="'/settings'"> -->
     <span
@@ -40,16 +43,19 @@ export default {
   },
   methods: {
     buildChartData: function (data) {
-      this.chartData = {
-        labels: data[0],
-        datasets: [
-          {
-            // label: "Data One",
-            backgroundColor: "#000",
-            data: data[1],
-          },
-        ],
-      };
+      // ensure we have lables and data
+      if (data && data.length == 2) {
+        this.chartData = {
+          labels: data[0],
+          datasets: [
+            {
+              // label: "Data One",
+              backgroundColor: "#000",
+              data: data[1],
+            },
+          ],
+        };
+      }
     },
     showSettings: function () {
       this.settingsVisible = true;
@@ -67,6 +73,11 @@ export default {
   computed: {
     getChartData: function () {
       return this.service.chartData;
+    },
+    getClassStatus: function () {
+      if (!this.service.isActive) return "disabled";
+      else if (!this.service.isHealthy) return "error";
+      else return "";
     },
   },
   watch: {
@@ -97,6 +108,9 @@ export default {
   position: relative;
   width: 32%;
   margin-bottom: 2%;
+}
+.disabled {
+  background: grey;
 }
 .error {
   background: red;

@@ -37,12 +37,30 @@ export default {
   },
   methods: {
     async onSubmit() {
-      //TODO: if database or inteventory, send the new URL to the API config endpoint
-      const service = this.$props.service.name;
-      if (service == "database" || service == "inventory") {
+      const service = this.$props.service;
+
+      // set service to active if URL is present
+      // TODO: url seems to be changing from null to "null"
+      switch (service.url) {
+        case null:
+        case "null":
+        case "":
+          service.isActive = false;
+          break;
+        default:
+          service.isActive = true;
+      }
+      // if (service.url && service.url != "null") {
+      //   service.isActive = true;
+      // } else {
+      //   service.isActive = false;
+      // }
+
+      // update database and inventory
+      if (service.name == "database" || service.name == "inventory") {
         try {
-          await axios.post(this.api_url + "/api/config/" + service, {
-            url: this.$props.service.url,
+          await axios.post(this.api_url + "/api/config/" + service.name, {
+            url: service.url,
           });
         } catch (error) {
           console.log(error);

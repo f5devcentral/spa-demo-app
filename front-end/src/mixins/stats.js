@@ -26,10 +26,10 @@ export default {
         },
         async getAllStatus() {
             for (const service of this.services) {
-                if(service.statsUrl)
-                    [service.latency, service.isActive] = 
+                if(service.isActive && service.url && service.statsUrl ) {
+                    [service.latency, service.isHealthy] = 
                     await this.getStats(service.statsUrl, service.monitorLocal);
-                    // console.log(`${service.name}:${service.latency}:${service.isActive}`);
+                }
             }
         }
     }

@@ -1,10 +1,13 @@
 <template>
   <div class="card" v-bind:class="getClassStatus">
-    <p>isActive: {{ service.isActive }}</p>
-    <p>URL: {{ service.url }}</p>
-    <p>isHealthy: {{ service.isHealthy }}</p>
     <i class="material-icons md-120">{{ service.icon }}</i>
-    <!-- <router-link v-bind:to="'/settings'"> -->
+    <span
+      class="material-icons active on"
+      v-if="service.isActive && service.isConfigurable"
+      v-on:click="turnServiceOff"
+    >
+      toggle_on
+    </span>
     <span
       class="material-icons settings"
       v-if="service.isConfigurable"
@@ -65,6 +68,9 @@ export default {
     },
     toggleShowSettings: function () {
       this.settingsVisible = !this.settingsVisible;
+    },
+    turnServiceOff: function () {
+      this.service.isActive = false;
     },
   },
   created() {
@@ -148,12 +154,17 @@ export default {
 }
 .settings {
   position: absolute;
-  /* bottom: 20px;
-  right: 15px; */
   top: 10px;
   right: 5px;
   max-height: 120px;
   color: black;
+}
+
+.active {
+}
+
+.active.on {
+  color: green;
 }
 
 .chart-container {

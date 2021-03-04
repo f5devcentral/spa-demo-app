@@ -30,13 +30,18 @@ export default {
                 // service.chartData = localStorage.getItem(service.name) || null;
 
                 // load url
-                const url = localStorage.getItem(service.name + "_url");
-                if(url == "null")  {
-                    service.url = null;
-                    service.isActive = false;
+                const url = localStorage.getItem(service.name + "_url")
+                switch(url) {
+                    case null:
+                    case "null":
+                    case "":
+                        service.url = null;
+                        service.isActive = false;
+                        break;
+                    default:
+                        service.url = url;
+                        service.isActive = true;
                 }
-                else
-                    service.url = url;
             }
         },
         writeStats() {

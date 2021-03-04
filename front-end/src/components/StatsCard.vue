@@ -71,6 +71,7 @@ export default {
     },
     turnServiceOff: function () {
       this.service.isActive = false;
+      localStorage.setItem(this.service.name + "_url", null);
     },
   },
   created() {

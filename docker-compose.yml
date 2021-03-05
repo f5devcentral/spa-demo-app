@@ -19,6 +19,8 @@ services:
     environment:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
+    dns:
+      - 10.1.1.6
 
   spa:
     build: ./spa

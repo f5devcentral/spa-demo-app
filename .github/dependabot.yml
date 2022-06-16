@@ -15,21 +15,29 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    labels:
+      - "dependencies"
   - package-ecosystem: npm
     directory: /inventory/package.json
     schedule:
       interval: weekly
       day: monday
       time: "00:00"
+    labels:
+      - "dependencies"
   - package-ecosystem: npm
     directory: /recommendations/package.json
     schedule:
       interval: weekly
       day: monday
       time: "00:00"
+    labels:
+      - "dependencies"
   - package-ecosystem: npm
     directory: /spa/package.json
     schedule:
       interval: weekly
       day: monday
       time: "00:00"
+    labels:
+      - "dependencies"

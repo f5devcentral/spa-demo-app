@@ -1,10 +1,10 @@
 # Single-Page Application Demo 
-This application demos a modern single-page application build on:
+This application demos a modern single-page application built on:
 - Vue.js (front-end)
 - Node.js (back-end)
 - MongoDB (database)
 
-This application was created to help train people on the [Volterra.io](https://volterra.io) capabilities. 
+This application was created to help train people on the [F5 Distributed Cloud Services](https://www.f5.com/cloud) capabilities. 
 
 ![Demo Footwear Site](./assets/demo_brews.png)
 
@@ -30,7 +30,7 @@ Node.JS microservice that will recommend products.
 - Environment: Internet facing 
 
 ### Inventory
-Node.JS microservice that will tell the local store inventory.  Note, this microservice is access through the API and simulates the API server talking to an internal service. 
+Node.JS microservice that will tell the local store inventory.  Note, this microservice is accessed through the API and simulates the API server talking to an internal service. 
 
 - Environment: Internal, accessibly by the API server
 

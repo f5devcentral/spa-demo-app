@@ -1,6 +1,6 @@
 {
-  "name": "front-end",
-  "version": "0.1.0",
+  "name": "spa",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -9,21 +9,22 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "chart.js": "^2.9.4",
+    "chart.js": "^3.8.0",
     "core-js": "^3.6.5",
     "vue": "^3.2.37",
-    "vue-chartjs": "^3.5.1",
+    "vue-chartjs": "^4.1.1",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
     "@vue/cli": "^4.5.11",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.18",
+    "@vue/cli-plugin-babel": "~5.0.6",
+    "@vue/cli-plugin-eslint": "~5.0.6",
     "@vue/cli-plugin-router": "~5.0.6",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "@vue/cli-service": "~5.0.6",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -36,7 +37,8 @@
       "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "babel-eslint"
+      "parser": "@babel/eslint-parser",
+      "requireConfigFile": false
     },
     "rules": {}
   },

@@ -8,7 +8,7 @@
       <h3 id="price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <Inventory :id="this.product.id" v-if="showService('inventory')" />
+      <InventoryComponent :id="this.product.id" v-if="showService('inventory')" />
       <button
         id="add-to-cart"
         v-if="!itemIsInCart && !showSuccessMessage"
@@ -27,7 +27,7 @@
         Item is already in cart
       </button>
     </div>
-    <Recommendations v-if="showService('recommendations')" />
+    <RecommendationsComponent v-if="showService('recommendations')" />
   </div>
   <NotFoundPage v-else />
 </template>
@@ -35,15 +35,15 @@
 <script>
 import axios from "axios";
 import NotFoundPage from "./NotFoundPage";
-import Recommendations from "../components/Recommendations";
-import Inventory from "../components/Inventory";
+import RecommendationsComponent from "../components/RecommendationsComponent";
+import InventoryComponent from "../components/InventoryComponent";
 
 export default {
   name: "ProductDetailPage",
   components: {
     NotFoundPage,
-    Recommendations,
-    Inventory,
+    RecommendationsComponent,
+    InventoryComponent,
   },
   data() {
     return {

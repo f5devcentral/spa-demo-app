@@ -1,15 +1,14 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   document.title = 'Demo Brews';
   next();
 });
 
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount('#app')
+const app = createApp(App)
+app.config.productionTip = false
+app.use(router)
+app.mount('#app')

@@ -1,58 +1,52 @@
 <template>
   <div class="card" v-bind:class="getClassStatus">
-    <i class="material-icons md-120">{{ service.icon }}</i>
-    <span
-      class="material-icons active on"
-      v-if="service.isActive && service.isConfigurable"
-      v-on:click="turnServiceOff"
-    >
+    <i class="material-icons md-120">{{ localService.icon }}</i>
+    <span class="material-icons active on" v-if="localService.isActive && localService.isConfigurable"
+      v-on:click="turnServiceOff">
       toggle_on
     </span>
-    <span
-      class="material-icons settings"
-      v-if="service.isConfigurable"
-      v-on:click="toggleShowSettings"
-      >settings</span
-    >
+    <span class="material-icons settings" v-if="localService.isConfigurable"
+      v-on:click="toggleShowSettings">settings</span>
     <!-- </router-link> -->
-    <h3>{{ service.title }}</h3>
+    <h3>{{ localService.title }}</h3>
     <div class="info">
-      <p class="url">{{ service.url }}</p>
-      <p class="latency">{{ service.latency }}<span class="unit">ms</span></p>
+      <p class="url">{{ localService.url }}</p>
+      <p class="latency">{{ localService.latency }}<span class="unit">ms</span></p>
     </div>
-    <ChangeUrl
-      v-if="settingsVisible"
-      v-on:hide="toggleShowSettings"
-      :service="service"
-    />
+    <ChangeUrlComponent v-if="settingsVisible" v-on:hide="toggleShowSettings" :service="localService" />
     <div class="chart-container">
-      <div class="lds-dual-ring" v-if="service.chartData.length == 0"></div>
-      <StatsGraph :chartdata="chartData" v-if="service.chartData.length > 0" />
+      <div class="lds-dual-ring" v-if="localService.chartData.length == 0"></div>
+      <StatsGraphComponent :chartData="chartData" v-if="localService.chartData.length > 0" />
     </div>
   </div>
 </template>
 <script>
-import StatsGraph from "../components/StatsGraph";
-import ChangeUrl from "../components/ChangeUrl";
+import StatsGraphComponent from "../components/StatsGraphComponent";
+import ChangeUrlComponent from "../components/ChangeUrlComponent";
 export default {
-  name: "StatsCard",
-  components: { ChangeUrl, StatsGraph },
+  name: "StatsCardComponent",
+  components: { ChangeUrlComponent, StatsGraphComponent },
   props: ["service"],
   data() {
     return {
       chartData: [],
       settingsVisible: false,
+      localService: this.service
     };
   },
   methods: {
     buildChartData: function (data) {
-      // ensure we have lables and data
+      // ensure we have labels and data
       if (data && data.length == 2) {
         this.chartData = {
           labels: data[0],
           datasets: [
             {
-              // label: "Data One",
+              label: "ms",
+              fill: {
+                target: true,
+                above: "#666"
+              },
               backgroundColor: "#000",
               data: data[1],
             },
@@ -70,8 +64,8 @@ export default {
       this.settingsVisible = !this.settingsVisible;
     },
     turnServiceOff: function () {
-      this.service.isActive = false;
-      localStorage.setItem(this.service.name + "_url", null);
+      this.localService.isActive = false;
+      localStorage.setItem(this.localService.name + "_url", null);
     },
   },
   created() {
@@ -79,11 +73,11 @@ export default {
   },
   computed: {
     getChartData: function () {
-      return this.service.chartData;
+      return this.localService.chartData;
     },
     getClassStatus: function () {
-      if (!this.service.isActive) return "disabled";
-      else if (!this.service.isHealthy) return "error";
+      if (!this.localService.isActive) return "disabled";
+      else if (!this.localService.isHealthy) return "error";
       else return "";
     },
   },
@@ -91,16 +85,19 @@ export default {
     getChartData(newVar) {
       this.buildChartData(newVar);
     },
-    service: function (newVal) {
-      this.buildChartData(newVal.chartData[0], newVal.chartData[1]);
-    },
-    deep: true,
+    localService: {
+      handler(newVal) {
+        this.buildChartData(newVal.chartData[0], newVal.chartData[1]);
+      },
+      deep: true,
+    }
   },
 };
 </script>
 <style scoped>
 @import "https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,900";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
+
 .card {
   border-radius: 4px;
   background: #fff;
@@ -116,12 +113,15 @@ export default {
   width: 32%;
   margin-bottom: 2%;
 }
+
 .disabled {
   background: grey;
 }
+
 .error {
   background: red;
 }
+
 .card h3 {
   font-weight: 600;
 }
@@ -150,9 +150,25 @@ export default {
     margin: 20px;
   }
 }
+
 .material-icons.md-120 {
-  font-size: 120px;
+    font-size: 100px;
+    margin-right: 10px;
 }
+
+@media (max-width: 1400px) {
+.material-icons.md-120 {
+    font-size: 70px;
+    margin-right: 10px;
+}
+}
+@media (max-width: 1100px) {
+.material-icons.md-120 {
+    font-size: 40px;
+    margin-right: 10px;
+}
+}
+
 .settings {
   position: absolute;
   top: 10px;
@@ -161,8 +177,7 @@ export default {
   color: black;
 }
 
-.active {
-}
+.active {}
 
 .active.on {
   color: green;
@@ -172,16 +187,19 @@ export default {
   flex-grow: 1;
   min-height: 0;
 }
+
 .chart-container div {
   position: relative;
   width: 100%;
   height: 200px;
 }
+
 .lds-dual-ring {
   display: inline-block;
   width: 80px;
   height: 80px;
 }
+
 .lds-dual-ring:after {
   content: " ";
   display: block;
@@ -193,10 +211,12 @@ export default {
   border-color: #000 transparent #000 transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
+
 @keyframes lds-dual-ring {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

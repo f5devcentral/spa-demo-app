@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <StatsCard
+    <StatsCardComponent
       v-for="service in services"
       :key="service.name"
       :service="service"
@@ -11,11 +11,11 @@
 <script>
 import stats from "../mixins/stats";
 import storage from "../mixins/storage";
-import StatsCard from "../components/StatsCard";
+import StatsCardComponent from "../components/StatsCardComponent";
 
 export default {
-  name: "Stats",
-  components: { StatsCard },
+  name: "StatsPage",
+  components: { StatsCardComponent },
   mixins: [stats, storage],
   data() {
     return {

@@ -1,18 +1,18 @@
 <template>
   <div id="page-wrap">
-    <ProductsGrid :products="products" />
+    <ProductsGridComponent :products="products" />
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import storage from "../mixins/storage";
-import ProductsGrid from "../components/ProductsGrid.vue";
+import ProductsGridComponent from "../components/ProductsGridComponent.vue";
 
 export default {
   name: "ProductsPage",
   components: {
-    ProductsGrid,
+    ProductsGridComponent,
   },
   mixins: [storage],
   data() {

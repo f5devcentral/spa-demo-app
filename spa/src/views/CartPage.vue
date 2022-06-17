@@ -1,7 +1,7 @@
 <template>
   <div id="page-wrap">
     <h1>Shopping Cart</h1>
-    <ProductsList
+    <ProductsListComponent
       :products="cartItems"
       v-on:remove-from-cart="removeFromCart($event)"
     />
@@ -12,12 +12,12 @@
 
 <script>
 import axios from "axios";
-import ProductsList from "../components/ProductsList.vue";
+import ProductsListComponent from "../components/ProductsListComponent.vue";
 
 export default {
   name: "CartPage",
   components: {
-    ProductsList,
+    ProductsListComponent,
   },
   data() {
     return {

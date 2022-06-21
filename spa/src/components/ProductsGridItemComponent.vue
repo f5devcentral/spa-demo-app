@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "ProductsGridItem",
+  name: "ProductsGridItemComponent",
   props: ["product"],
   data() {
     return {

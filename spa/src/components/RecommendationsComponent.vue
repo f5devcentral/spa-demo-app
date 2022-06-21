@@ -1,18 +1,18 @@
 <template>
   <div class="recommendations" v-if="recIsActive">
     <h3>Check out these similar selections</h3>
-    <ProductsGrid :products="products" />
+    <ProductsGridComponent :products="products" />
   </div>
 </template>
    
 <script>
 import axios from "axios";
-import ProductsGrid from "../components/ProductsGrid.vue";
+import ProductsGridComponent from "../components/ProductsGridComponent.vue";
 
 export default {
-  name: "Recommendations",
+  name: "RecommendationsComponent",
   components: {
-    ProductsGrid,
+    ProductsGridComponent,
   },
   data() {
     return {

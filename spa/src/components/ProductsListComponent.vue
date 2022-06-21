@@ -1,6 +1,6 @@
 <template>
   <div v-if="products.length > 0">
-    <ProductsListItem
+    <ProductsListItemComponent
       v-for="product in products"
       v-on:remove-from-cart="$emit('remove-from-cart', $event)"
       :key="product.id"
@@ -11,13 +11,13 @@
 </template>
 
 <script>
-import ProductsListItem from "./ProductsListItem.vue";
+import ProductsListItemComponent from "./ProductsListItemComponent.vue";
 
 export default {
-  name: "ProductsList",
+  name: "ProductsListComponent",
   props: ["products"],
   components: {
-    ProductsListItem,
+    ProductsListItemComponent,
   },
 };
 </script>

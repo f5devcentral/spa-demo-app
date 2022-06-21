@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <NavBar />
+    <NavBarComponent />
     <router-view :key="$route.name + ($route.params.id || '')" />
   </div>
 </template>
 
 <script>
-import NavBar from "./components/NavBar.vue";
+import NavBarComponent from "./components/NavBarComponent.vue";
 
 export default {
   name: "App",
   components: {
-    NavBar,
+    NavBarComponent,
   },
 };
 </script>

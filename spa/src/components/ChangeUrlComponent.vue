@@ -9,7 +9,7 @@
         </li>
       </ul>
     </p>
-      <input type="text" v-model.lazy="service.url" :disabled="showSuccessMessage" />
+      <input type="text" v-model.lazy="localService.url" :disabled="showSuccessMessage" />
       <span class="material-icons" 
       v-on:click="onSubmit"
       v-if="!showSuccessMessage">
@@ -26,36 +26,35 @@
 <script>
 import axios from "axios";
 export default {
-  name: "ChangeUrl",
+  name: "ChangeUrlComponent",
   props: ["service"],
   data() {
     return {
       showSuccessMessage: false,
       errors: [],
       api_url: localStorage.api_url,
+      localService: this.service
     };
   },
   methods: {
     async onSubmit() {
-      const service = this.$props.service;
-
       // set service to active if URL is present
       // TODO: url seems to be changing from null to "null"
-      switch (service.url) {
+      switch (this.localService.url) {
         case null:
         case "null":
         case "":
-          service.isActive = false;
+          this.localService.isActive = false;
           break;
         default:
-          service.isActive = true;
+          this.localService.isActive = true;
       }
 
       // update database and inventory
-      if (service.name == "database" || service.name == "inventory") {
+      if (this.localService.name == "database" || this.localService.name == "inventory") {
         try {
-          await axios.post(this.api_url + "/api/config/" + service.name, {
-            url: service.url,
+          await axios.post(this.api_url + "/api/config/" + this.localService.name, {
+            url: this.localService.url,
           });
         } catch (error) {
           console.log(error);

@@ -1,6 +1,6 @@
 <template>
   <div class="grid-wrap">
-    <ProductsGridItem
+    <ProductsGridItemComponent
         v-for="product in products"
         :key="product.id"
         :product="product" />
@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import ProductsGridItem from './ProductsGridItem.vue';
+import ProductsGridItemComponent from './ProductsGridItemComponent.vue';
 
 export default {
-    name: 'ProductsGrid',
+    name: 'ProductsGridComponent',
     props: ['products'],
     components: {
-        ProductsGridItem,
+        ProductsGridItemComponent,
     },
 }
 </script>

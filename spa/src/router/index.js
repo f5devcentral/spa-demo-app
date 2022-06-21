@@ -1,12 +1,9 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import CartPage from '../views/CartPage.vue';
 import ProductDetailPage from '../views/ProductDetailPage.vue';
 import ProductsPage from '../views/ProductsPage.vue';
 import NotFoundPage from '../views/NotFoundPage.vue';
 import StatsPage from '../views/StatsPage.vue';
-
-Vue.use(VueRouter)
 
 const routes = [
   {
@@ -34,15 +31,15 @@ const routes = [
     component: StatsPage,
   },
   {
-    path: '*',
+    path: '/:catchAll(.*)',
     component: NotFoundPage,
   }
 ]
 
-const router = new VueRouter({
-  mode: 'history',
+const router = createRouter({
+  history: createWebHistory(),
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 export default router

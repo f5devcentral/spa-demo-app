@@ -24,7 +24,7 @@
 import axios from "axios";
 
 export default {
-  name: "Inventory",
+  name: "InventoryComponent",
   props: ["id"],
 
   data() {

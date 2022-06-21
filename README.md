@@ -6,7 +6,7 @@ This application demos a modern single-page application built on:
 
 This application was created to help train people on the [F5 Distributed Cloud Services](https://www.f5.com/cloud) capabilities. 
 
-![Demo Footwear Site](./assets/demo_brews.png)
+![Demo Brews Site](./assets/demo_brews.png)
 
 # Components
 ### Frontend
@@ -56,21 +56,21 @@ docker-compose up -d
 ```
 
 # Development 
-## back-end
+## back-end services (api, inventory, recommendations)
 ```bash
-cd back-end
+cd <service folder here>
 export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
 npm run dev
 ```
 
-## front-end
+## spa (front-end)
 ```bash
-cd front-end
+cd spa
 npm run serve
 ```
 
-You will also need to update the *./front-end/.env* with the correct API server URL.
+You will also need to update the *./spa/.env* with the correct API server URL.
 
 ## Docker Compose
 You can use the docker-compose file leveraged in production for development as well.

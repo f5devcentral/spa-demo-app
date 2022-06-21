@@ -57,16 +57,16 @@ export default {
             for (const service of this.services) {
                 const stats = JSON.parse(localStorage.getItem(service.name)) || [];
 
-                var lables = [];
+                var labels = [];
                 var data = [];
                 var i = 0;
 
                 stats.forEach((stat) => {
-                    lables.push(i);
+                    labels.push(i);
                     i++;
                     data.push(stat);
                 })
-                service.chartData = [lables, data];
+                service.chartData = [labels, data];
             }
         },
         async getRemoteServiceUrl(statsUrl) {

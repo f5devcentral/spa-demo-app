@@ -1,5 +1,5 @@
 # --------- Base ---------
-From node:12-alpine AS base
+FROM node:12-alpine AS base
 
 WORKDIR /app
 

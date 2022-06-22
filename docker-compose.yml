@@ -21,6 +21,7 @@ services:
       - INVENTORY_URL=http://inventory:8002
     dns:
       - 10.1.1.6
+    restart: unless-stopped
 
   spa:
     build: ./spa
@@ -29,12 +30,16 @@ services:
       - "8081:80"
     links:
       - api
+    restart: unless-stopped
 
   recommendations:
     build: ./recommendations
     container_name: recs
     ports:
       - "8001:8001"
+    links:
+      - api
+    restart: unless-stopped
 
   inventory:
     build: ./inventory
@@ -43,3 +48,4 @@ services:
       - "8002:8002"
     links:
       - api
+    restart: unless-stopped

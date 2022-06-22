@@ -17,6 +17,10 @@ var services = [
   {
     name: "inventory",
     url: process.env.INVENTORY_URL
+  },
+  {
+    name: "recommendations",
+    url: process.env.RECOMMENDATIONS_URL
   }
 ]
 
@@ -118,6 +122,18 @@ app.get('/api/inventory', async (req, res) => {
     );
 
     res.status(200).json(inventory);
+  } catch(error) {
+    console.log(error)
+  }
+});
+
+app.get('/api/recommendations', async (req, res) => {
+  try {
+    const { data: recommendations } = await axios.get(
+    `${getService("recommendations").url}/api/recommendations`
+    );
+
+    res.status(200).json(recommendations);
   } catch(error) {
     console.log(error)
   }

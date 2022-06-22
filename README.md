@@ -61,6 +61,7 @@ docker-compose up -d
 cd <service folder here>
 export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
+export RECOMMENDATIONS_URL="http://recommendations:8001"
 npm run dev
 ```
 

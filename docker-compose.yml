@@ -19,6 +19,7 @@ services:
     environment:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
+      - RECOMMENDATIONS_URL=http://recommendations:8001
     dns:
       - 10.1.1.6
 
@@ -35,6 +36,8 @@ services:
     container_name: recs
     ports:
       - "8001:8001"
+    links:
+      - api
 
   inventory:
     build: ./inventory

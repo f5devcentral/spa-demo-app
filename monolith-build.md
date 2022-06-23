@@ -31,23 +31,46 @@ docker-compose up -d
 ```
 
 
+Set up an NGINX Proxy in a docker container to create a proxy for the UDF Access method:
 
+```shell
+mkdir ~/nginx-proxy && cd nginx-proxy
 
+cat <<'EOF' > proxy.conf
+user www-data;
+worker_processes auto;
+worker_rlimit_nofile 8192;
+pid /run/nginx.pid;
 
+events {
+    worker_connections 4096;
+}
 
+http {
+    upstream spa {
+        server 10.1.1.4:8081;
+    }
 
+    upstream api {
+        server 10.1.1.4:8000;
+    }
 
+    server {
+        listen 80;
+        location / {
+            proxy_pass http://spa;
+        }
+        location /images {
+            proxy_pass http://api/images;
+        }
+        location /api {
+            proxy_pass http://api;
+        }
+    }
+}
+EOF
 
-Services
+docker run --restart unless-stopped --name nginx-proxy-container -d -p 80:80 -v "$(pwd)/proxy.conf:/etc/nginx/nginx.conf:ro" nginx
 
-http://localhost:8000/api/config/database
-http://localhost:8000/api/inventory
-http://localhost:8000/api/products
-http://localhost:8000/api/products/123
-http://localhost:8000/api/stats
-http://localhost:8000/api/stats/database
-http://localhost:8000/api/stats/inventory
-http://localhost:8000/api/stats/inventory
-http://localhost:8000/api/users/12345/cart
-http://localhost:8000/api/recommendations
-http://localhost:8081/
+```
+

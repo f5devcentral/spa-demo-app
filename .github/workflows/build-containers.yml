@@ -57,3 +57,35 @@ jobs:
           push: true
           tags: ${{ steps.meta-api.outputs.tags }}
           labels: ${{ steps.meta-api.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for recommendations container
+        id: meta-recommendations
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=recommendations
+
+      - name: Build and push recommendations image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: recommendations/.
+          push: true
+          tags: ${{ steps.meta-recommendations.outputs.tags }}
+          labels: ${{ steps.meta-recommendations.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for inventory container
+        id: meta-inventory
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=inventory
+
+      - name: Build and push inventory image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          context: inventory/.
+          push: true
+          tags: ${{ steps.meta-inventory.outputs.tags }}
+          labels: ${{ steps.meta-inventory.outputs.labels }}

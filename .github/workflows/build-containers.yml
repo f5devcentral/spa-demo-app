@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  IMAGE_NAME: f5devcentral/spa-demo-app:spa
 
 jobs:
   build-and-push-image:

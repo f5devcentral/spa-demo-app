@@ -1,9 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { MongoClient } from 'mongodb';
-import path from 'path';
 import cors from 'cors';
-import fetch from 'node-fetch';
 
 const inventory = require('../inventory.json');
 

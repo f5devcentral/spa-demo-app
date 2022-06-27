@@ -32,6 +32,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-spa
           tags: |
+            type=sha
             type=raw,value=latest
 
       - name: Build and push spa image
@@ -48,6 +49,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
           tags: |
+            type=sha
             type=raw,value=latest
 
       - name: Build and push api image
@@ -64,6 +66,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-recommendations
           tags: |
+            type=sha
             type=raw,value=latest
 
       - name: Build and push recommendations image
@@ -80,6 +83,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-inventory
           tags: |
+            type=sha
             type=raw,value=latest
 
       - name: Build and push inventory image

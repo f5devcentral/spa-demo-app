@@ -30,9 +30,9 @@ jobs:
         id: meta-spa
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-spa
           tags: |
-            type=raw,value=spa
+            type=raw,value=latest
 
       - name: Build and push spa image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -46,9 +46,9 @@ jobs:
         id: meta-api
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
           tags: |
-            type=raw,value=api
+            type=raw,value=latest
 
       - name: Build and push api image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -62,9 +62,9 @@ jobs:
         id: meta-recommendations
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-recommendations
           tags: |
-            type=raw,value=recommendations
+            type=raw,value=latest
 
       - name: Build and push recommendations image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
@@ -78,9 +78,9 @@ jobs:
         id: meta-inventory
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-inventory
           tags: |
-            type=raw,value=inventory
+            type=raw,value=latest
 
       - name: Build and push inventory image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc

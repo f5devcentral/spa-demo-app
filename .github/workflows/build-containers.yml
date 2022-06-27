@@ -35,7 +35,7 @@ jobs:
             type=raw,value=spa
 
       - name: Build and push spa image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8
         with:
           context: spa/.
           push: true
@@ -51,7 +51,7 @@ jobs:
             type=raw,value=api
 
       - name: Build and push api image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8
         with:
           context: api/.
           push: true
@@ -67,7 +67,7 @@ jobs:
             type=raw,value=recommendations
 
       - name: Build and push recommendations image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8
         with:
           context: recommendations/.
           push: true
@@ -83,7 +83,7 @@ jobs:
             type=raw,value=inventory
 
       - name: Build and push inventory image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@e551b19e49efd4e98792db7592c17c09b89db8d8
         with:
           context: inventory/.
           push: true

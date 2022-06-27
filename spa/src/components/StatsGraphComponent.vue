@@ -61,16 +61,8 @@ const defaultChartOptions = {
 
 export default {
   name: "StatsGraphComponent",
+  // eslint-disable-next-line
   components: { Line },
-  // data() {
-  //   return {
-  //     chartData: {
-  //       datasets: [
-  //         { fill: true }
-  //       ]
-  //     }
-  //   }
-  // },
   props: {
     chartData: {
       type: Object,
@@ -81,9 +73,5 @@ export default {
       default: () => { return defaultChartOptions }
     }
   },
-  // computed: {
-  //   // chartData() { return this.chartdata },
-  //   chartOptions() { return chartOptions }
-  // },
 };
 </script>

@@ -136,7 +136,6 @@ export default {
         this.writeStats();
         this.getAllStatus();
         this.getChartData();
-        // }, 60000);
       }, 6000);
     });
   },

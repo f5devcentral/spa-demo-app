@@ -4,7 +4,7 @@ import router from './router'
 
 
 router.beforeEach((to, from, next) => {
-  document.title = 'Demo Brews';
+  document.title = 'Brewz';
   next();
 });
 

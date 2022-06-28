@@ -6,7 +6,7 @@ This application demos a modern single-page application built on:
 
 This application was created to help train people on the [F5 Distributed Cloud Services](https://www.f5.com/cloud) capabilities. 
 
-![Demo Brews Site](./assets/demo_brews.png)
+![Brewz Site](./assets/demo_brewz.png)
 
 # Components
 ### Frontend
@@ -41,9 +41,9 @@ The stats page provides information for the various components that make up this
 - Latency
 - Historic latency graph
 
-If a component is offline, the component card will go red as pictured below.
-
 ![Stats Page](./assets/stats.png)
+
+NOTE: If a component is offline, a component card such as in the image above will turn red.
 
 ### Product Detail
 The Product detail page contains the recommendations and inventory microservices. 

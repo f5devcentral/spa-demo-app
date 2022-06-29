@@ -7,11 +7,17 @@
 
 <script>
 import NavBarComponent from "./components/NavBarComponent.vue";
+import storage from "./mixins/storage";
 
 export default {
   name: "App",
   components: {
     NavBarComponent,
+  },
+  mixins: [storage],
+  async created() {
+    // populate local storage with component URLs
+    this.populateLocalStorage();
   },
 };
 </script>

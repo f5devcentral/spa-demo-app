@@ -4,28 +4,23 @@ export default {
     methods: {
         async populateLocalStorage() {
             // set service urls if not present
-            // This should only happen on first load
-            if(!localStorage.spa_url) localStorage.spa_url = window.location.protocol + "//" + window.location.host || null;
-            if (!localStorage.api_url) {
-                // default to the spa service so we can do url based pool selection
-                localStorage.api_url = localStorage.spa_url || null;
-            }
-
-            // hack for 1st load
-            if(!localStorage.database_url) localStorage.database_url = "mongodb";
-            if (localStorage.api_url != "null")
-                localStorage.database_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database") || null;
+            const default_uri = window.location.protocol + "//" + window.location.host;
+            localStorage.spa_url = default_uri || null;
+            localStorage.api_url = localStorage.api_url || default_uri || null;
+            localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null;
+            localStorage.inventory_url = localStorage.inventory_url || default_uri || null;
+            localStorage.database_url = await this.getRemoteServiceUrl(localStorage.api_url + "/api/config/database") || null;
         },
 
         populateServices() {
             for (const service of this.services) {
                 // load chart data
-                if(localStorage.name) service.chartData = localStorage.name;
+                if (localStorage.name) service.chartData = localStorage.name;
                 // service.chartData = localStorage.getItem(service.name) || null;
 
                 // load url
                 const url = localStorage.getItem(service.name + "_url")
-                switch(url) {
+                switch (url) {
                     case null:
                     case "null":
                     case "":
@@ -41,7 +36,7 @@ export default {
         writeStats() {
             for (const service of this.services) {
                 // only write stats for active services
-                if(! service.isActive) return
+                if (!service.isActive) return
 
                 // get stats history
                 var stats = JSON.parse(localStorage.getItem(service.name)) || [];
@@ -71,9 +66,9 @@ export default {
         },
         async getRemoteServiceUrl(statsUrl) {
             try {
-                const resp = await axios.get(statsUrl, {timeout: 10000});
+                const resp = await axios.get(statsUrl, { timeout: 10000 });
                 const data = resp.data;
-                if(data["url"])
+                if (data["url"])
                     return data["url"];
                 else
                     return null;

@@ -9,18 +9,10 @@
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
       <InventoryComponent :id="this.product.id" v-if="showService('inventory')" />
-      <button
-        id="add-to-cart"
-        v-if="!itemIsInCart && !showSuccessMessage"
-        v-on:click="addToCart"
-      >
+      <button id="add-to-cart" v-if="!itemIsInCart && !showSuccessMessage" v-on:click="addToCart">
         Add to Cart
       </button>
-      <button
-        id="add-to-cart"
-        class="green-button"
-        v-if="!itemIsInCart && showSuccessMessage"
-      >
+      <button id="add-to-cart" class="green-button" v-if="!itemIsInCart && showSuccessMessage">
         Successfully added item to cart!
       </button>
       <button id="add-to-cart" class="grey-button" v-if="itemIsInCart">
@@ -81,19 +73,15 @@ export default {
     },
   },
   async created() {
-    if (!this.api_url || this.api_url == "null")
-      this.$router.push("/stats?config=first");
-    else {
-      const { data: product } = await axios.get(
-        `${this.api_url}/api/products/${this.$route.params.id}`
-      );
-      this.product = product;
+    const { data: product } = await axios.get(
+      `${this.api_url}/api/products/${this.$route.params.id}`
+    );
+    this.product = product;
 
-      const { data: cartItems } = await axios.get(
-        `${this.api_url}/api/users/12345/cart`
-      );
-      this.cartItems = cartItems;
-    }
+    const { data: cartItems } = await axios.get(
+      `${this.api_url}/api/users/12345/cart`
+    );
+    this.cartItems = cartItems;
   },
 };
 </script>

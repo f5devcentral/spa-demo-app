@@ -127,9 +127,6 @@ export default {
     this.getAllStatus();
   },
   async created() {
-    // populate local storage with component URLs
-    this.populateLocalStorage();
-
     // refresh the graphs
     this.$nextTick(function () {
       window.setInterval(() => {

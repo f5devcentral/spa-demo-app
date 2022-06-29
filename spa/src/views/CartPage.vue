@@ -1,10 +1,7 @@
 <template>
   <div id="page-wrap">
     <h1>Shopping Cart</h1>
-    <ProductsListComponent
-      :products="cartItems"
-      v-on:remove-from-cart="removeFromCart($event)"
-    />
+    <ProductsListComponent :products="cartItems" v-on:remove-from-cart="removeFromCart($event)" />
     <h3 id="total-price">Total: ${{ totalPrice }}</h3>
     <button id="checkout-button">Proceed to Checkout</button>
   </div>
@@ -41,13 +38,9 @@ export default {
     },
   },
   async created() {
-    if (!this.api_url || this.api_url == "null")
-      this.$router.push("/stats?config=first");
-    else {
-      const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
-      const cartItems = result.data;
-      this.cartItems = cartItems;
-    }
+    const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
+    const cartItems = result.data;
+    this.cartItems = cartItems;
   },
 };
 </script>

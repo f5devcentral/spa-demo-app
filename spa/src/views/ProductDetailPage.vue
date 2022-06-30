@@ -1,11 +1,11 @@
 <template>
   <div id="page-wrap" v-if="product" :key="product.id">
     <div id="img-wrap">
-      <img v-bind:src="this.api_url + product.imageUrl" />
+      <img v-if="product.imageUrl" v-bind:src="this.api_url + product.imageUrl" />
     </div>
     <div id="product-details">
-      <h1>{{ product.name }}</h1>
-      <h3 id="price">${{ product.price }}</h3>
+      <h1 id="product-name">{{ product.name }}</h1>
+      <h3 id="product-price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
       <InventoryComponent :id="this.product.id" v-if="showService('inventory')" />
@@ -110,7 +110,11 @@ img {
   width: 100%;
 }
 
-#price {
+#product-name {
+  width: 500px;
+}
+
+#product-price {
   position: absolute;
   top: 24px;
   right: 16px;

@@ -26,6 +26,8 @@ export default {
 * {
   box-sizing: border-box;
   font-family: Arial;
+  background-color: black;
+  color: white;
 }
 
 #page-wrap {

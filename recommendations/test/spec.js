@@ -21,7 +21,7 @@ describe('GET /api/recommendations', function () {
       .set('Accept', 'application/json')
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(200);
-    expect(response.body.length).to.equal(4);
+    expect(response.body.length).to.equal(3);
   });
 });
 

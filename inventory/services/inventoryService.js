@@ -1,4 +1,4 @@
-import inventory from '../../inventory.json' assert {type: 'json'};
+import inventory from '../inventory.json' assert {type: 'json'};
 
 const inventoryService = {
     getInventory() {

@@ -10,10 +10,8 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ./src ./src
+COPY ./ ./
 COPY ./products.json ./
-
-RUN npm run build
 
 RUN npm prune --production 
 
@@ -21,9 +19,9 @@ RUN npm prune --production
 FROM base as release
 
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/ ./
 COPY --from=builder /app/products.json ./
 
 USER node
 
-CMD ["node", "./dist/server.js"]
+CMD ["node", "./server.js"]

@@ -17,7 +17,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/images', express.static(path.join(__dirname, '../assets')));
+app.use('/images', express.static(path.join(__dirname, 'assets')));
 
 app.listen(LISTENER_TCP_PORT, () => {
   console.log(`Server is listening on port ${LISTENER_TCP_PORT}`);

@@ -5,16 +5,14 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "build": "babel ./src --out-dir ./dist",
-    "start": "node ./dist/server.js",
-    "dev": "npx nodemon --exec npx babel-node src/server.js",
+    "start": "node ./server.js",
+    "dev": "npx nodemon ./server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@babel/runtime": "^7.18.9",
     "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "connect-history-api-fallback": "^2.0.0",
@@ -26,11 +24,6 @@
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/node": "^7.18.10",
-    "@babel/plugin-transform-runtime": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
     "eslint": "^8.22.0",
     "nodemon": "^2.0.19"
   }

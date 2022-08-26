@@ -11,8 +11,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/api/src/server.js",
-            "cwd": "${workspaceFolder}/api/src",
+            "program": "${workspaceFolder}/api/server.js",
+            "cwd": "${workspaceFolder}/api",
             "env": {
                 "MONGO_URL": "localhost",
                 "INVENTORY_URL": "http://localhost:8002",
@@ -26,8 +26,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/inventory/src/server.js",
-            "cwd": "${workspaceFolder}/inventory/src",
+            "program": "${workspaceFolder}/inventory/server.js",
+            "cwd": "${workspaceFolder}/inventory",
             "env": {
                 "MONGO_URL": "localhost",
                 "INVENTORY_URL": "http://localhost:8002",
@@ -41,8 +41,8 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/recommendations/src/server.js",
-            "cwd": "${workspaceFolder}/recommendations/src",
+            "program": "${workspaceFolder}/recommendations/server.js",
+            "cwd": "${workspaceFolder}/recommendations",
             "env": {
                 "MONGO_URL": "localhost",
                 "INVENTORY_URL": "http://localhost:8002",

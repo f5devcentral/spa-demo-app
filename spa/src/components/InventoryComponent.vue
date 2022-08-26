@@ -9,7 +9,7 @@
       />
       <h3>In Store</h3>
       <p v-if="inventory == 0">Sorry, we're out of stock!</p>
-      <p v-else-if="inventory >= 5">Good new, {{ inventory }} in stock!</p>
+      <p v-else-if="inventory >= 5">Good news, {{ inventory }} in stock!</p>
       <p v-else>Order quick, only {{ inventory }} in stock!</p>
     </div>
     <div class="delivery">

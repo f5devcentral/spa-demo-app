@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node ./server.js",
     "dev": "npx nodemon ./server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test-watch": "node ./node_modules/mocha/bin/mocha --watch --parallel",
+    "test": "node ./node_modules/mocha/bin/mocha --exit"
   },
   "keywords": [],
   "author": "",

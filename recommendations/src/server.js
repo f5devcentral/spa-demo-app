@@ -1,33 +1,39 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
+import swaggerUi from 'swagger-ui-express';
+import { initialize } from 'express-openapi';
+import ApiDoc from './api-doc.js';
+import RecommendationsService from './services/recommendationsService.js';
 
-const products = require('../products.json');
+const LISTENER_TCP_PORT = 8001;
+const __dirname = path.resolve();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/api/recommendations', async (req, res) => {
-    const keys = Object.keys(products);
-    var randKeys = [];
-    while(randKeys.length < 3) {
-      var key = parseInt(Math.random() * products.length)
-      if(randKeys.indexOf(key) === -1) randKeys.push(key)
-    }
-
-    const randomProducts =  [
-        products[randKeys[0]],
-        products[randKeys[1]],
-        products[randKeys[2]]
-    ]
-  res.status(200).json(randomProducts);
+app.listen(LISTENER_TCP_PORT, () => {
+  console.log(`Server is listening on port ${LISTENER_TCP_PORT}`);
 });
 
-app.get('/api/stats', async (req, res) => {
-  res.status(200).json({});
-})
-
-app.listen(8001, () => {
-    console.log('Server is listening on port 8001');
+initialize({
+  app,
+  apiDoc: ApiDoc,
+  dependencies: {
+    recommendationsService: RecommendationsService
+  },
+  paths: path.resolve(__dirname, 'paths/'),
 });
+
+// OpenAPI UI
+app.use(
+  "/api-documentation",
+  swaggerUi.serve,
+  swaggerUi.setup(null, {
+    swaggerOptions: {
+      url: `http://localhost:${LISTENER_TCP_PORT}/api/api-docs`,
+    },
+  })
+);

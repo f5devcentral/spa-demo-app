@@ -9,7 +9,7 @@ name: Tests
 
 jobs:
   test:
-    name: "Node.js v${{ matrix.node }}"
+    name: "Recommendations test on Node.js v${{ matrix.node }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -28,6 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-v${{ matrix.node }}-
       - name: Install Dependencies
-        run: npm install
+        run: cd recommendations && npm install
       - name: Run All Node.js Tests
         run: cd recommendations && npm run test

@@ -2,7 +2,8 @@
 import request from 'supertest';
 import app from '../server.js';
 import { expect } from 'chai';
-import { stub as _stub } from 'sinon';
+import { stub } from 'sinon';
+import sinon from 'sinon';
 import axios from 'axios';
 import { strictEqual } from 'assert';
 
@@ -75,8 +76,12 @@ describe('GET /api/inventory', function () {
     ]
   }
 
+  afterEach(() => {
+    sinon.restore();
+  });
+
   it('Should return 12 product quantities', async function () {
-    const stub = _stub(axios, "get").resolves(Promise.resolve(responseStub));
+    const axiosStub = stub(axios, "get").resolves(Promise.resolve(responseStub));
 
     const response = await request(app)
       .get('/api/inventory')
@@ -84,7 +89,19 @@ describe('GET /api/inventory', function () {
       expect(response.headers["content-type"]).to.match(/json/);
       expect(response.status).to.equal(200);
       expect(response.body.length).to.equal(12);
-      strictEqual(stub.callCount, 1);
+      strictEqual(axiosStub.callCount, 1);
+  });
+
+  it('Should a 500 error if an error is thrown', async function () {
+    const axiosStub = stub(axios, "get").rejects(new Error("Oops."));
+
+    const response = await request(app)
+      .get('/api/inventory')
+      .set('Accept', 'application/json')
+      expect(response.headers["content-type"]).to.match(/json/);
+      expect(response.status).to.equal(500);
+      expect(response.body).to.equal("Oops.");
+      strictEqual(axiosStub.callCount, 1);
   });
 });
 

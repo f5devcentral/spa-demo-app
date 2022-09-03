@@ -72,6 +72,8 @@ docker-compose up -d
 
 ### back-end services (api, inventory, recommendations)
 
+#### Running
+
 ```bash
 cd <service folder here>
 export MONGO_URL="localhost"
@@ -79,6 +81,22 @@ export INVENTORY_URL="http://localhost:8002"
 export RECOMMENDATIONS_URL="http://recommendations:8001"
 npm run dev
 ```
+
+#### Tests
+
+```bash
+cd <service folder here>
+npm run test
+```
+
+#### Code Coverage Metrics
+
+```bash
+cd <service folder here>
+npm run test-coverage
+```
+
+Coverage reports will appear in each subproject's `coverage` directory.
 
 ### spa (front-end)
 
@@ -88,6 +106,8 @@ npm run serve
 ```
 
 You will also need to update the *./spa/.env* with the correct API server URL.
+
+### 
 
 ### Docker Compose
 

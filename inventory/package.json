@@ -8,7 +8,8 @@
     "start": "node ./server.js",
     "dev": "npx nodemon ./server.js",
     "test-watch": "node ./node_modules/mocha/bin/mocha --watch --parallel",
-    "test": "node ./node_modules/mocha/bin/mocha --exit"
+    "test": "node ./node_modules/mocha/bin/mocha --exit",
+    "test-coverage": "./node_modules/c8/bin/c8.js npm test"
   },
   "author": "",
   "license": "ISC",
@@ -21,9 +22,10 @@
     "swagger-ui-express": "^4.5.0"
   },
   "devDependencies": {
-    "eslint": "^8.22.0",
     "@types/supertest": "^2.0.12",
+    "c8": "^7.12.0",
     "chai": "^4.3.6",
+    "eslint": "^8.22.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
     "supertest": "^6.2.4"

@@ -1,0 +1,14 @@
+{
+  "all": true,
+  "exclude": [
+    "coverage/**/**.js",
+    "node_modules/**/**.js"
+  ],
+  "reporter": [
+    "html",
+    "text",
+    "lcov",
+    "json"
+  ],
+  "instrument": true
+}

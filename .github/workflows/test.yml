@@ -9,11 +9,15 @@ name: Tests
       - reopened
 
 jobs:
-  test-core-api:
-    name: "Core API test on Node.js v${{ matrix.node }}"
+  test-apis:
+    name: "${{ matrix.subproject }} subproject test on Node.js v${{ matrix.node }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        subproject:
+          - api
+          - inventory
+          - recommendations
         node:
           - 16
     steps:
@@ -25,58 +29,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-v${{ matrix.node }}-
+            ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-
       - name: Install Dependencies
-        run: cd api && npm install
+        run: cd ${{ matrix.subproject }} && npm install
       - name: Run All Node.js Tests
-        run: cd api && npm run test
-
-  test-inventory:
-    name: "Inventory API test on Node.js v${{ matrix.node }}"
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node:
-          - 16
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "${{ matrix.node }}"
-      - uses: actions/checkout@v2
-      - name: "Cache node_modules"
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-v${{ matrix.node }}-
-      - name: Install Dependencies
-        run: cd inventory && npm install
-      - name: Run All Node.js Tests
-        run: cd inventory && npm run test
-
-  test-recommendations:
-    name: "Recommendations API test on Node.js v${{ matrix.node }}"
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node:
-          - 16
-    steps:
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "${{ matrix.node }}"
-      - uses: actions/checkout@v2
-      - name: "Cache node_modules"
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-v${{ matrix.node }}-
-      - name: Install Dependencies
-        run: cd recommendations && npm install
-      - name: Run All Node.js Tests
-        run: cd recommendations && npm run test
+        run: cd ${{ matrix.subproject }} && npm run test

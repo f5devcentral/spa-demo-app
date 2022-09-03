@@ -1,5 +1,6 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, } from 'mongodb';
 import locatorService from "./locatorService.js";
+import { NotFoundError } from '../helpers/customErrors.js'
 
 const productsService = {
 
@@ -10,7 +11,8 @@ const productsService = {
         try {
             client = await getMongoDbConnection();
             const db = client.db(this.mongoDbName);
-            return await db.collection('products').find({}).toArray();
+            const products = await db.collection('products').find({});
+            return products.toArray();
         }
         finally { client.close(); }
     },
@@ -21,7 +23,7 @@ const productsService = {
             client = await getMongoDbConnection();
             const db = client.db(this.mongoDbName);
             const product = await db.collection('products').findOne({ id: productId });
-            if (!product) throw new Error("Could not find the product!");
+            if (!product) throw new NotFoundError("Could not find the product!");
             return product;
         }
         finally { client.close(); }
@@ -33,8 +35,9 @@ const productsService = {
             client = await getMongoDbConnection();
             const db = client.db(this.mongoDbName);
             const user = await db.collection('users').findOne({ id: userId });
-            if (!user) throw new Error("Could not find user!");
-            const products = await db.collection('products').find({}).toArray();
+            if (!user) throw new NotFoundError("Could not find user!");
+            const productsResult = await db.collection('products').find({})
+            const products = productsResult.toArray();
             const cartItemIds = user.cartItems;
             const cartItems = cartItemIds.map(id =>
                 products.find(product => product.id === id));
@@ -52,9 +55,9 @@ const productsService = {
                 $pull: { cartItems: productId },
             });
             const user = await db.collection('users').findOne({ id: userId });
-            const products = await db.collection('products').find({}).toArray();
-            const cartItemIds = user.cartItems;
-            return cartItemIds.map(id => products.find(product => product.id === id));
+            const productsResult = await db.collection('products').find({});
+            const products = productsResult.toArray();
+            return user.cartItems.map(id => products.find(product => product.id === id));
         }
         finally { client.close(); }
     },
@@ -69,14 +72,14 @@ const productsService = {
                 $addToSet: { cartItems: productId },
             });
             const user = await db.collection('users').findOne({ id: userId });
-            const products = await db.collection('products').find({}).toArray();
+            const productsResult = await db.collection('products').find({})
+            const products = productsResult.toArray();
             const cartItemIds = user.cartItems;
             return cartItemIds.map(id => products.find(product => product.id === id));
         }
         finally { client.close(); }
     }
 }
-
 
 async function getMongoDbConnection() {
     const mongoEndpoint = `mongodb://${locatorService.getService("database").url}:27017`;

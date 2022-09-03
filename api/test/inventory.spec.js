@@ -5,24 +5,10 @@ import { expect } from 'chai';
 import { stub } from 'sinon';
 import sinon from 'sinon';
 import axios from 'axios';
-import { strictEqual } from 'assert';
-
-describe('GET /api/api-docs', function () {
-  it('Should return the OpenAPI spec', async function () {
-    const response = await request(app)
-      .get('/api/api-docs')
-      .set('Accept', 'application/json')
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body.info.title).to.equal("Brewz Core API.");
-  });
-});
 
 describe('GET /api/inventory', function () {
 
   const responseStub = {
-    status: 500,
-    statusText: 'OK',
     headers: { "content-type": "application/json" },
     data: [
       {
@@ -86,13 +72,14 @@ describe('GET /api/inventory', function () {
     const response = await request(app)
       .get('/api/inventory')
       .set('Accept', 'application/json')
+
       expect(response.headers["content-type"]).to.match(/json/);
       expect(response.status).to.equal(200);
       expect(response.body.length).to.equal(12);
-      strictEqual(axiosStub.callCount, 1);
+      expect(axiosStub.callCount).to.equal(1);
   });
 
-  it('Should a 500 error if an error is thrown', async function () {
+  it('Should emit a 500 error if an error is thrown', async function () {
     const axiosStub = stub(axios, "get").rejects(new Error("Oops."));
 
     const response = await request(app)
@@ -101,17 +88,6 @@ describe('GET /api/inventory', function () {
       expect(response.headers["content-type"]).to.match(/json/);
       expect(response.status).to.equal(500);
       expect(response.body).to.equal("Oops.");
-      strictEqual(axiosStub.callCount, 1);
-  });
-});
-
-describe('GET /api/stats', function () {
-  it('Should return an empty JSON payload', async function () {
-    const response = await request(app)
-      .get('/api/stats')
-      .set('Accept', 'application/json')
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body).to.be.empty;
+      expect(axiosStub.callCount).to.equal(1);
   });
 });

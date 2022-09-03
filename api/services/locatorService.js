@@ -1,39 +1,48 @@
+import { NotFoundError } from '../helpers/customErrors.js'
+
+const ERR_SVC_NOT_FOUND = "service not found";
+
 let services = [
-    {
-        name: "database",
-        url: process.env.MONGO_URL
-    },
-    {
-        name: "inventory",
-        url: process.env.INVENTORY_URL
-    },
-    {
-        name: "recommendations",
-        url: process.env.RECOMMENDATIONS_URL
-    }
+  {
+    name: "database",
+    url: process.env.MONGO_URL || "mongodb"
+  },
+  {
+    name: "inventory",
+    url: process.env.INVENTORY_URL || "http://inventory:8002"
+  },
+  {
+    name: "recommendations",
+    url: process.env.RECOMMENDATIONS_URL || "http://recommendations:8001"
+  }
 ]
 
 const locatorService = {
-    getService(serviceName) {
-        return services.find(service => service.name === serviceName);
-    },
-
-    getAllServices() {
-        return services;
-    },
-
-    setServiceUrl(serviceName, url) {
-        const service = this.getService(serviceName)
-
-        if (service) {
-          service.url = url;
-          return service;
-        }
-        else {
-            // TODO: Figure out how to throw "typed" errors to differentiate business/data exceptions from system failures
-            throw new Error({ "error": "service not found" });
-        }
+  getService(serviceName) {
+    const service = services.find(service => service.name === serviceName);
+    if (service) {
+      return service;
     }
+    else {
+      throw new NotFoundError(ERR_SVC_NOT_FOUND);
+    }
+  },
+
+  getAllServices() {
+    return services;
+  },
+
+  setServiceUrl(serviceName, url) {
+    const service = this.getService(serviceName)
+
+    if (service) {
+      service.url = url;
+      return service;
+    }
+    else {
+      throw new NotFoundError(ERR_SVC_NOT_FOUND);
+    }
+  }
 }
 
 export default locatorService;

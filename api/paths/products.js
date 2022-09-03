@@ -8,7 +8,7 @@ export default function (productsService) {
       res.status(200).json(await productsService.getProducts());
     }
     catch (e) {
-      res.status(404).json(e.message)
+      res.status(500).json(e.message)
       console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
     }
   }

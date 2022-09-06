@@ -13,7 +13,7 @@ const statsService = {
             const db_start = new Date()
             client = await getMongoDbConnection();
             const db = client.db(this.mongoDbName);
-            await db.collection('products').find({}).toArray();
+            await db.collection('products').find({})
             payload["host"] = `mongodb://${locatorService.getService("database").url}:27017`;
             payload["latency"] = new Date() - db_start;
             return payload;

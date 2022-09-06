@@ -34,14 +34,8 @@ const locatorService = {
 
   setServiceUrl(serviceName, url) {
     const service = this.getService(serviceName)
-
-    if (service) {
-      service.url = url;
-      return service;
-    }
-    else {
-      throw new NotFoundError(ERR_SVC_NOT_FOUND);
-    }
+    service.url = url;
+    return service;
   }
 }
 

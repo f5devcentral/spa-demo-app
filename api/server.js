@@ -24,7 +24,7 @@ app.listen(LISTENER_TCP_PORT, () => {
   console.log(`path is ${ __dirname }`);
 });
 
-initialize({
+await initialize({
   app,
   apiDoc: ApiDoc,
   dependencies: {

@@ -1,0 +1,38 @@
+name: Tests
+"on":
+  push:
+    branches: ["main"]
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  test-apis:
+    name: "${{ matrix.subproject }} subproject test on Node.js v${{ matrix.node }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subproject:
+          - api
+          - inventory
+          - recommendations
+        node:
+          - 16
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "${{ matrix.node }}"
+      - uses: actions/checkout@v2
+      - name: "Cache node_modules"
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-
+      - name: Install Dependencies
+        run: cd ${{ matrix.subproject }} && npm install
+      - name: Run All Node.js Tests
+        run: cd ${{ matrix.subproject }} && npm run test

@@ -1,7 +1,7 @@
 print('Start #################################################################');
 
-var products = JSON.parse(cat('/docker-entrypoint-initdb.d/initProducts.json'))
-var users = JSON.parse(cat('/docker-entrypoint-initdb.d/initUsers.json'))
+var products = JSON.parse(fs.readFileSync('/docker-entrypoint-initdb.d/initProducts.json', 'utf8'))
+var users = JSON.parse(fs.readFileSync('/docker-entrypoint-initdb.d/initUsers.json', 'utf8'))
 
 db = db.getSiblingDB('vue-db');
 

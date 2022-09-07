@@ -29,11 +29,11 @@ describe('GET /api/products', function () {
 
   beforeEach(() => {
 
-    stubFind = sinon.stub().resolves({
+    stubFind = sinon.stub().returns({
       project: sinon.stub().returnsThis(),
       limit: sinon.stub().returnsThis(),
       skip: sinon.stub().returnsThis(),
-      toArray: sinon.stub().returns(allProducts),
+      toArray: sinon.stub().resolves(allProducts),
     });
 
     mockDb = {

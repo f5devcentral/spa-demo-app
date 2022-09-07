@@ -11,10 +11,9 @@ const productsService = {
         try {
             client = await getMongoDbConnection();
             const db = client.db(this.mongoDbName);
-            const products = await db.collection('products').find({});
-            return products.toArray();
+            return await db.collection('products').find({}).toArray();
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     },
 
     async getProductById(productId) {
@@ -26,7 +25,7 @@ const productsService = {
             if (!product) throw new NotFoundError("Could not find the product!");
             return product;
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     },
 
     async getUserCart(userId) {
@@ -36,14 +35,11 @@ const productsService = {
             const db = client.db(this.mongoDbName);
             const user = await db.collection('users').findOne({ id: userId });
             if (!user) throw new NotFoundError("Could not find user!");
-            const productsResult = await db.collection('products').find({})
-            const products = productsResult.toArray();
+            const products = await db.collection('products').find({}).toArray();
             const cartItemIds = user.cartItems;
-            const cartItems = cartItemIds.map(id =>
-                products.find(product => product.id === id));
-            return cartItems;
+            return cartItemIds.map(id => products.find(product => product.id === id));
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     },
 
     async deleteItemFromUserCart(userId, productId) {
@@ -55,11 +51,10 @@ const productsService = {
                 $pull: { cartItems: productId },
             });
             const user = await db.collection('users').findOne({ id: userId });
-            const productsResult = await db.collection('products').find({});
-            const products = productsResult.toArray();
+            const products = await db.collection('products').find({}).toArray();
             return user.cartItems.map(id => products.find(product => product.id === id));
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     },
 
     async addItemToUserCart(userId, productId) {
@@ -72,12 +67,11 @@ const productsService = {
                 $addToSet: { cartItems: productId },
             });
             const user = await db.collection('users').findOne({ id: userId });
-            const productsResult = await db.collection('products').find({})
-            const products = productsResult.toArray();
+            const products = await db.collection('products').find({}).toArray();
             const cartItemIds = user.cartItems;
             return cartItemIds.map(id => products.find(product => product.id === id));
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     }
 }
 

@@ -44,11 +44,11 @@ describe('GET /api/stats/{serviceName}', function () {
     let mockConnectionStub;
 
 
-    stubFind = sinon.stub().resolves({
+    stubFind = sinon.stub().returns({
       project: sinon.stub().returnsThis(),
       limit: sinon.stub().returnsThis(),
       skip: sinon.stub().returnsThis(),
-      toArray: sinon.stub().returns([]),
+      toArray: sinon.stub().resolves([]),
     });
 
     mockDb = {

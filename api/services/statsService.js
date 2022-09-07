@@ -18,7 +18,7 @@ const statsService = {
             payload["latency"] = new Date() - db_start;
             return payload;
         }
-        finally { client.close(); }
+        finally { await client.close(); }
     },
 
     async getInventoryStats() {

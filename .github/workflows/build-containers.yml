@@ -57,8 +57,8 @@ jobs:
         with:
           context: spa/.
           build-args: |
-            VUE_APP_GLOBAL_BACKGROUND_COLOR="#000"
-            VUE_APP_GLOBAL_COLOR="#FFF"
+            VUE_APP_GLOBAL_BACKGROUND_COLOR=#000
+            VUE_APP_GLOBAL_COLOR=#FFF
           push: true
           tags: ${{ steps.meta-spa-dark.outputs.tags }}
           labels: ${{ steps.meta-spa-dark.outputs.labels }}

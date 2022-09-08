@@ -43,15 +43,6 @@ jobs:
           tags: ${{ steps.meta-spa.outputs.tags }}
           labels: ${{ steps.meta-spa.outputs.labels }}
 
-      - name: Extract metadata (tags, labels) for api container
-        id: meta-api
-        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
-          tags: |
-            type=sha
-            type=raw,value=latest
-
       - name: Extract metadata (tags, labels) for spa-dark container
         id: meta-spa-dark
         uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a

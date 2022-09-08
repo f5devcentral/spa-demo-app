@@ -18,6 +18,13 @@ export default {
       api_url: localStorage.api_url,
     };
   },
+  beforeCreate() {
+    this.$nextTick(() => {
+      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
+
+      document.querySelector('.product-item').style.color = color;
+    })
+  }
 };
 </script>
 

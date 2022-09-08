@@ -25,7 +25,11 @@ services:
     restart: unless-stopped
 
   spa:
-    build: ./spa
+    build:
+      context: ./spa
+      args:
+        VUE_APP_GLOBAL_COLOR: "#000"
+        VUE_APP_GLOBAL_BACKGROUND_COLOR: "#FFF"
     container_name: spa
     ports:
       - "8081:80"

@@ -15,6 +15,14 @@
 <script>
 export default {
   name: "NavBarComponent",
+  beforeCreate() {
+    this.$nextTick(() => {
+      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
+
+      document.querySelector('#products-link').style.color = color;
+      document.querySelector('#stats-link').style.color = color;
+    })
+  }
 };
 </script>
 
@@ -28,7 +36,6 @@ export default {
 #products-link {
   text-align: center;
   display: block;
-  color: black;
   font-size: 22px;
   left: 32px;
   position: absolute;
@@ -49,7 +56,6 @@ export default {
   position: absolute;
   right: 180px;
   top: 16px;
-  color: black;
 }
 .material-icons.md-48 {
   font-size: 48px;

@@ -52,6 +52,35 @@ jobs:
             type=sha
             type=raw,value=latest
 
+      - name: Extract metadata (tags, labels) for spa-dark container
+        id: meta-spa-dark
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-spa-dark
+          tags: |
+            type=sha
+            type=raw,value=latest
+
+      - name: Build and push spa-dark image
+        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94
+        with:
+          context: spa/.
+          build-args: |
+            VUE_APP_GLOBAL_BACKGROUND_COLOR="#000"
+            VUE_APP_GLOBAL_COLOR="#FFF"
+          push: true
+          tags: ${{ steps.meta-spa-dark.outputs.tags }}
+          labels: ${{ steps.meta-spa-dark.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for api container
+        id: meta-api
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
+          tags: |
+            type=sha
+            type=raw,value=latest
+
       - name: Build and push api image
         uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94
         with:

@@ -1,31 +1,35 @@
 # front-end
 
 ## Project setup
-```
-yarn install
+
+```shell
+npm install
 ```
 
 ### Compiles and hot-reloads for development
-```
-yarn serve
+
+```shell
+npm run serve
 ```
 
 ### Compiles and minifies for production
-```
-yarn build
+
+```shell
+npm run build
 ```
 
 ### Lints and fixes files
-```
-yarn lint
+
+```shell
+npm run lint
 ```
 
 ### Audit and fix security issues
-Since yarn has no automatic updates for security vulnerabilities, you need to install and use the `yarn-autid-fix` package:
-```
-yarn add yarn-audit-fix -D
-npx yarn-audit-fix
+
+```shell
+npm audit fix
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).

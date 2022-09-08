@@ -19,15 +19,24 @@ export default {
     // populate local storage with component URLs
     this.populateLocalStorage();
   },
+  beforeCreate() {
+    this.$nextTick(() => {
+      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
+      const backgroundColor = process.env.VUE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
+
+      document.querySelector('body').style.backgroundColor = backgroundColor;
+      document.querySelector('body').style.color = color;
+      document.querySelector('button').style.color = color;
+      document.querySelector('button').style.backgroundColor = backgroundColor;
+    })
+  }
 };
 </script>
 
 <style>
-* {
+body {
   box-sizing: border-box;
   font-family: Arial;
-  /* background-color: black;
-  color: white; */
 }
 
 #page-wrap {
@@ -37,10 +46,8 @@ export default {
 }
 
 button {
-  background-color: black;
   border: none;
   border-radius: 8px;
-  color: white;
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;

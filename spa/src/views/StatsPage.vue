@@ -141,7 +141,6 @@ export default {
 
 <style>
 body {
-  font-family: "Nunito", sans-serif;
   padding: 50px;
 }
 .container {

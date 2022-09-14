@@ -21,12 +21,12 @@ jobs:
         node:
           - 16
     steps:
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         with:
           node-version: "${{ matrix.node }}"
       - uses: actions/checkout@v2
       - name: "Cache node_modules"
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}

@@ -35,6 +35,12 @@ export default {
       api_url: localStorage.api_url,
     };
   },
+  beforeCreate() {
+    this.$nextTick(() => {
+      const backgroundColor = process.env.VUE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF';
+      document.querySelector('.inventory').style.backgroundColor = backgroundColor;
+    })
+  },
   async created() {
     try {
       // get data
@@ -56,7 +62,6 @@ export default {
 <style scoped>
 .inventory {
   border-radius: 4px;
-  background: #fff;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
   transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
     0.3s box-shadow,

@@ -95,7 +95,6 @@ export default {
 };
 </script>
 <style scoped>
-@import "https://fonts.googleapis.com/css?family=Nunito:200,300,400,600,700,900";
 @import "https://fonts.googleapis.com/icon?family=Material+Icons";
 
 .card {
@@ -174,7 +173,6 @@ export default {
   top: 10px;
   right: 5px;
   max-height: 120px;
-  color: black;
 }
 
 .active {}

@@ -8,6 +8,8 @@ services:
     volumes:
       - ./mongo-seed:/docker-entrypoint-initdb.d
     restart: unless-stopped
+    environment:
+      - SEED_FILE=coffeeProducts.json
 
   api:
     build: ./api
@@ -20,6 +22,7 @@ services:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
       - RECOMMENDATIONS_URL=http://recommendations:8001
+      - IMAGE_DIRECTORY=coffee
     dns:
       - 10.1.1.6
     restart: unless-stopped

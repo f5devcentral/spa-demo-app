@@ -1,0 +1,96 @@
+[
+  {
+    "id": "123",
+    "name": "Tony's Coffee Upland Blend Medium Roast Whole Bean Coffee",
+    "price": "11.49",
+    "description": "Package: 12 oz. Inspiration: \"I just realized: I'm not a morning person. I'm a coffee person.\" - Anonymous",
+    "imageUrl": "/images/tonys-coffee-upland-blend-medium-roast-whole-bean-coffee.png",
+    "averageRating": 4.6
+  },
+  {
+    "id": "234",
+    "name": "Puroast Bourbon Pecan Torte Whole Bean Coffee",
+    "price": "10.49",
+    "description": "Package: 12 oz. Inspiration: \"I have measured out my life with coffee spoons.\" - T.S. Eliot",
+    "imageUrl": "/images/puroast-bourbon-pecan-torte-whole-bean-coffee.png",
+    "averageRating": 4.3
+  },
+  {
+    "id": "345",
+    "name": "Peace Coffee Morning Glory Whole Bean Coffee",
+    "price": "11.99",
+    "description": "Package: 20 oz. Inspiration: \"Friends bring happiness into your life. Best friends bring coffee.\" - Anonymous",
+    "imageUrl": "/images/peace-coffee-morning-glory-whole-bean-coffee.png",
+    "averageRating": 4.7
+  },
+  {
+    "id": "456",
+    "name": "Tim Horton's Original Blend Medium Roast Whole Bean Coffee",
+    "price": "7.99",
+    "description": "Package: 12 oz. Inspiration: \"Never steal a man's coffee.\" - Anthony T. Hincks",
+    "imageUrl": "/images/tim-hortons-original-blend-medium-roast-whole-bean-coffee.png",
+    "averageRating": 4
+  },
+  {
+    "id": "567",
+    "name": "Groundwork Organic Ethiopia Light Roast Whole Bean Coffee",
+    "price": "12.99",
+    "description": "Package: 12 oz. Inspiration: \"Without my morning coffee, I'm just like a dried-up piece of goat.\" - Johann Sebastian Bach",
+    "imageUrl": "/images/groundwork-organic-ethiopia-light-roast-whole-bean-coffee.png",
+    "averageRating": 4.9
+  },
+  {
+    "id": "678",
+    "name": "First Colony Columbian Santa Marta Whole Bean Coffee",
+    "price": "17.99",
+    "description": "Package: 24 oz. Inspiration: \"Coffee is a way of stealing time that should by rights belong to your older self.\" - Terry Pratchett",
+    "imageUrl": "/images/first-colony-columbian-santa-marta-whole-bean-coffee.png",
+    "averageRating": 4.6
+  },
+  {
+    "id": "789",
+    "name": "Cafe Altura Organic Italian Style Dark Roast Whole Bean Coffee",
+    "price": "16.99",
+    "description": "Package: 1.25 lb. Inspiration: \"I orchestrate my mornings to the tune of coffee.\" - Terri Guillemets",
+    "imageUrl": "/images/cafe-altura-organic-italian-style-dark-roast-whole-bean-coffee.png",
+    "averageRating": 3.9
+  },
+  {
+    "id": "890",
+    "name": "Equal Exchange Organic Breakfast Blend Whole Bean Coffee",
+    "description": "Package: 2 lb. Inspiration: \"I just realized: I'm not a morning person. I'm a coffee person.\" - Anonymous",
+    "imageUrl": "/images/equal-exchange-organic-breakfast-blend-whole-bean-coffee.png",
+    "averageRating": 4.7
+  },
+  {
+    "id": "901",
+    "name": "Illy Caffe Medium Roast Whole Bean Coffee",
+    "price": "13.99",
+    "description": "Package: 8.8 oz. Inspiration: \"Without my morning coffee, I'm just like a dried-up piece of goat.\" - Johann Sebastian Bach",
+    "imageUrl": "/images/illy-caffe-medium-roast-whole-bean-coffee.png",
+    "averageRating": 3.6
+  },
+  {
+    "id": "112",
+    "name": "Seattle's Best Dark & Intense Coffee Level 5 Whole Bean Coffee",
+    "price": "6.79",
+    "description": "Package: 12 oz. Inspiration: \"Why, yes, I could start my day without coffee. But I like being able to remember things like how to say words and put on pants.\" - Nanea Hoffman",
+    "imageUrl": "/images/seattles-best-dark--intense-coffee-level-5-whole-bean-coffee.png",
+    "averageRating": 4.8
+  },
+  {
+    "id": "223",
+    "name": "Stumptown Coffee Organic Holler Mountain Whole Bean Coffee",
+    "price": "15.99",
+    "description": "Package: 12 oz. Inspiration: \"Never underestimate the power of a good cup of coffee.\" - Ursula Vernon",
+    "imageUrl": "/images/stumptown-coffee-organic-holler-mountain-whole-bean-coffee.png",
+    "averageRating": 4.1
+  },
+  {
+    "id": "334",
+    "name": "Community Coffee Breakfast Blend Medium Roast Whole Bean Coffee",
+    "description": "Package: 12 oz. Inspiration: \"Our culture runs on coffee and gasoline, the first often tasting like the second.\" - Edward Abbey",
+    "imageUrl": "/images/community-coffee-breakfast-blend-medium-roast-whole-bean-coffee.png",
+    "averageRating": 4.9
+  }
+]

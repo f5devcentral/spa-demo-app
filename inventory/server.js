@@ -19,7 +19,7 @@ app.listen(LISTENER_TCP_PORT, () => {
     console.log(`Server is listening on port ${LISTENER_TCP_PORT}`);
 });
 
-initialize({
+await initialize({
   app,
   apiDoc: ApiDoc,
   dependencies: {

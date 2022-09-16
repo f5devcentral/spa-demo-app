@@ -5,7 +5,7 @@ export default function (recommendationsService) {
 
   async function GET(req, res) {
     try {
-      res.status(200).json(recommendationsService.getRecommendations());
+      res.status(200).json(await recommendationsService.getRecommendations());
     }
     catch (e) {
       res.status(500).json(e.message)

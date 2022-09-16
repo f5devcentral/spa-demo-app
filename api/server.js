@@ -12,7 +12,7 @@ import LocatorService from './services/locatorService.js';
 import StatsService from './services/statsService.js';
 
 const LISTENER_TCP_PORT = 8000;
-const imageFolder = process.env.IMAGE_FOLDER || "beer"
+const imageFolder = process.env.IMAGE_DIRECTORY || "beer"
 const __dirname = path.resolve();
 const app = express();
 

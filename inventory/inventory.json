@@ -1,40 +1,50 @@
-[{
-        "id": "123",
-        "quantity": 20
-    }, {
-        "id": "234",
-        "quantity": 30
-    }, {
-        "id": "345",
-        "quantity": 10
-    }, {
-        "id": "456",
-        "quantity": 2
-    }, {
-        "id": "567",
-        "quantity": 14
-    }, {
-        "id": "678",
-        "quantity": 9
-    }, {
-        "id": "789",
-        "quantity": 5
-    }, {
-        "id": "890",
-        "quantity": 7
-    }, {
-        "id": "901",
-        "quantity": 22
-    },
-    {
-        "id": "112",
-        "quantity": 0
-    },
-    {
-        "id": "223",
-        "quantity": 32
-    }, {
-        "id": "334",
-        "quantity": 11
-    }
+[
+  {
+    "id": "123",
+    "quantity": 20
+  },
+  {
+    "id": "234",
+    "quantity": 30
+  },
+  {
+    "id": "345",
+    "quantity": 10
+  },
+  {
+    "id": "456",
+    "quantity": 2
+  },
+  {
+    "id": "567",
+    "quantity": 14
+  },
+  {
+    "id": "678",
+    "quantity": 9
+  },
+  {
+    "id": "789",
+    "quantity": 5
+  },
+  {
+    "id": "890",
+    "quantity": 7
+  },
+  {
+    "id": "901",
+    "quantity": 22
+  },
+  {
+    "id": "112",
+    "quantity": 0
+  },
+  {
+    "id": "223",
+    "quantity": 32
+  },
+  {
+    "id": "334",
+    "quantity": 11
+  }
 ]

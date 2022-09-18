@@ -87,7 +87,7 @@ describe('GET /api/inventory', function () {
       .set('Accept', 'application/json')
       expect(response.headers["content-type"]).to.match(/json/);
       expect(response.status).to.equal(500);
-      expect(response.body).to.equal("Oops.");
+      expect(response.body).to.deep.equal({ error: "Oops." });
       expect(axiosStub.callCount).to.equal(1);
   });
 });

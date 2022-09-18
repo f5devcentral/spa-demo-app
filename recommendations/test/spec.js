@@ -3,6 +3,7 @@ import request from 'supertest'
 import app from '../server.js'
 import { expect } from 'chai'
 import { stub } from 'sinon';
+import sinon from 'sinon';
 import fs from 'fs/promises';
 
 const allProductsJSONString = `[
@@ -25,6 +26,7 @@ describe('GET /api/api-docs', function () {
     const response = await request(app)
       .get('/api/api-docs')
       .set('Accept', 'application/json')
+
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(200);
     expect(response.body.info.title).to.equal("Brewz Recommendations API.");
@@ -32,15 +34,34 @@ describe('GET /api/api-docs', function () {
 });
 
 describe('GET /api/recommendations', function () {
-  const fsStub = stub(fs, "readFile").resolves(Promise.resolve(allProductsJSONString));
+
+  afterEach(() => {
+    sinon.restore();
+  });
 
   it('Should return 3 products', async function () {
+    const fsStub = stub(fs, "readFile").resolves(Promise.resolve(allProductsJSONString));
+
     const response = await request(app)
       .get('/api/recommendations')
       .set('Accept', 'application/json')
+
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(200);
     expect(response.body.length).to.equal(3);
+    expect(fsStub.callCount).to.equal(1);
+  });
+
+  it('Should emit a 500 error if the products file cannot be loaded', async function () {
+    const fsStub = stub(fs, "readFile").rejects(new Error("Oops."));
+
+    const response = await request(app)
+      .get('/api/recommendations')
+      .set('Accept', 'application/json')
+
+    expect(response.headers["content-type"]).to.match(/json/);
+    expect(response.status).to.equal(500);
+    expect(response.body).to.deep.equal({ error: "Oops." });
     expect(fsStub.callCount).to.equal(1);
   });
 });

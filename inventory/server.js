@@ -7,7 +7,6 @@ import { initialize } from 'express-openapi';
 import ApiDoc from './api-doc.js';
 import InventoryService from './services/inventoryService.js';
 
-
 const LISTENER_TCP_PORT = 8002;
 const __dirname = path.resolve();
 

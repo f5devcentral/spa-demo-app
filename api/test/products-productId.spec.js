@@ -54,9 +54,7 @@ describe('GET /api/products/{productId}', function () {
   });
 
   it('Should throw a 404 error if the product could not be found', async function () {
-    stubFindOne = sinon.stub().resolves(
-      null
-    );
+    stubFindOne = sinon.stub().resolves(null);
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub));
 
     const response = await request(app)

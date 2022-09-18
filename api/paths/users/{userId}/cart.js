@@ -72,8 +72,13 @@ export default function (productsService) {
       res.status(200).json(cartItems)
     }
     catch (e) {
-      res.status(404).json(e.message)
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      if (e instanceof NotFoundError) {
+        res.status(404).json(formatErrorAsJson(e.message))
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      } else {
+        res.status(500).json(formatErrorAsJson(e.message))
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      }
     }
   }
 

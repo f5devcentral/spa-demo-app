@@ -173,12 +173,30 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(mockInstanceStub.close.called).to.be.true;
   });
 
+  it('Should emit a 404 error if the user does not exist in the database', async function () {
+    stubFindOne = sinon.stub().resolves(null);
+    mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub));
+
+    const response = await request(app)
+      .post('/api/users/99999/cart')
+      .set('Accept', 'application/json')
+      .send({ productId: '112' })
+
+    expect(response.headers["content-type"]).to.match(/json/);
+    expect(response.status).to.equal(404);
+    expect(response.body).to.deep.equal({ error: "Could not find the user!" });
+    expect(stubFindOne.callCount).to.equal(1);
+    expect(mockConnectionStub.callCount).to.equal(1);
+    expect(mockInstanceStub.close.called).to.be.true;
+  });
+
   it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."));
 
     const response = await request(app)
-      .get('/api/users/12345/cart')
+      .post('/api/users/12345/cart')
       .set('Accept', 'application/json')
+      .send({ productId: '112' })
 
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(500);

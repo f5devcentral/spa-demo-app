@@ -67,6 +67,7 @@ const productsService = {
                 $addToSet: { cartItems: productId },
             });
             const user = await db.collection('users').findOne({ id: userId });
+            if (!user) throw new NotFoundError("Could not find the user!");
             const products = await db.collection('products').find({}).toArray();
             const cartItemIds = user.cartItems;
             return cartItemIds.map(id => products.find(product => product.id === id));

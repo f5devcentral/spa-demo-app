@@ -65,7 +65,6 @@ export default function (locatorService) {
       const { serviceName } = req.params;
       const { url } = req.body;
 
-      if (!url) { res.status(404).json(formatErrorAsJson("a service url is required")); }
       const service = locatorService.setServiceUrl(serviceName, url)
       res.status(200).json(service);
     }

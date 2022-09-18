@@ -1,18 +1,11 @@
-import { formatErrorAsJson } from '../helpers/utils.js'
-
 export default function (locatorService) {
   let operations = {
     GET
   };
 
   async function GET(req, res) {
-    try {
-      res.status(200).json(locatorService.getAllServices());
-    }
-    catch (e) {
-      res.status(500).json(formatErrorAsJson(e.message))
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
-    }
+    res.status(200).json(locatorService.getAllServices());
+
   }
 
   GET.apiDoc = {

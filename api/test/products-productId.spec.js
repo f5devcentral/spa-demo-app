@@ -75,7 +75,7 @@ describe('GET /api/products/{productId}', function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."));
 
     const response = await request(app)
-      .get('/api/products')
+      .get('/api/products/12345')
       .set('Accept', 'application/json')
 
     expect(response.headers["content-type"]).to.match(/json/);

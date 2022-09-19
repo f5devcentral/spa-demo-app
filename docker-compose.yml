@@ -9,8 +9,7 @@ services:
       - ./mongo-seed:/docker-entrypoint-initdb.d
     restart: unless-stopped
     environment:
-      # - SEED_FILE=coffeeProducts.json
-      - SEED_FILE=beerProducts.json
+      - SEED_FILE=${PRODUCT_TYPE}Products.json
 
   api:
     build: ./api
@@ -23,8 +22,7 @@ services:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
       - RECOMMENDATIONS_URL=http://recommendations:8001
-      # - IMAGE_DIRECTORY=coffee
-      - IMAGE_DIRECTORY=beer
+      - IMAGE_DIRECTORY=${PRODUCT_TYPE}
     dns:
       - 10.1.1.6
     restart: unless-stopped
@@ -59,14 +57,13 @@ services:
     build:
       context: .
       dockerfile: ./recommendations/Dockerfile
-      args:
-        # SEED_FILE: ./mongo-seed/coffeeProducts.json
-        SEED_FILE: ./mongo-seed/beerProducts.json
     container_name: recs
     ports:
       - "8001:8001"
     links:
       - api
+    environment:
+      - SEED_FILE=${PRODUCT_TYPE}Products.json
     restart: unless-stopped
 
   inventory:

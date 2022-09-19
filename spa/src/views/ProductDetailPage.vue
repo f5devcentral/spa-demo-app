@@ -19,7 +19,7 @@
         Item is already in cart
       </button>
     </div>
-    <RecommendationsComponent v-if="showService('recommendations')" />
+    <RecommendationsComponent :id="this.product.id" v-if="showService('recommendations')" />
   </div>
   <NotFoundPage v-else />
 </template>

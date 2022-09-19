@@ -11,6 +11,7 @@ import ProductsGridComponent from "../components/ProductsGridComponent.vue";
 
 export default {
   name: "RecommendationsComponent",
+  props: ["id"],
   components: {
     ProductsGridComponent,
   },
@@ -23,7 +24,7 @@ export default {
   },
   async created() {
     axios
-      .get(`${this.recommendations_url}/api/recommendations`)
+      .get(`${this.recommendations_url}/api/recommendations/${this.id}`)
       .then((result) => {
         const products = result.data;
         this.products = products;

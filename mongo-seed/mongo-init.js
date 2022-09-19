@@ -1,7 +1,9 @@
 print('Start #################################################################');
 
-var products = JSON.parse(fs.readFileSync('/docker-entrypoint-initdb.d/initProducts.json', 'utf8'))
-var users = JSON.parse(fs.readFileSync('/docker-entrypoint-initdb.d/initUsers.json', 'utf8'))
+const seedFile = process.env.SEED_FILE || "beerProducts.json"
+
+const products = JSON.parse(fs.readFileSync(`/docker-entrypoint-initdb.d/${seedFile}`, 'utf8'))
+const users = JSON.parse(fs.readFileSync('/docker-entrypoint-initdb.d/initUsers.json', 'utf8'))
 
 db = db.getSiblingDB('vue-db');
 

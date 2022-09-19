@@ -12,12 +12,13 @@ import LocatorService from './services/locatorService.js';
 import StatsService from './services/statsService.js';
 
 const LISTENER_TCP_PORT = 8000;
+const imageFolder = process.env.IMAGE_DIRECTORY || "beer"
 const __dirname = path.resolve();
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
-app.use('/images', express.static(path.join(__dirname, 'assets')));
+app.use('/images', express.static(path.join(__dirname, `assets/${imageFolder}`)));
 
 app.listen(LISTENER_TCP_PORT, () => {
   console.log(`Server is listening on port ${LISTENER_TCP_PORT}`);

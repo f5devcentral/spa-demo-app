@@ -1,3 +1,5 @@
+import { formatErrorAsJson } from '../helpers/utils.js'
+
 export default function (productsService) {
   let operations = {
     GET
@@ -8,7 +10,7 @@ export default function (productsService) {
       res.status(200).json(await productsService.getProducts());
     }
     catch (e) {
-      res.status(500).json(e.message)
+      res.status(500).json(formatErrorAsJson(e.message))
       console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
     }
   }

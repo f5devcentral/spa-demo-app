@@ -54,9 +54,7 @@ describe('GET /api/products/{productId}', function () {
   });
 
   it('Should throw a 404 error if the product could not be found', async function () {
-    stubFindOne = sinon.stub().resolves(
-      null
-    );
+    stubFindOne = sinon.stub().resolves(null);
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub));
 
     const response = await request(app)
@@ -75,12 +73,12 @@ describe('GET /api/products/{productId}', function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."));
 
     const response = await request(app)
-      .get('/api/products')
+      .get('/api/products/12345')
       .set('Accept', 'application/json')
 
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(500);
-    expect(response.body).to.equal("Cannot read properties of undefined (reading 'close')");
+    expect(response.body).to.deep.equal({error: "Cannot read properties of undefined (reading 'close')"});
     expect(mockConnectionStub.callCount).to.equal(1);
   });
 });

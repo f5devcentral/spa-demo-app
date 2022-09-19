@@ -1,9 +1,10 @@
-import inventory from '../inventory.json' assert {type: 'json'};
+import fs from 'fs/promises';
 
 const inventoryService = {
-    getInventory() {
-        return inventory;
-    },
+  async getInventory() {
+    const data = await fs.readFile('./inventory.json', { encoding: 'utf8' });
+    return JSON.parse(data);
+  },
 }
 
 export default inventoryService;

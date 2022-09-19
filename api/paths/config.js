@@ -4,13 +4,8 @@ export default function (locatorService) {
   };
 
   async function GET(req, res) {
-    try {
-      res.status(200).json(locatorService.getAllServices());
-    }
-    catch (e) {
-      res.status(500).json(e.message)
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
-    }
+    res.status(200).json(locatorService.getAllServices());
+
   }
 
   GET.apiDoc = {

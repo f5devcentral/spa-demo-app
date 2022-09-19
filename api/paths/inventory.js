@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { formatErrorAsJson } from '../helpers/utils.js'
 
 export default function (locatorService) {
   let operations = {
@@ -13,7 +14,7 @@ export default function (locatorService) {
       res.status(200).json(inventory);
     }
     catch (e) {
-      res.status(500).json(e.message)
+      res.status(500).json(formatErrorAsJson(e.message))
       console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
     }
   }

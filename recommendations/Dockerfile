@@ -6,12 +6,15 @@ WORKDIR /app
 # --------- Builder ---------
 FROM base as builder
 
-COPY package*.json ./
+ARG SEED_FILE
+ENV SEED_FILE $SEED_FILE
+
+COPY ./recommendations/package*.json ./
 
 RUN npm install
 
-COPY ./ ./
-COPY ./products.json ./
+COPY ./recommendations ./
+COPY $SEED_FILE ./products.json
 
 RUN npm prune --production 
 

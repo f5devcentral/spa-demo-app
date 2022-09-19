@@ -2,7 +2,8 @@
   "all": true,
   "exclude": [
     "coverage/**/**.js",
-    "node_modules/**/**.js"
+    "node_modules/**/**.js",
+    "test/**/**.js"
   ],
   "reporter": [
     "html",

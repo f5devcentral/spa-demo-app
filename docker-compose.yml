@@ -1,13 +1,16 @@
 version: "3.3"
 services:
   mongodb:
-    image: mongo
+    image: mongo:6
     container_name: mongodb
     ports:
       - 27017:27017
     volumes:
       - ./mongo-seed:/docker-entrypoint-initdb.d
     restart: unless-stopped
+    environment:
+      # - SEED_FILE=coffeeProducts.json
+      - SEED_FILE=beerProducts.json
 
   api:
     build: ./api
@@ -20,6 +23,8 @@ services:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
       - RECOMMENDATIONS_URL=http://recommendations:8001
+      # - IMAGE_DIRECTORY=coffee
+      - IMAGE_DIRECTORY=beer
     dns:
       - 10.1.1.6
     restart: unless-stopped
@@ -37,8 +42,26 @@ services:
       - api
     restart: unless-stopped
 
+  spa-dark:
+    build:
+      context: ./spa
+      args:
+        VUE_APP_GLOBAL_COLOR: "#FFF"
+        VUE_APP_GLOBAL_BACKGROUND_COLOR: "#000"
+    container_name: spa-dark
+    ports:
+      - "8082:80"
+    links:
+      - api
+    restart: unless-stopped
+
   recommendations:
-    build: ./recommendations
+    build:
+      context: .
+      dockerfile: ./recommendations/Dockerfile
+      args:
+        # SEED_FILE: ./mongo-seed/coffeeProducts.json
+        SEED_FILE: ./mongo-seed/beerProducts.json
     container_name: recs
     ports:
       - "8001:8001"

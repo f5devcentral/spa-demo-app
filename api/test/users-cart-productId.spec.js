@@ -93,7 +93,7 @@ describe('DELETE /api/users/{userId}/cart/{productId}', function () {
 
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(500);
-    expect(response.body).to.equal("Cannot read properties of undefined (reading 'close')");
+    expect(response.body).to.deep.equal({ error: "Cannot read properties of undefined (reading 'close')" });
     expect(mockConnectionStub.callCount).to.equal(1);
   });
 });

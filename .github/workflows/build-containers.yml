@@ -92,7 +92,11 @@ jobs:
       - name: Build and push recommendations image
         uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94
         with:
-          context: recommendations/.
+          context: .
+          file: recommendations/Dockerfile
+          build-args: |
+            # SEED_FILE=./mongo-seed/coffeeProducts.json
+            SEED_FILE=./mongo-seed/beerProducts.json
           push: true
           tags: ${{ steps.meta-recommendations.outputs.tags }}
           labels: ${{ steps.meta-recommendations.outputs.labels }}

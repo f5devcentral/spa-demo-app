@@ -7,7 +7,6 @@ import { initialize } from 'express-openapi';
 import ApiDoc from './api-doc.js';
 import InventoryService from './services/inventoryService.js';
 
-
 const LISTENER_TCP_PORT = 8002;
 const __dirname = path.resolve();
 
@@ -19,7 +18,7 @@ app.listen(LISTENER_TCP_PORT, () => {
     console.log(`Server is listening on port ${LISTENER_TCP_PORT}`);
 });
 
-initialize({
+await initialize({
   app,
   apiDoc: ApiDoc,
   dependencies: {

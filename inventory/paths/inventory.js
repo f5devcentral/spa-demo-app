@@ -1,3 +1,5 @@
+import { formatErrorAsJson } from '../helpers/utils.js'
+
 export default function (inventoryService) {
   let operations = {
     GET
@@ -5,10 +7,10 @@ export default function (inventoryService) {
 
   async function GET(req, res) {
     try {
-      res.status(200).json(inventoryService.getInventory());
+      res.status(200).json(await inventoryService.getInventory());
     }
     catch (e) {
-      res.status(500).json(e.message)
+      res.status(500).json(formatErrorAsJson(e.message))
       console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
     }
   }

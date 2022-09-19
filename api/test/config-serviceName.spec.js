@@ -70,17 +70,6 @@ describe('POST /api/config/{serviceName}', function () {
     expect(response.body).to.deep.equal({ name: 'inventory', url: 'http://inventory:8002' });
   });
 
-  // NOTE: This test is disabled as it is an example of a test that cannot bass without a parameter that the OAS framework required.
-  // This is essentially an unreachable code scenario. Leaving it here for illustrative purposes. This rest will show as "pending" in test runs.
-  xit('Should throw an error when updating a service without including a URL', async function () {
-    const response = await request(app)
-      .post('/api/config/recommendations')
-      .set('Accept', 'application/json')
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(404);
-    expect(response.body).to.deep.equal({ error: 'a service url is required' });
-  });
-
   it('Should throw an error when attempting to set the URL of an unknown service', async function () {
     const response = await request(app)
       .post('/api/config/blah')

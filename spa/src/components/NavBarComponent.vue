@@ -3,27 +3,18 @@
     <router-link to="/products" id="products-link">
       <h1>BREWZ</h1>
     </router-link>
-    <router-link to="/cart" id="cart-link">
-      <button>Shopping Cart</button>
-    </router-link>
-    <router-link to="/stats" id="stats-link">
-      <span class="material-icons md-48"> info </span>
-    </router-link>
+    <button v-on:click="$router.push('/cart')" class="nav-link">Shopping Cart</button>
+    <SignOutButton v-if="isAuthenticated" class="nav-link" />
+    <SignInButton v-else class="nav-link" />
   </div>
 </template>
 
-<script>
-export default {
-  name: "NavBarComponent",
-  beforeCreate() {
-    this.$nextTick(() => {
-      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
+<script setup lang="ts">
+import { useIsAuthenticated } from '../composition-api/useIsAuthenticated';
+import SignInButton from "./SignInButton.vue";
+import SignOutButton from "./SignOutButton.vue";
 
-      document.querySelector('#products-link').style.color = color;
-      document.querySelector('#stats-link').style.color = color;
-    })
-  }
-};
+const isAuthenticated = useIsAuthenticated();
 </script>
 
 <style scoped>
@@ -37,9 +28,7 @@ export default {
   text-align: center;
   display: block;
   font-size: 22px;
-  left: 32px;
-  position: absolute;
-  top: 16px;
+  float: left;
   text-decoration: none;
 }
 
@@ -47,16 +36,17 @@ export default {
   margin: 0;
 }
 
-#cart-link {
-  position: absolute;
-  right: 16px;
-  top: 16px;
+.nav-link {
+  float: right;
+  margin-left: 5px;
+  margin-right: 5px;
 }
-#stats-link {
-  position: absolute;
-  right: 180px;
-  top: 16px;
+
+.auth {
+  float: right;
+  padding-top: 10px;
 }
+
 .material-icons.md-48 {
   font-size: 48px;
 }

@@ -5,25 +5,24 @@
       <h3>{{ product.name }}</h3>
       <p>${{ product.price }}</p>
     </div>
-    <button
-      class="remove-button"
-      v-on:click="$emit('remove-from-cart', product.id)"
-    >
+    <button class="remove-button" v-if="!readOnly" v-on:click="$emit('remove-from-cart', product.id)">
       Remove From Cart
     </button>
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: "ProductsListItemComponent",
-  props: ["product"],
+  props: ["product", "readOnly"],
   data() {
     return {
       api_url: localStorage.api_url,
     };
   },
-};
+});
 </script>
 
 <style scoped>

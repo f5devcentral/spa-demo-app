@@ -3,11 +3,10 @@
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
     "spellright.language": [
-        "en"
+      "en"
     ],
     "spellright.documentTypes": [
-        "markdown",
-        "latex",
-        "plaintext"
+      "markdown",
+      "latex"
     ]
 }

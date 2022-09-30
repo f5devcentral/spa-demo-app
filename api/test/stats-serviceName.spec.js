@@ -37,6 +37,20 @@ describe('GET /api/stats/{serviceName}', function () {
     expect(axiosStub.callCount).to.equal(1);
   });
 
+  it('Should return service stats when called with known serviceName: recommendations', async function () {
+    const axiosStub = stub(axios, "get").resolves(Promise.resolve({}));
+
+    const response = await request(app)
+      .get('/api/stats/recommendations')
+      .set('Accept', 'application/json')
+
+    expect(response.headers["content-type"]).to.match(/json/);
+    expect(response.status).to.equal(200);
+    expect(response.body.host).to.equal('http://recommendations:8001');
+    expect(response.body.latency).to.be.a('number');
+    expect(axiosStub.callCount).to.equal(1);
+  });
+
   it('Should return service stats when called with known serviceName: database', async function () {
     let stubFind;
     let mockDb;

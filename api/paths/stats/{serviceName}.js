@@ -10,7 +10,8 @@ export default function (statsService) {
         stats = await statsService.getDatabaseStats();
         break;
       case "inventory":
-        stats = await statsService.getInventoryStats();
+      case "recommendations":
+        stats = await statsService.getRestApiStats(req.params.serviceName);
         break;
       default:
         stats = {};

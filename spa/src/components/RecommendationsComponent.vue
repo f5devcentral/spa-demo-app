@@ -5,11 +5,12 @@
   </div>
 </template>
    
-<script>
+<script lang="ts">
 import axios from "axios";
+import { defineComponent } from "vue";
 import ProductsGridComponent from "../components/ProductsGridComponent.vue";
 
-export default {
+export default defineComponent({
   name: "RecommendationsComponent",
   props: ["id"],
   components: {
@@ -34,7 +35,7 @@ export default {
         this.recIsActive = false;
       });
   },
-};
+});
 </script>
 
 <style scoped>

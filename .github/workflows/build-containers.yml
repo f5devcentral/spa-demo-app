@@ -114,3 +114,20 @@ jobs:
           push: true
           tags: ${{ steps.meta-inventory.outputs.tags }}
           labels: ${{ steps.meta-inventory.outputs.labels }}
+
+      - name: Extract metadata (tags, labels) for checkout container
+        id: meta-checkout
+        uses: docker/metadata-action@69f6fc9d46f2f8bf0d5491e4aabe0bb8c6a4678a
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-inventory
+          tags: |
+            type=sha
+            type=raw,value=latest
+
+      - name: Build and push checkout image
+        uses: docker/build-push-action@c84f38281176d4c9cdb1626ffafcd6b3911b5d94
+        with:
+          context: checkout/.
+          push: true
+          tags: ${{ steps.meta-checkout.outputs.tags }}
+          labels: ${{ steps.meta-checkout.outputs.labels }}

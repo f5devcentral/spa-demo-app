@@ -1,4 +1,8 @@
-# front-end
+# front-end SPA application
+
+## About
+
+This is a VueJS SPA application with a large portion of the OIDC/OAuth 2 code borrowed from the [MSAL Vue 3 example](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/samples/msal-browser-samples/vue3-sample-app/).
 
 ## Project setup
 

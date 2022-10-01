@@ -22,7 +22,6 @@ import { defineComponent } from 'vue'
 import axios from "axios";
 import { Address, Product, OrderProduct, Order } from '../types'
 import ProductsListComponent from "../components/ProductsListComponent.vue";
-import { useIsAuthenticated } from '../composition-api/useIsAuthenticated';
 import { ElMessageBox } from 'element-plus'
 import { h } from 'vue'
 
@@ -41,8 +40,7 @@ export default defineComponent({
         city: "Seattle",
         state: "WA",
         zip: "98104"
-      } as Address,
-      isAuthenticated: {} as any
+      } as Address
     };
   },
   computed: {
@@ -95,7 +93,6 @@ export default defineComponent({
     }
   },
   async created() {
-    this.isAuthenticated = useIsAuthenticated();
     const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
     const cartItems = result.data;
     this.cartItems = cartItems;

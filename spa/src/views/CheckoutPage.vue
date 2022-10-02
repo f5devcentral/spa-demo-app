@@ -13,7 +13,7 @@
         <h3 id="total-price">Total: ${{ totalPrice }}</h3>
       </div>
     </div>
-    <button id="checkout-button" v-on:click="checkout()">Complete Purchase</button>
+    <button id="checkout-button" v-on:click="checkout(cartItems)">Complete Purchase</button>
   </div>
 </template>
 
@@ -24,6 +24,9 @@ import { Address, Product, OrderProduct, Order } from '../types'
 import ProductsListComponent from "../components/ProductsListComponent.vue";
 import { ElMessageBox } from 'element-plus'
 import { h } from 'vue'
+import { useMsal } from '../composition-api/useMsal';
+import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser";
+import { tokenRequest } from "../authConfig";
 
 export default defineComponent({
   name: "CartPage",
@@ -32,6 +35,8 @@ export default defineComponent({
   },
   data() {
     return {
+      instance: useMsal().instance,
+      inProgress: useMsal().inProgress,
       api_url: localStorage.api_url,
       checkout_url: localStorage.checkout_url,
       cartItems: [] as Product[],
@@ -57,13 +62,35 @@ export default defineComponent({
       );
       this.cartItems = result.data;
     },
-    async checkout() {
+    async getToken() {
+      const tokenResponse = await this.instance.acquireTokenSilent({
+        ...tokenRequest
+      }).catch(async (e) => {
+        if (e instanceof InteractionRequiredAuthError) {
+          await this.instance.acquireTokenRedirect(tokenRequest);
+        }
+        throw e;
+      });
+      if (this.inProgress === InteractionStatus.None) {
+        return tokenResponse.accessToken
+      }
+    },
+    async checkout(items: Product[]) {
       try {
-        const orderProducts = this.cartItems.map<OrderProduct>((p) => { return { id: p.id } })
+        const token = await this.getToken()
+        if (token === undefined) {
+          this.showError('getting an API token')
+          return
+        }
+        const orderProducts = items.map<OrderProduct>((p) => { return { id: p.id } })
         const { data: response } = await axios.post(`${this.checkout_url}/api/order`, {
           products: orderProducts,
           shippingAddress: this.shippingAddress
-        } as Order);
+        } as Order, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
         ElMessageBox({
           title: 'Purchase Complete',
           message: h('p', null, [
@@ -78,18 +105,21 @@ export default defineComponent({
         })
       }
       catch (error) {
-        ElMessageBox({
-          title: 'Error',
-          message: h('p', null, [
-            h('div', { class: 'bottom-room' }, 'There was an error completing your purchase.'),
-            h('span', { class: 'top-room' }, 'Please call our support line: '),
-            h('span', { class: 'bold bigger' }, '+800 11 ASK 4 F5'),
-          ]),
-          type: 'error',
-          confirmButtonText: 'OK',
-          closeOnClickModal: false
-        })
+        this.showError('completing your purchase')
       }
+    },
+    showError(message: string) {
+      ElMessageBox({
+        title: 'Error',
+        message: h('p', null, [
+          h('div', { class: 'bottom-room' }, `There was an error ${message}.`),
+          h('span', { class: 'top-room' }, 'Please call our support line: '),
+          h('span', { class: 'bold bigger' }, '+800 11 ASK 4 F5'),
+        ]),
+        type: 'error',
+        confirmButtonText: 'OK',
+        closeOnClickModal: false
+      })
     }
   },
   async created() {

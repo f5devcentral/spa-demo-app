@@ -2,14 +2,14 @@
   <div class="inventory" v-if="inventoryIsActive">
     <div class="instore">
       <input class="input" type="radio" name="inventory" :disabled="inventory == 0" />
-      <h3>In Store</h3>
+      <h3 class="input-label">In Store</h3>
       <p v-if="inventory == 0">Sorry, we're out of stock!</p>
       <p v-else-if="inventory >= 5">Good news, {{ inventory }} in stock!</p>
       <p v-else>Order quick, only {{ inventory }} in stock!</p>
     </div>
     <div class="delivery">
       <input class="input" type="radio" name="inventory" />
-      <h3>Delivery</h3>
+      <h3 class="input-label">Delivery</h3>
       <p>We'll ship it to your home</p>
     </div>
   </div>
@@ -81,17 +81,11 @@ export default defineComponent({
   padding: 4px 4px 4px 4px;
 }
 
-.instore .input {
-  position: absolute;
-  top: 43px;
-  left: 3px;
-  max-height: 120px;
+.input-label {
+  display: inline;
 }
-
-.delivery .input {
-  position: absolute;
-  top: 43px;
-  left: 250px;
-  max-height: 120px;
+.instore .input, .delivery .input {
+margin-left: 0px;
+margin-right: 10px;
 }
 </style>

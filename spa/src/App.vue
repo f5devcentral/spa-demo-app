@@ -28,6 +28,7 @@ export default defineComponent({
     localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null;
     localStorage.inventory_url = localStorage.inventory_url || default_uri || null;
     localStorage.checkout_url = localStorage.checkout_url || default_uri || null;
+    localStorage.userId = localStorage.userId || '12345';
   },
   beforeCreate() {
     this.$nextTick(() => {

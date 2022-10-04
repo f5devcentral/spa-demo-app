@@ -21,8 +21,9 @@ export interface Address {
 
 
 export interface Order {
-  products: OrderProduct[],
+  products: OrderProduct[]
   shippingAddress: Address
+  userId: string
 }
 
 export interface ConfigService {

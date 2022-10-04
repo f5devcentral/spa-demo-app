@@ -6,13 +6,10 @@ export default function (checkoutService) {
   };
 
   async function POST(req, res) {
-    const { products } = req.body;
-    if (products.length > 0) {
-      res.status(200).json({ orderId: checkoutService.createOrder() })
-    }
-    else {
-      res.status(400).json(formatErrorAsJson("No products in order!"))
-    }
+    const { products, userId } = req.body;
+    if (products.length === 0) res.status(400).json(formatErrorAsJson("No products in order!"))
+    else if (!userId) res.status(400).json(formatErrorAsJson("No userId in order!"))
+    else res.status(200).json({ orderId: await checkoutService.createOrder(userId) })
   }
 
   POST.apiDoc = {

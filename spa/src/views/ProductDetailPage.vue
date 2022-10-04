@@ -59,7 +59,7 @@ export default defineComponent({
   },
   methods: {
     async addToCart() {
-      await axios.post(`${this.api_url}/api/users/12345/cart`, {
+      await axios.post(`${this.api_url}/api/users/${localStorage.userId}/cart`, {
         productId: this.$route.params.id,
       });
       this.showSuccessMessage = true;
@@ -77,7 +77,7 @@ export default defineComponent({
       this.product = product;
 
       const { data: cartItems } = await axios.get(
-        `${this.api_url}/api/users/12345/cart`
+        `${this.api_url}/api/users/${localStorage.userId}/cart`
       );
       this.cartItems = cartItems;
     }

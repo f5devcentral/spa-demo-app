@@ -160,6 +160,7 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(response.status).to.equal(200);
     expect(response.body.length).to.equal(3);
     expect(stubFind.callCount).to.equal(1);
+    expect(stubUpdateOne.callCount).to.equal(1);
     expect(mockConnectionStub.callCount).to.equal(1);
     expect(mockInstanceStub.close.called).to.be.true;
   });
@@ -177,6 +178,7 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(response.status).to.equal(404);
     expect(response.body).to.deep.equal({ error: "Could not find the user!" });
     expect(stubFindOne.callCount).to.equal(1);
+    expect(stubUpdateOne.callCount).to.equal(1);
     expect(mockConnectionStub.callCount).to.equal(1);
     expect(mockInstanceStub.close.called).to.be.true;
   });
@@ -192,6 +194,8 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(response.headers["content-type"]).to.match(/json/);
     expect(response.status).to.equal(500);
     expect(response.body).to.deep.equal({ error: "Cannot read properties of undefined (reading 'close')" });
+    expect(stubFind.callCount).to.equal(0);
+    expect(stubUpdateOne.callCount).to.equal(0);
     expect(mockConnectionStub.callCount).to.equal(1);
   });
 });

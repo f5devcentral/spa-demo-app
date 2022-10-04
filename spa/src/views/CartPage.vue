@@ -3,7 +3,7 @@
     <h1>Shopping Cart</h1>
     <ProductsListComponent :products="cartItems" v-on:remove-from-cart="removeFromCart($event)" />
     <h3 id="total-price">Total: ${{ totalPrice }}</h3>
-    <button id="checkout-button" v-on:click="checkIfAuthenticated()">Proceed to Checkout</button>
+    <button id="checkout-button" v-on:click="checkIfAuthenticated()" :disabled="cartItems.length === 0">Proceed to Checkout</button>
   </div>
 </template>
 
@@ -37,7 +37,7 @@ export default defineComponent({
   methods: {
     async removeFromCart(productId: string) {
       const result = await axios.delete<Product[]>(
-        `${this.api_url}/api/users/12345/cart/${productId}`
+        `${this.api_url}/api/users/${localStorage.userId}/cart/${productId}`
       );
       this.cartItems = result.data;
     },
@@ -55,7 +55,7 @@ export default defineComponent({
   },
   async created() {
     this.isAuthenticated = useIsAuthenticated();
-    const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
+    const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`);
     const cartItems = result.data;
     this.cartItems = cartItems;
   },

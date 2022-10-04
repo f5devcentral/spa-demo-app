@@ -13,7 +13,7 @@
         <h3 id="total-price">Total: ${{ totalPrice }}</h3>
       </div>
     </div>
-    <button id="checkout-button" v-on:click="checkout(cartItems)">Complete Purchase</button>
+    <button id="checkout-button" :disabled="cartItems.length === 0" v-on:click="checkout(cartItems)">Complete Purchase</button>
   </div>
 </template>
 
@@ -58,7 +58,7 @@ export default defineComponent({
   methods: {
     async removeFromCart(productId: string) {
       const result = await axios.delete<Product[]>(
-        `${this.api_url}/api/users/12345/cart/${productId}`
+        `${this.api_url}/api/users/${localStorage.userId}/cart/${productId}`
       );
       this.cartItems = result.data;
     },
@@ -85,7 +85,8 @@ export default defineComponent({
         const orderProducts = items.map<OrderProduct>((p) => { return { id: p.id } })
         const { data: response } = await axios.post(`${this.checkout_url}/api/order`, {
           products: orderProducts,
-          shippingAddress: this.shippingAddress
+          shippingAddress: this.shippingAddress,
+          userId: localStorage.userId
         } as Order, {
           headers: {
             Authorization: 'Bearer ' + token
@@ -123,7 +124,7 @@ export default defineComponent({
     }
   },
   async created() {
-    const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
+    const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`);
     const cartItems = result.data;
     this.cartItems = cartItems;
   },

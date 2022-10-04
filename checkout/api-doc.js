@@ -48,6 +48,9 @@ const apiDoc = {
           },
           shippingAddress: {
             $ref: '#/components/schemas/Address'
+          },
+          userId: {
+            type: 'string'
           }
         },
         required: ['products', 'shippingAddress']

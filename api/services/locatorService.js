@@ -1,6 +1,6 @@
-import { NotFoundError } from '../helpers/customErrors.js'
+import { NotFoundError } from "../helpers/customErrors.js"
 
-const ERR_SVC_NOT_FOUND = "service not found";
+const ERR_SVC_NOT_FOUND = "service not found"
 
 let services = [
   {
@@ -19,24 +19,24 @@ let services = [
 
 const locatorService = {
   getService(serviceName) {
-    const service = services.find(service => service.name === serviceName);
+    const service = services.find(service => service.name === serviceName)
     if (service) {
-      return service;
+      return service
     }
     else {
-      throw new NotFoundError(ERR_SVC_NOT_FOUND);
+      throw new NotFoundError(ERR_SVC_NOT_FOUND)
     }
   },
 
   getAllServices() {
-    return services;
+    return services
   },
 
   setServiceUrl(serviceName, url) {
     const service = this.getService(serviceName)
-    service.url = url;
-    return service;
+    service.url = url
+    return service
   }
 }
 
-export default locatorService;
+export default locatorService

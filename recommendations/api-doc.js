@@ -1,36 +1,36 @@
 const apiDoc = {
-  openapi: '3.0.0',
+  openapi: "3.0.0",
   servers: [
-    { url: '/api' },
+    { url: "/api" },
   ],
   info: {
-    title: 'Brewz Recommendations API.',
-    version: '1.0.0'
+    title: "Brewz Recommendations API.",
+    version: "1.0.0"
   },
   components: {
     schemas: {
       Recommendation: {
-        type: 'object',
+        type: "object",
         properties: {
-          id: { type: 'string' },
-          name: { type: 'string' },
-          price: { type: 'string' },
-          description: { type: 'string' },
-          imageUrl: { type: 'string' },
-          averageRating: { type: 'string' }
+          id: { type: "string" },
+          name: { type: "string" },
+          price: { type: "string" },
+          description: { type: "string" },
+          imageUrl: { type: "string" },
+          averageRating: { type: "string" }
         },
-        required: ['name']
+        required: ["name"]
       },
       ServiceStatus: {
-        type: 'object',
+        type: "object",
         properties: {
-          host: { type: 'string' },
-          latency: { type: 'string' }
+          host: { type: "string" },
+          latency: { type: "string" }
         }
       }
     }
   },
   paths: {}
-};
+}
 
-export default apiDoc;
+export default apiDoc

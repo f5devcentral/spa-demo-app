@@ -1,15 +1,15 @@
-import { NotFoundError } from '../../../helpers/customErrors.js'
-import { formatErrorAsJson } from '../../../helpers/utils.js'
+import { NotFoundError } from "../../../helpers/customErrors.js"
+import { formatErrorAsJson } from "../../../helpers/utils.js"
 
 export default function (productsService) {
   let operations = {
     GET,
     POST
-  };
+  }
 
   async function GET(req, res) {
     try {
-      const cart = await productsService.getUserCart(req.params.userId);
+      const cart = await productsService.getUserCart(req.params.userId)
       res.status(200).json(cart)
     }
     catch (e) {
@@ -18,42 +18,42 @@ export default function (productsService) {
         res.status(404).json(e.message)
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
 
   GET.apiDoc = {
-    summary: 'Returns all products in user cart',
-    operationId: 'getUserCart',
+    summary: "Returns all products in user cart",
+    operationId: "getUserCart",
     parameters: [
       {
-        name: 'userId',
-        in: 'path',
+        name: "userId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'User Id',
+        description: "User Id",
       }
     ],
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -61,48 +61,48 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
 
   async function POST(req, res) {
-    const { userId } = req.params;
-    const { productId } = req.body;
     try {
-      const cartItems = await productsService.addItemToUserCart(userId, productId);
+      const { userId } = req.params
+      const { productId } = req.body
+      const cartItems = await productsService.addItemToUserCart(userId, productId)
       res.status(200).json(cartItems)
     }
     catch (e) {
       if (e instanceof NotFoundError) {
         res.status(404).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
 
   POST.apiDoc = {
-    summary: 'Add a product to user cart',
-    operationId: 'addItemToUserCart',
+    summary: "Add a product to user cart",
+    operationId: "addItemToUserCart",
     parameters: [
       {
-        name: 'userId',
-        in: 'path',
+        name: "userId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'User Id',
+        description: "User Id",
       }
     ],
     requestBody: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: {
-            type: 'object',
+            type: "object",
             properties: {
               productId:
-                { type: 'string' }
+                { type: "string" }
             }
           }
         }
@@ -111,22 +111,22 @@ export default function (productsService) {
     },
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -134,7 +134,7 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

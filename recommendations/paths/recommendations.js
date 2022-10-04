@@ -1,42 +1,42 @@
-import { formatErrorAsJson } from '../helpers/utils.js'
+import { formatErrorAsJson } from "../helpers/utils.js"
 
 export default function (recommendationsService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
     try {
-      res.status(200).json(await recommendationsService.getRecommendations());
+      res.status(200).json(await recommendationsService.getRecommendations())
     }
     catch (e) {
       res.status(500).json(formatErrorAsJson(e.message))
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
   GET.apiDoc = {
-    summary: 'Returns product recommendations.',
-    operationId: 'getRecommendations',
+    summary: "Returns product recommendations.",
+    operationId: "getRecommendations",
     parameters: [],
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Recommendation'
+                $ref: "#/components/schemas/Recommendation"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -44,7 +44,7 @@ export default function (recommendationsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

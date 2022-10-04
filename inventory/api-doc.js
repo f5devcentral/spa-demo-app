@@ -1,25 +1,25 @@
 const apiDoc = {
-  openapi: '3.0.0',
+  openapi: "3.0.0",
   servers: [
-    { url: '/api' },
+    { url: "/api" },
   ],
   info: {
-    title: 'Brewz Inventory API.',
-    version: '1.0.0'
+    title: "Brewz Inventory API.",
+    version: "1.0.0"
   },
   components: {
     schemas: {
       ProductInventory: {
-        type: 'object',
+        type: "object",
         properties: {
-          id: { type: 'string' },
-          quantity: { type: 'number' }
+          id: { type: "string" },
+          quantity: { type: "number" }
         },
-        required: ['id']
+        required: ["id"]
       }
     }
   },
   paths: {}
-};
+}
 
-export default apiDoc;
+export default apiDoc

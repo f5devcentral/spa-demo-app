@@ -1,35 +1,34 @@
 export default function (locatorService) {
   let operations = {
     GET
-  };
+  }
 
-  async function GET(req, res) {
-    res.status(200).json(locatorService.getAllServices());
-
+  function GET(req, res) {
+    res.status(200).json(locatorService.getAllServices())
   }
 
   GET.apiDoc = {
-    summary: 'Returns remote service URLs.',
-    operationId: 'getAllServices',
+    summary: "Returns remote service URLs.",
+    operationId: "getAllServices",
     parameters: [],
     responses: {
       200: {
-        description: 'A list of remote services.',
+        description: "A list of remote services.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/ConfigService'
+                $ref: "#/components/schemas/ConfigService"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -37,7 +36,7 @@ export default function (locatorService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

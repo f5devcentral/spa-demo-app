@@ -1,61 +1,61 @@
-import { formatErrorAsJson } from '../../../../helpers/utils.js'
+import { formatErrorAsJson } from "../../../../helpers/utils.js"
 
 export default function (productsService) {
   let operations = {
     DELETE
-  };
+  }
 
   async function DELETE(req, res) {
     try {
-      const { userId, productId } = req.params;
-      const cartItems = await productsService.deleteItemFromUserCart(userId, productId);
-      res.status(200).json(cartItems);
+      const { userId, productId } = req.params
+      const cartItems = await productsService.deleteItemFromUserCart(userId, productId)
+      res.status(200).json(cartItems)
     }
     catch (e) {
-      res.status(500).json(formatErrorAsJson(e.message));
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      res.status(500).json(formatErrorAsJson(e.message))
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
   DELETE.apiDoc = {
-    summary: 'Deletes a specific item in user cart',
-    operationId: 'deleteItemFromUserCart',
+    summary: "Deletes a specific item in user cart",
+    operationId: "deleteItemFromUserCart",
     parameters: [
       {
-        name: 'userId',
-        in: 'path',
+        name: "userId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'User Id',
+        description: "User Id",
       },
       {
-        name: 'productId',
-        in: 'path',
+        name: "productId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Product Id',
+        description: "Product Id",
       }
     ],
     responses: {
       200: {
-        description: 'A list of products currently in the user cart.',
+        description: "A list of products currently in the user cart.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -63,7 +63,7 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

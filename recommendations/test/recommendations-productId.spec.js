@@ -1,10 +1,10 @@
-import 'mocha'
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon';
-import sinon from 'sinon';
-import fs from 'fs/promises';
+import "mocha"
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import fs from "fs/promises"
 
 const allProductsJSONString = `[
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -19,61 +19,61 @@ const allProductsJSONString = `[
   { "_id": "112", "id": "112", "name": "Samuel Adams Utopias", "price": "239.99", "description": "Massachusetts- American Strong Ale- 28% ABV. BARREL AGED. 2019 vintage is a blend of batches, some aged up to 26 years in a variety of barrels. The '19 recipe includes Utopias aged in Aquavit, Carcavelos and Ruby Port barrels as well as Cognac and Madeira finishing barrels.", "imageUrl": "/images/samueladams.png", "averageRating": "4.6" },
   { "_id": "223", "id": "223", "name": "Kentucky Bourbon Barrel Ale", "price": "11.99", "description": "Kentucky- American Strong Ale- 8+%ABV. A unique sipping beer with the distinctive nose of a well-crafted bourbon. Aged for up to 6 weeks in freshly decanted bourbon barrels from some of Kentucky's finest distilleries. Subtle flavors of vanilla and oak. Pleasantly smooth and robust.", "imageUrl": "/images/kentucky.png", "averageRating": "4.3" },
   { "_id": "334", "id": "334", "name": "Ayinger Celebrator Doppelbock", "price": "11.99", "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.", "imageUrl": "/images/ayinger.png", "averageRating": "4.3" }
-]`;
+]`
 
-describe('GET /api/api-docs', function () {
-  it('Should return the OpenAPI spec', async function () {
+describe("GET /api/api-docs", function () {
+  it("Should return the OpenAPI spec", async function () {
     const response = await request(app)
-      .get('/api/api-docs')
-      .set('Accept', 'application/json')
+      .get("/api/api-docs")
+      .set("Accept", "application/json")
 
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body.info.title).to.equal("Brewz Recommendations API.");
-  });
-});
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(200)
+    expect(response.body.info.title).to.equal("Brewz Recommendations API.")
+  })
+})
 
-describe('GET /api/recommendations/{productId}', function () {
+describe("GET /api/recommendations/{productId}", function () {
 
   afterEach(() => {
-    sinon.restore();
-  });
+    sinon.restore()
+  })
 
-  it('Should return 3 products excluding the specified product', async function () {
-    const fsStub = stub(fs, "readFile").resolves(Promise.resolve(allProductsJSONString));
-
-    const response = await request(app)
-      .get('/api/recommendations/789')
-      .set('Accept', 'application/json')
-
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body.length).to.equal(3);
-    expect(response.body).to.not.include({ "_id": "789", "id": "789", "name": "Chimay Grande Reserve Blue", "price": "24.99", "description": "Belgium- Belgian Strong Dark Ale- 9% ABV. TRAPPIST ALE. The color of this beer is dark and inviting. A rich and lively sweetness gives way to a drier finish. A peppery spiciness is balanced by thyme, cedar & a touch of nutmeg. BeerAdvocate's #25 of 25 All-Time Top Beers 2008.", "imageUrl": "/images/chimay.png", "averageRating": "4.9" });
-    expect(fsStub.callCount).to.equal(1);
-  });
-
-  it('Should emit a 500 error if the products file cannot be loaded', async function () {
-    const fsStub = stub(fs, "readFile").rejects(new Error("Oops."));
+  it("Should return 3 products excluding the specified product", async function () {
+    const fsStub = stub(fs, "readFile").resolves(Promise.resolve(allProductsJSONString))
 
     const response = await request(app)
-      .get('/api/recommendations/999')
-      .set('Accept', 'application/json')
+      .get("/api/recommendations/789")
+      .set("Accept", "application/json")
 
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(500);
-    expect(response.body).to.deep.equal({ error: "Oops." });
-    expect(fsStub.callCount).to.equal(1);
-  });
-});
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(200)
+    expect(response.body.length).to.equal(3)
+    expect(response.body).to.not.include({ "_id": "789", "id": "789", "name": "Chimay Grande Reserve Blue", "price": "24.99", "description": "Belgium- Belgian Strong Dark Ale- 9% ABV. TRAPPIST ALE. The color of this beer is dark and inviting. A rich and lively sweetness gives way to a drier finish. A peppery spiciness is balanced by thyme, cedar & a touch of nutmeg. BeerAdvocate's #25 of 25 All-Time Top Beers 2008.", "imageUrl": "/images/chimay.png", "averageRating": "4.9" })
+    expect(fsStub.callCount).to.equal(1)
+  })
 
-describe('GET /api/stats', function () {
-  it('Should return an empty JSON payload', async function () {
+  it("Should emit a 500 error if the products file cannot be loaded", async function () {
+    const fsStub = stub(fs, "readFile").rejects(new Error("Oops."))
+
     const response = await request(app)
-      .get('/api/stats')
-      .set('Accept', 'application/json')
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body).to.be.empty;
-  });
-});
+      .get("/api/recommendations/999")
+      .set("Accept", "application/json")
+
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(500)
+    expect(response.body).to.deep.equal({ error: "Oops." })
+    expect(fsStub.callCount).to.equal(1)
+  })
+})
+
+describe("GET /api/stats", function () {
+  it("Should return an empty JSON payload", async function () {
+    const response = await request(app)
+      .get("/api/stats")
+      .set("Accept", "application/json")
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(200)
+    expect(response.body).to.be.empty
+  })
+})

@@ -1,42 +1,42 @@
-import { formatErrorAsJson } from '../helpers/utils.js'
+import { formatErrorAsJson } from "../helpers/utils.js"
 
 export default function (inventoryService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
     try {
-      res.status(200).json(await inventoryService.getInventory());
+      res.status(200).json(await inventoryService.getInventory())
     }
     catch (e) {
       res.status(500).json(formatErrorAsJson(e.message))
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
   GET.apiDoc = {
-    summary: 'Returns inventory information for all products.',
-    operationId: 'getInventory',
+    summary: "Returns inventory information for all products.",
+    operationId: "getInventory",
     parameters: [],
     responses: {
       200: {
-        description: 'A list of product inventory items.',
+        description: "A list of product inventory items.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/ProductInventory'
+                $ref: "#/components/schemas/ProductInventory"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -44,7 +44,7 @@ export default function (inventoryService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

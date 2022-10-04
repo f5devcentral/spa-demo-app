@@ -1,52 +1,52 @@
 export default function (statsService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
-    let stats;
+    let stats
     switch (req.params.serviceName) {
       case "database":
-        stats = await statsService.getDatabaseStats();
-        break;
+        stats = await statsService.getDatabaseStats()
+        break
       case "inventory":
       case "recommendations":
-        stats = await statsService.getRestApiStats(req.params.serviceName);
-        break;
+        stats = await statsService.getRestApiStats(req.params.serviceName)
+        break
       default:
-        stats = {};
+        stats = {}
     }
-    res.status(200).json(stats);
+    res.status(200).json(stats)
   }
 
   GET.apiDoc = {
-    summary: 'Returns statistics for a specific service name.',
-    operationId: 'get_Stats',
+    summary: "Returns statistics for a specific service name.",
+    operationId: "get_Stats",
     parameters: [
       {
-        name: 'serviceName',
-        in: 'path',
+        name: "serviceName",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Service Name',
+        description: "Service Name",
       }
     ],
     responses: {
       200: {
-        description: 'A single remote service performance stats.',
+        description: "A single remote service performance stats.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              $ref: '#/components/schemas/ServiceStatus'
+              $ref: "#/components/schemas/ServiceStatus"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -54,7 +54,7 @@ export default function (statsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

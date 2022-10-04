@@ -7,16 +7,17 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import ProductsGridItemComponent from './ProductsGridItemComponent.vue';
 
-export default {
+export default defineComponent({
     name: 'ProductsGridComponent',
     props: ['products'],
     components: {
         ProductsGridItemComponent,
     },
-}
+})
 </script>
 
 <style scoped>

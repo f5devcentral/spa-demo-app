@@ -21,10 +21,10 @@ const statsService = {
         finally { await client.close(); }
     },
 
-    async getInventoryStats() {
+    async getRestApiStats(serviceName) {
         let payload = {};
         const inv_start = new Date();
-        const service = locatorService.getService("inventory");
+        const service = locatorService.getService(serviceName);
         await axios.get(
             `${service.url}/api/stats`, { timeout: 15 }
         );

@@ -3,15 +3,19 @@
     <h1>Shopping Cart</h1>
     <ProductsListComponent :products="cartItems" v-on:remove-from-cart="removeFromCart($event)" />
     <h3 id="total-price">Total: ${{ totalPrice }}</h3>
-    <button id="checkout-button">Proceed to Checkout</button>
+    <button id="checkout-button" v-on:click="checkIfAuthenticated()" :disabled="cartItems.length === 0">Proceed to Checkout</button>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 import axios from "axios";
+import { Product } from '../types'
 import ProductsListComponent from "../components/ProductsListComponent.vue";
+import { useIsAuthenticated } from '../composition-api/useIsAuthenticated';
+import { ElMessageBox } from 'element-plus'
 
-export default {
+export default defineComponent({
   name: "CartPage",
   components: {
     ProductsListComponent,
@@ -19,30 +23,43 @@ export default {
   data() {
     return {
       api_url: localStorage.api_url,
-      cartItems: [],
+      cartItems: [] as Product[],
+      isAuthenticated: {} as any
     };
   },
   computed: {
     totalPrice() {
       return this.cartItems
-        .reduce((sum, item) => sum + Number(item.price), 0)
+        .reduce((sum, item: Product) => sum + Number(item.price), 0)
         .toFixed(2);
     },
   },
   methods: {
-    async removeFromCart(productId) {
-      const result = await axios.delete(
-        `${this.api_url}/api/users/12345/cart/${productId}`
+    async removeFromCart(productId: string) {
+      const result = await axios.delete<Product[]>(
+        `${this.api_url}/api/users/${localStorage.userId}/cart/${productId}`
       );
       this.cartItems = result.data;
     },
+    checkIfAuthenticated() {
+      if (this.isAuthenticated) {
+        this.$router.push("/checkout");
+      }
+      else {
+        ElMessageBox.alert('You must sign in before you can complete your purchase.', 
+        'Sign In Required', {
+          confirmButtonText: 'OK'
+        })
+      }
+    }
   },
   async created() {
-    const result = await axios.get(`${this.api_url}/api/users/12345/cart`);
+    this.isAuthenticated = useIsAuthenticated();
+    const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`);
     const cartItems = result.data;
     this.cartItems = cartItems;
   },
-};
+});
 </script>
 
 <style scoped>

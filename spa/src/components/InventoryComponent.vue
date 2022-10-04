@@ -1,29 +1,26 @@
 <template>
   <div class="inventory" v-if="inventoryIsActive">
     <div class="instore">
-      <input
-        class="input"
-        type="radio"
-        name="inventory"
-        :disabled="inventory == 0"
-      />
-      <h3>In Store</h3>
+      <input class="input" type="radio" name="inventory" :disabled="inventory == 0" />
+      <h3 class="input-label">In Store</h3>
       <p v-if="inventory == 0">Sorry, we're out of stock!</p>
       <p v-else-if="inventory >= 5">Good news, {{ inventory }} in stock!</p>
       <p v-else>Order quick, only {{ inventory }} in stock!</p>
     </div>
     <div class="delivery">
       <input class="input" type="radio" name="inventory" />
-      <h3>Delivery</h3>
+      <h3 class="input-label">Delivery</h3>
       <p>We'll ship it to your home</p>
     </div>
   </div>
 </template>
    
-<script>
+<script lang="ts">
 import axios from "axios";
+import { defineComponent } from "vue";
+import { ProductInventory } from "../types";
 
-export default {
+export default defineComponent({
   name: "InventoryComponent",
   props: ["id"],
 
@@ -35,12 +32,6 @@ export default {
       api_url: localStorage.api_url,
     };
   },
-  beforeCreate() {
-    this.$nextTick(() => {
-      const backgroundColor = process.env.VUE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF';
-      document.querySelector('.inventory').style.backgroundColor = backgroundColor;
-    })
-  },
   async created() {
     try {
       // get data
@@ -48,7 +39,7 @@ export default {
         `${this.api_url}/api/inventory`
       );
       // find inventory for product
-      inventory.forEach((item) => {
+      inventory.forEach((item: ProductInventory) => {
         if (item.id === this.id) this.inventory = item["quantity"];
       });
     } catch (err) {
@@ -56,7 +47,7 @@ export default {
       this.inventoryIsActive = false;
     }
   },
-};
+});
 </script>
 
 <style scoped>
@@ -90,16 +81,11 @@ export default {
   padding: 4px 4px 4px 4px;
 }
 
-.instore .input {
-  position: absolute;
-  top: 43px;
-  left: 3px;
-  max-height: 120px;
+.input-label {
+  display: inline;
 }
-.delivery .input {
-  position: absolute;
-  top: 43px;
-  left: 250px;
-  max-height: 120px;
+.instore .input, .delivery .input {
+margin-left: 0px;
+margin-right: 10px;
 }
 </style>

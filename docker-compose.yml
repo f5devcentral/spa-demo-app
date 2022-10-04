@@ -22,6 +22,7 @@ services:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
       - RECOMMENDATIONS_URL=http://recommendations:8001
+      - CHECKOUT_URL=http://checkout:8003
       - IMAGE_DIRECTORY=${PRODUCT_TYPE}
     dns:
       - 10.1.1.6
@@ -31,8 +32,8 @@ services:
     build:
       context: ./spa
       args:
-        VUE_APP_GLOBAL_COLOR: "#000"
-        VUE_APP_GLOBAL_BACKGROUND_COLOR: "#FFF"
+        VITE_APP_GLOBAL_COLOR: "#000"
+        VITE_APP_GLOBAL_BACKGROUND_COLOR: "#FFF"
     container_name: spa
     ports:
       - "8081:80"
@@ -44,8 +45,8 @@ services:
     build:
       context: ./spa
       args:
-        VUE_APP_GLOBAL_COLOR: "#FFF"
-        VUE_APP_GLOBAL_BACKGROUND_COLOR: "#000"
+        VITE_APP_GLOBAL_COLOR: "#FFF"
+        VITE_APP_GLOBAL_BACKGROUND_COLOR: "#000"
     container_name: spa-dark
     ports:
       - "8082:80"
@@ -73,4 +74,11 @@ services:
       - "8002:8002"
     links:
       - api
+    restart: unless-stopped
+
+  checkout:
+    build: ./checkout
+    container_name: checkout
+    ports:
+      - "8003:8003"
     restart: unless-stopped

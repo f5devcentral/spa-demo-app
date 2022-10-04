@@ -1,14 +1,14 @@
 <template>
   <div id="page-wrap" v-if="product" :key="product.id">
     <div id="img-wrap">
-      <img v-if="product.imageUrl" v-bind:src="this.api_url + product.imageUrl" />
+      <img v-if="product.imageUrl" v-bind:src="api_url + product.imageUrl" />
     </div>
     <div id="product-details">
       <h1 id="product-name">{{ product.name }}</h1>
       <h3 id="product-price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <InventoryComponent :id="this.product.id" v-if="showService('inventory')" />
+      <InventoryComponent :id="product.id" v-if="showService('inventory')" />
       <button id="add-to-cart" v-if="!itemIsInCart && !showSuccessMessage" v-on:click="addToCart">
         Add to Cart
       </button>
@@ -19,18 +19,20 @@
         Item is already in cart
       </button>
     </div>
-    <RecommendationsComponent :id="this.product.id" v-if="showService('recommendations')" />
+    <RecommendationsComponent :id="product.id" v-if="showService('recommendations')" />
   </div>
   <NotFoundPage v-else />
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import axios from "axios";
-import NotFoundPage from "./NotFoundPage";
-import RecommendationsComponent from "../components/RecommendationsComponent";
-import InventoryComponent from "../components/InventoryComponent";
+import { Product } from "../types"
+import NotFoundPage from "./NotFoundPage.vue";
+import RecommendationsComponent from "../components/RecommendationsComponent.vue";
+import InventoryComponent from "../components/InventoryComponent.vue";
 
-export default {
+export default defineComponent({
   name: "ProductDetailPage",
   components: {
     NotFoundPage,
@@ -39,20 +41,25 @@ export default {
   },
   data() {
     return {
-      product: {},
-      cartItems: [],
+      product: {} as Product,
+      cartItems: [] as Product[],
       showSuccessMessage: false,
       api_url: localStorage.api_url,
     };
   },
   computed: {
-    itemIsInCart() {
+    itemIsInCart(): boolean {
       return this.cartItems.some((item) => item.id === this.product.id);
     },
   },
+  watch: {
+    '$route'() {
+      this.loadProduct(this.$route.params.id as string)
+    }
+  },
   methods: {
     async addToCart() {
-      await axios.post(`${this.api_url}/api/users/12345/cart`, {
+      await axios.post(`${this.api_url}/api/users/${localStorage.userId}/cart`, {
         productId: this.$route.params.id,
       });
       this.showSuccessMessage = true;
@@ -60,30 +67,25 @@ export default {
         this.$router.push("/products");
       }, 1500);
     },
-    showService(serviceName) {
-      switch (localStorage.getItem(serviceName + "_url")) {
-        case null:
-        case "null":
-        case "":
-        case undefined:
-          return false;
-        default:
-          return true;
-      }
+    showService(serviceName: string): boolean {
+      return localStorage.getItem(serviceName + "_url") !== null
     },
+    async loadProduct(id: string) {
+      const { data: product } = await axios.get(
+        `${this.api_url}/api/products/${id}`
+      );
+      this.product = product;
+
+      const { data: cartItems } = await axios.get(
+        `${this.api_url}/api/users/${localStorage.userId}/cart`
+      );
+      this.cartItems = cartItems;
+    }
   },
   async created() {
-    const { data: product } = await axios.get(
-      `${this.api_url}/api/products/${this.$route.params.id}`
-    );
-    this.product = product;
-
-    const { data: cartItems } = await axios.get(
-      `${this.api_url}/api/users/12345/cart`
-    );
-    this.cartItems = cartItems;
+    await this.loadProduct(this.$route.params.id as string)
   },
-};
+});
 </script>
 
 <style scoped>
@@ -94,11 +96,14 @@ export default {
 }
 
 #img-wrap {
-  text-align: center;
+  height: 400px;
+  display: flex;
+  justify-content: center;
 }
 
-img {
+#img-wrap img {
   width: 400px;
+  height: 400px;
 }
 
 #product-details {

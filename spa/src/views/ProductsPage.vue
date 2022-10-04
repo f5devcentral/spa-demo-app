@@ -4,28 +4,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import axios from "axios";
-import storage from "../mixins/storage";
+import { defineComponent } from "vue"
 import ProductsGridComponent from "../components/ProductsGridComponent.vue";
+import { Product } from "../types"
 
-export default {
+export default defineComponent({
   name: "ProductsPage",
   components: {
     ProductsGridComponent,
   },
-  mixins: [storage],
   data() {
     return {
       api_url: localStorage.api_url,
-      products: [],
+      products: [] as Product[],
     };
   },
   async created() {
-    const result = await axios.get(`${this.api_url}/api/products`);
-    const products = result.data;
-    this.products = products;
+    const result = await axios.get<Product[]>(`${localStorage.getItem("api_url")}/api/products`);
+    this.products = result.data;
   },
-};
+});
 </script>
-

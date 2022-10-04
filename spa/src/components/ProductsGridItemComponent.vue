@@ -9,23 +9,18 @@
   </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
   name: "ProductsGridItemComponent",
   props: ["product"],
   data() {
     return {
       api_url: localStorage.api_url,
     };
-  },
-  beforeCreate() {
-    this.$nextTick(() => {
-      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
-
-      document.querySelector('.product-item').style.color = color;
-    })
   }
-};
+});
 </script>
 
 <style scoped>

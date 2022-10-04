@@ -16,7 +16,8 @@
       "env": {
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
-        "RECOMMENDATIONS_URL": "http://localhost:8001"
+        "RECOMMENDATIONS_URL": "http://localhost:8001",
+        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -31,7 +32,8 @@
       "env": {
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
-        "RECOMMENDATIONS_URL": "http://localhost:8001"
+        "RECOMMENDATIONS_URL": "http://localhost:8001",
+        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -46,7 +48,24 @@
       "env": {
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
-        "RECOMMENDATIONS_URL": "http://localhost:8001"
+        "RECOMMENDATIONS_URL": "http://localhost:8001",
+        "CHECKOUT_URL": "http://localhost:8003"
+      }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Checkout API",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${workspaceFolder}/checkout/server.js",
+      "cwd": "${workspaceFolder}/checkout",
+      "env": {
+        "MONGO_URL": "localhost",
+        "INVENTORY_URL": "http://localhost:8002",
+        "RECOMMENDATIONS_URL": "http://localhost:8001",
+        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -78,6 +97,16 @@
         "${file}"
       ],
       "cwd": "${workspaceRoot}/recommendations"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Current Checkout API Test",
+      "program": "${workspaceFolder}/checkout/node_modules/mocha/bin/_mocha",
+      "args": [
+        "${file}"
+      ],
+      "cwd": "${workspaceRoot}/checkout"
     }
   ]
 }

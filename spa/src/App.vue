@@ -1,42 +1,63 @@
 <template>
-  <div id="app">
+  <div id="brewz">
     <NavBarComponent />
-    <router-view :key="$route.name + ($route.params.id || '')" />
+    <router-view :key="$route.name || '' + ($route.params.id || '')" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import NavBarComponent from "./components/NavBarComponent.vue";
-import storage from "./mixins/storage";
 
-export default {
+export default defineComponent({
   name: "App",
   components: {
     NavBarComponent,
   },
-  mixins: [storage],
+  data: () => {
+    return {
+      color: import.meta.env.VITE_APP_GLOBAL_COLOR || '#000',
+      backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
+    }
+  },
   async created() {
     // populate local storage with component URLs
-    this.populateLocalStorage();
+    const default_uri = `${window.location.protocol}//${window.location.host}`;
+    localStorage.spa_url = default_uri || null;
+    localStorage.api_url = localStorage.api_url || default_uri || null;
+    localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null;
+    localStorage.inventory_url = localStorage.inventory_url || default_uri || null;
+    localStorage.checkout_url = localStorage.checkout_url || default_uri || null;
+    localStorage.userId = localStorage.userId || '12345';
   },
   beforeCreate() {
     this.$nextTick(() => {
-      const color = process.env.VUE_APP_GLOBAL_COLOR || '#000'
-      const backgroundColor = process.env.VUE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
-
-      document.querySelector('body').style.backgroundColor = backgroundColor;
-      document.querySelector('body').style.color = color;
-      document.querySelector('button').style.color = color;
-      document.querySelector('button').style.backgroundColor = backgroundColor;
+      const backgroundColor = import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
+      const bodyElement = document.querySelector('html') as HTMLElement
+      bodyElement.style.backgroundColor = backgroundColor;
     })
   }
-};
+});
 </script>
 
 <style>
+h1, h2, h3 {
+  color: v-bind(color);
+  background-color: v-bind(backgroundColor);
+}
+
 body {
   box-sizing: border-box;
   font-family: Arial;
+  margin: 0px;
+}
+
+#brewz {
+  box-sizing: border-box;
+  font-family: Arial;
+  color: v-bind(color);
+  padding: 8px;
+  background-color: v-bind(backgroundColor);
 }
 
 #page-wrap {
@@ -54,4 +75,21 @@ button {
   outline: 0;
   padding: 16px;
 }
+
+.bold {
+  font-size: larger;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.top-room {
+  margin-top: 6px;
+}
+
+.bottom-room {
+  margin-bottom: 6px;
+}
+
 </style>

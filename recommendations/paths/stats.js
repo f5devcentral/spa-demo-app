@@ -1,10 +1,10 @@
 export default function () {
   let operations = {
     GET
-  };
+  }
 
-  async function GET(req, res) {
-    res.status(200).json({});
+  function GET(req, res) {
+    res.status(200).json({})
   }
 
   GET.apiDoc = {
@@ -34,7 +34,7 @@ export default function () {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

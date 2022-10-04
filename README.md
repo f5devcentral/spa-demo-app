@@ -14,7 +14,7 @@ This application was created to help train people on the [F5 Distributed Cloud S
 
 ### Frontend
 
-Vue.JS application that simulates a shopping cart application.
+Vue.JS application written in TypeScript that simulates a shopping cart application.
 
 - Environment: Internet facing
 
@@ -42,19 +42,13 @@ Node.JS microservice that will tell the local store inventory.  Note, this micro
 
 - Environment: Internal, accessibly by the API server
 
+### Checkout
+
+Node.JS microservice that will complete the ordering process.
+
+- Environment: Internet facing
+
 ## Features
-
-### Stats Page
-
-The stats page provides information for the various components that make up this application:
-
-- service URL
-- Latency
-- Historic latency graph
-
-![Stats Page](./assets/stats.png)
-
-NOTE: If a component is offline, a component card such as in the image above will turn red.
 
 ### Product Detail
 
@@ -79,7 +73,8 @@ cd <service folder here>
 export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
 export RECOMMENDATIONS_URL="http://recommendations:8001"
-npm run dev
+export CHECKOUT_URL="http://checkout:8003"
+npm start
 ```
 
 #### Tests
@@ -107,8 +102,6 @@ npm run serve
 
 You will also need to update the *./spa/.env* with the correct API server URL.
 
-### 
-
 ### Docker Compose
 
 You can use the docker-compose file leveraged in production for development as well.
@@ -129,11 +122,13 @@ Then start your front-end or back-end as shown above.
 
 This code is based on the work of [Shaun Wassell](https://www.linkedin.com/in/shaun-wassell?trk=lil_course&lipi=urn%3Ali%3Apage%3Ad_learning_content%3BEJRJvvk4SzmhYz%2Bf1ZJBUw%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_learning_content-view_on_linkedin) and his [Creating and Hosting a Full-Stack Site LinkedIn Learning course](https://www.linkedin.com/learning/vue-js-creating-and-hosting-a-full-stack-site/).
 
-I have extended his demo to:
+I have extended this demo to:
 
 - run components in docker containers
 - abstract API and image URLs
 - seed MongoDB
 - recommendations microservice
+- checkout (ordering) microservice
 - store inventory simulation  
 - stats page for all services
+- use OIDC and OAuth 2 for authentication/authorization to spa app and backend services via JWT

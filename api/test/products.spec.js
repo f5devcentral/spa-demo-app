@@ -1,10 +1,10 @@
 
-import request from 'supertest';
-import app from '../server.js';
-import { expect } from 'chai';
-import { stub } from 'sinon';
-import sinon from 'sinon';
-import { MongoClient } from 'mongodb';
+import request from 'supertest'
+import app from '../server.js'
+import { expect } from 'chai'
+import { stub } from 'sinon'
+import sinon from 'sinon'
+import { MongoClient } from 'mongodb'
 
 const allProducts = [
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -19,13 +19,13 @@ const allProducts = [
   { "_id": "112", "id": "112", "name": "Samuel Adams Utopias", "price": "239.99", "description": "Massachusetts- American Strong Ale- 28% ABV. BARREL AGED. 2019 vintage is a blend of batches, some aged up to 26 years in a variety of barrels. The '19 recipe includes Utopias aged in Aquavit, Carcavelos and Ruby Port barrels as well as Cognac and Madeira finishing barrels.", "imageUrl": "/images/samueladams.png", "averageRating": "4.6" },
   { "_id": "223", "id": "223", "name": "Kentucky Bourbon Barrel Ale", "price": "11.99", "description": "Kentucky- American Strong Ale- 8+%ABV. A unique sipping beer with the distinctive nose of a well-crafted bourbon. Aged for up to 6 weeks in freshly decanted bourbon barrels from some of Kentucky's finest distilleries. Subtle flavors of vanilla and oak. Pleasantly smooth and robust.", "imageUrl": "/images/kentucky.png", "averageRating": "4.3" },
   { "_id": "334", "id": "334", "name": "Ayinger Celebrator Doppelbock", "price": "11.99", "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.", "imageUrl": "/images/ayinger.png", "averageRating": "4.3" }
-];
+]
 
 describe('GET /api/products', function () {
-  let stubFind;
-  let mockDb;
-  let mockInstanceStub;
-  let mockConnectionStub;
+  let stubFind
+  let mockDb
+  let mockInstanceStub
+  let mockConnectionStub
 
   beforeEach(() => {
 
@@ -34,15 +34,15 @@ describe('GET /api/products', function () {
       limit: sinon.stub().returnsThis(),
       skip: sinon.stub().returnsThis(),
       toArray: sinon.stub().resolves(allProducts),
-    });
+    })
 
     mockDb = {
       collection: () => {
         return {
           find: stubFind
-        };
+        }
       }
-    };
+    }
 
     mockInstanceStub = {
       db: () => mockDb,
@@ -51,34 +51,34 @@ describe('GET /api/products', function () {
   })
 
   afterEach(() => {
-    sinon.restore();
-  });
+    sinon.restore()
+  })
 
   it('Should return 12 products', async function () {
-    mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub));
+    mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
       .get('/api/products')
       .set('Accept', 'application/json')
 
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(200);
-    expect(response.body.length).to.equal(12);
-    expect(stubFind.callCount).to.equal(1);
-    expect(mockConnectionStub.callCount).to.equal(1);
-    expect(mockInstanceStub.close.called).to.be.true;
-  });
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(200)
+    expect(response.body.length).to.equal(12)
+    expect(stubFind.callCount).to.equal(1)
+    expect(mockConnectionStub.callCount).to.equal(1)
+    expect(mockInstanceStub.close.called).to.be.true
+  })
 
   it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
-    mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."));
+    mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
     const response = await request(app)
       .get('/api/products')
       .set('Accept', 'application/json')
 
-    expect(response.headers["content-type"]).to.match(/json/);
-    expect(response.status).to.equal(500);
-    expect(response.body).to.deep.equal({error: "Cannot read properties of undefined (reading 'close')"});
-    expect(mockConnectionStub.callCount).to.equal(1);
-  });
-});
+    expect(response.headers["content-type"]).to.match(/json/)
+    expect(response.status).to.equal(500)
+    expect(response.body).to.deep.equal({error: "Cannot read properties of undefined (reading 'close')"})
+    expect(mockConnectionStub.callCount).to.equal(1)
+  })
+})

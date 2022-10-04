@@ -1,15 +1,25 @@
+import { RequestInvalidError } from '../helpers/customErrors.js'
 import { formatErrorAsJson } from '../helpers/utils.js'
 
 export default function (checkoutService) {
   let operations = {
     POST
-  };
+  }
 
   async function POST(req, res) {
-    const { products, userId } = req.body;
-    if (products.length === 0) res.status(400).json(formatErrorAsJson("No products in order!"))
-    else if (!userId) res.status(400).json(formatErrorAsJson("No userId in order!"))
-    else res.status(200).json({ orderId: await checkoutService.createOrder(userId) })
+    try {
+      const { userId, products } = req.body
+      const orderId = await checkoutService.createOrder(userId, products)
+      res.status(200).json({ orderId: orderId })
+    }
+    catch (e) {
+      if (e instanceof RequestInvalidError) {
+        res.status(400).json(formatErrorAsJson(e.message))
+      } else {
+        res.status(500).json(formatErrorAsJson(e.message))
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
+      }
+    }
   }
 
   POST.apiDoc = {
@@ -47,7 +57,7 @@ export default function (checkoutService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

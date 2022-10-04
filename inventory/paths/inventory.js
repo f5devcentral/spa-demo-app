@@ -3,15 +3,15 @@ import { formatErrorAsJson } from '../helpers/utils.js'
 export default function (inventoryService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
     try {
-      res.status(200).json(await inventoryService.getInventory());
+      res.status(200).json(await inventoryService.getInventory())
     }
     catch (e) {
       res.status(500).json(formatErrorAsJson(e.message))
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
@@ -44,7 +44,7 @@ export default function (inventoryService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

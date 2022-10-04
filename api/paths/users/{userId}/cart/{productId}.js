@@ -3,17 +3,17 @@ import { formatErrorAsJson } from '../../../../helpers/utils.js'
 export default function (productsService) {
   let operations = {
     DELETE
-  };
+  }
 
   async function DELETE(req, res) {
     try {
-      const { userId, productId } = req.params;
-      const cartItems = await productsService.deleteItemFromUserCart(userId, productId);
-      res.status(200).json(cartItems);
+      const { userId, productId } = req.params
+      const cartItems = await productsService.deleteItemFromUserCart(userId, productId)
+      res.status(200).json(cartItems)
     }
     catch (e) {
-      res.status(500).json(formatErrorAsJson(e.message));
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      res.status(500).json(formatErrorAsJson(e.message))
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
@@ -63,7 +63,7 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

@@ -5,20 +5,20 @@ export default function (locatorService) {
   let operations = {
     GET,
     POST
-  };
+  }
 
-  async function GET(req, res) {
+  function GET(req, res) {
     try {
-      const { serviceName } = req.params;
+      const { serviceName } = req.params
       const service = locatorService.getService(serviceName)
-      res.status(200).json(service);
+      res.status(200).json(service)
     }
     catch (e) {
       if (e instanceof NotFoundError) {
         res.status(404).json(formatErrorAsJson(e.message))
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
@@ -58,22 +58,21 @@ export default function (locatorService) {
         }
       }
     }
-  };
+  }
 
-  async function POST(req, res) {
+  function POST(req, res) {
     try {
-      const { serviceName } = req.params;
-      const { url } = req.body;
-
+      const { serviceName } = req.params
+      const { url } = req.body
       const service = locatorService.setServiceUrl(serviceName, url)
-      res.status(200).json(service);
+      res.status(200).json(service)
     }
     catch (e) {
       if (e instanceof NotFoundError) {
         res.status(404).json(formatErrorAsJson(e.message))
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
@@ -127,7 +126,7 @@ export default function (locatorService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

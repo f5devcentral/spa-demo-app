@@ -1,7 +1,7 @@
-class NotFoundError extends Error {
+class RequestInvalidError extends Error {
   constructor(msg) {
     super(msg)
   }
 }
 
-export { NotFoundError }
+export { RequestInvalidError }

@@ -65,6 +65,6 @@ const apiDoc = {
     }
   },
   paths: {}
-};
+}
 
-export default apiDoc;
+export default apiDoc

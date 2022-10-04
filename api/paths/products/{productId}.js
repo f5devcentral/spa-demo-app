@@ -4,11 +4,11 @@ import { formatErrorAsJson } from '../../helpers/utils.js'
 export default function (productsService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
     try {
-      const cart = await productsService.getProductById(req.params.productId);
+      const cart = await productsService.getProductById(req.params.productId)
       res.status(200).json(cart)
     }
     catch (e) {
@@ -17,7 +17,7 @@ export default function (productsService) {
         res.status(404).json(e.message)
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
@@ -57,7 +57,7 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

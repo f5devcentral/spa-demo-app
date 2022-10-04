@@ -1,21 +1,21 @@
-import axios from 'axios';
+import axios from 'axios'
 import { formatErrorAsJson } from '../helpers/utils.js'
 
 export default function (locatorService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
     try {
       const { data: inventory } = await axios.get(
         `${locatorService.getService("inventory").url}/api/inventory`
-      );
-      res.status(200).json(inventory);
+      )
+      res.status(200).json(inventory)
     }
     catch (e) {
       res.status(500).json(formatErrorAsJson(e.message))
-      console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+      console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
     }
   }
 
@@ -48,7 +48,7 @@ export default function (locatorService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

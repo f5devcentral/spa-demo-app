@@ -1,22 +1,22 @@
 export default function (statsService) {
   let operations = {
     GET
-  };
+  }
 
   async function GET(req, res) {
-    let stats;
+    let stats
     switch (req.params.serviceName) {
       case "database":
-        stats = await statsService.getDatabaseStats();
-        break;
+        stats = await statsService.getDatabaseStats()
+        break
       case "inventory":
       case "recommendations":
-        stats = await statsService.getRestApiStats(req.params.serviceName);
-        break;
+        stats = await statsService.getRestApiStats(req.params.serviceName)
+        break
       default:
-        stats = {};
+        stats = {}
     }
-    res.status(200).json(stats);
+    res.status(200).json(stats)
   }
 
   GET.apiDoc = {
@@ -54,7 +54,7 @@ export default function (statsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

@@ -5,11 +5,11 @@ export default function (productsService) {
   let operations = {
     GET,
     POST
-  };
+  }
 
   async function GET(req, res) {
     try {
-      const cart = await productsService.getUserCart(req.params.userId);
+      const cart = await productsService.getUserCart(req.params.userId)
       res.status(200).json(cart)
     }
     catch (e) {
@@ -18,7 +18,7 @@ export default function (productsService) {
         res.status(404).json(e.message)
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
@@ -61,23 +61,23 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
 
   async function POST(req, res) {
-    const { userId } = req.params;
-    const { productId } = req.body;
     try {
-      const cartItems = await productsService.addItemToUserCart(userId, productId);
+      const { userId } = req.params
+      const { productId } = req.body
+      const cartItems = await productsService.addItemToUserCart(userId, productId)
       res.status(200).json(cartItems)
     }
     catch (e) {
       if (e instanceof NotFoundError) {
         res.status(404).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       } else {
         res.status(500).json(formatErrorAsJson(e.message))
-        console.log(`Error in ${req.method} ${req.url}: ${e.message}`);
+        console.log(`Error in ${req.method} ${req.url}: ${e.message}`)
       }
     }
   }
@@ -134,7 +134,7 @@ export default function (productsService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

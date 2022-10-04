@@ -1,11 +1,10 @@
 export default function (locatorService) {
   let operations = {
     GET
-  };
+  }
 
-  async function GET(req, res) {
-    res.status(200).json(locatorService.getAllServices());
-
+  function GET(req, res) {
+    res.status(200).json(locatorService.getAllServices())
   }
 
   GET.apiDoc = {
@@ -37,7 +36,7 @@ export default function (locatorService) {
         }
       }
     }
-  };
+  }
 
-  return operations;
+  return operations
 }

@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../../helpers/customErrors.js'
-import { formatErrorAsJson } from '../../../helpers/utils.js'
+import { NotFoundError } from "../../../helpers/customErrors.js"
+import { formatErrorAsJson } from "../../../helpers/utils.js"
 
 export default function (productsService) {
   let operations = {
@@ -24,36 +24,36 @@ export default function (productsService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns all products in user cart',
-    operationId: 'getUserCart',
+    summary: "Returns all products in user cart",
+    operationId: "getUserCart",
     parameters: [
       {
-        name: 'userId',
-        in: 'path',
+        name: "userId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'User Id',
+        description: "User Id",
       }
     ],
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -83,26 +83,26 @@ export default function (productsService) {
   }
 
   POST.apiDoc = {
-    summary: 'Add a product to user cart',
-    operationId: 'addItemToUserCart',
+    summary: "Add a product to user cart",
+    operationId: "addItemToUserCart",
     parameters: [
       {
-        name: 'userId',
-        in: 'path',
+        name: "userId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'User Id',
+        description: "User Id",
       }
     ],
     requestBody: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: {
-            type: 'object',
+            type: "object",
             properties: {
               productId:
-                { type: 'string' }
+                { type: "string" }
             }
           }
         }
@@ -111,22 +111,22 @@ export default function (productsService) {
     },
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

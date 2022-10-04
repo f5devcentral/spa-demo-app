@@ -1,11 +1,11 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import path from 'path'
-import cors from 'cors'
-import swaggerUi from 'swagger-ui-express'
-import { initialize } from 'express-openapi'
-import ApiDoc from './api-doc.js'
-import InventoryService from './services/inventoryService.js'
+import express from "express"
+import bodyParser from "body-parser"
+import path from "path"
+import cors from "cors"
+import swaggerUi from "swagger-ui-express"
+import { initialize } from "express-openapi"
+import ApiDoc from "./api-doc.js"
+import InventoryService from "./services/inventoryService.js"
 
 const LISTENER_TCP_PORT = 8002
 const __dirname = path.resolve()
@@ -24,7 +24,7 @@ await initialize({
   dependencies: {
     inventoryService: InventoryService
   },
-  paths: path.resolve(__dirname, 'paths/'),
+  paths: path.resolve(__dirname, "paths/"),
 })
 
 // OpenAPI UI

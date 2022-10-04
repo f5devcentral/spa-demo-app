@@ -1,10 +1,10 @@
 
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon'
-import sinon from 'sinon'
-import { MongoClient } from 'mongodb'
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import { MongoClient } from "mongodb"
 
 const allProducts = [
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -26,7 +26,7 @@ const userAfterProductDelete = {
 }
 const anUpdateResult = { "acknowledged": true, "matchedCount": 1, "modifiedCount": 1 }
 
-describe('DELETE /api/users/{userId}/cart/{productId}', function () {
+describe("DELETE /api/users/{userId}/cart/{productId}", function () {
   let stubFind
   let stubFindOne
   let stubUpdateOne
@@ -69,12 +69,12 @@ describe('DELETE /api/users/{userId}/cart/{productId}', function () {
     sinon.restore()
   })
 
-  it('Should delete a specific product from the user cart', async function () {
+  it("Should delete a specific product from the user cart", async function () {
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .delete('/api/users/12345/cart/234')
-      .set('Accept', 'application/json')
+      .delete("/api/users/12345/cart/234")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -85,12 +85,12 @@ describe('DELETE /api/users/{userId}/cart/{productId}', function () {
     expect(mockInstanceStub.close.called).to.be.true
   })
 
-  it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
+  it("Should emit a 500 error if the mongo connect fails, and cannot close afterward", async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .delete('/api/users/12345/cart/234')
-      .set('Accept', 'application/json')
+      .delete("/api/users/12345/cart/234")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)

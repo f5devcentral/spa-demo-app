@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../helpers/customErrors.js'
-import { formatErrorAsJson } from '../../helpers/utils.js'
+import { NotFoundError } from "../../helpers/customErrors.js"
+import { formatErrorAsJson } from "../../helpers/utils.js"
 
 export default function (productsService) {
   let operations = {
@@ -23,33 +23,33 @@ export default function (productsService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns product details',
-    operationId: 'getProductById',
+    summary: "Returns product details",
+    operationId: "getProductById",
     parameters: [
       {
-        name: 'productId',
-        in: 'path',
+        name: "productId",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Product Id',
+        description: "Product Id",
       }
     ],
     responses: {
       200: {
-        description: 'Product details.',
+        description: "Product details.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              $ref: '#/components/schemas/Product'
+              $ref: "#/components/schemas/Product"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

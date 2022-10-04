@@ -1,12 +1,12 @@
-import { RequestInvalidError } from '../helpers/customErrors.js'
-import { MongoClient, } from 'mongodb'
+import { RequestInvalidError } from "../helpers/customErrors.js"
+import { MongoClient, } from "mongodb"
 
 const ERR_NO_PRODUCTS = "No products in order!"
 const ERR_NO_USER_ID = "No userId in order!"
 
 const checkoutService = {
 
-  mongoDbName: 'vue-db',
+  mongoDbName: "vue-db",
   mongoUrl: process.env.MONGO_URL || "mongodb",
 
   async createOrder(userId, products) {
@@ -33,7 +33,7 @@ const checkoutService = {
     try {
       client = await getMongoDbConnection(this.mongoUrl)
       const db = client.db(this.mongoDbName)
-      await db.collection('users').updateOne({ id: userId }, {
+      await db.collection("users").updateOne({ id: userId }, {
         $set: { cartItems: [] },
       })
     }

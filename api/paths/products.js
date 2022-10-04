@@ -1,4 +1,4 @@
-import { formatErrorAsJson } from '../helpers/utils.js'
+import { formatErrorAsJson } from "../helpers/utils.js"
 
 export default function (productsService) {
   let operations = {
@@ -16,27 +16,27 @@ export default function (productsService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns all products.',
-    operationId: 'getProducts',
+    summary: "Returns all products.",
+    operationId: "getProducts",
     parameters: [],
     responses: {
       200: {
-        description: 'A list of products.',
+        description: "A list of products.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Product'
+                $ref: "#/components/schemas/Product"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

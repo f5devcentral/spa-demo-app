@@ -1,17 +1,17 @@
-import { MongoClient } from 'mongodb'
+import { MongoClient } from "mongodb"
 import locatorService from "./locatorService.js"
-import { NotFoundError } from '../helpers/customErrors.js'
+import { NotFoundError } from "../helpers/customErrors.js"
 
 const productsService = {
 
-  mongoDbName: 'vue-db',
+  mongoDbName: "vue-db",
 
   async getProducts() {
     let client
     try {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
-      return await db.collection('products').find({}).toArray()
+      return await db.collection("products").find({}).toArray()
     }
     finally { await client.close() }
   },
@@ -21,7 +21,7 @@ const productsService = {
     try {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
-      const product = await db.collection('products').findOne({ id: productId })
+      const product = await db.collection("products").findOne({ id: productId })
       if (!product) throw new NotFoundError("Could not find the product!")
       return product
     }
@@ -33,9 +33,9 @@ const productsService = {
     try {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
-      const user = await db.collection('users').findOne({ id: userId })
+      const user = await db.collection("users").findOne({ id: userId })
       if (!user) throw new NotFoundError("Could not find user!")
-      const products = await db.collection('products').find({}).toArray()
+      const products = await db.collection("products").find({}).toArray()
       const cartItemIds = user.cartItems
       return cartItemIds.map(id => products.find(product => product.id === id))
     }
@@ -47,11 +47,11 @@ const productsService = {
     try {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
-      await db.collection('users').updateOne({ id: userId }, {
+      await db.collection("users").updateOne({ id: userId }, {
         $pull: { cartItems: productId },
       })
-      const user = await db.collection('users').findOne({ id: userId })
-      const products = await db.collection('products').find({}).toArray()
+      const user = await db.collection("users").findOne({ id: userId })
+      const products = await db.collection("products").find({}).toArray()
       return user.cartItems.map(id => products.find(product => product.id === id))
     }
     finally { await client.close() }
@@ -63,12 +63,12 @@ const productsService = {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
       // TODO: Validate that the product actually exists before adding it to the cart
-      await db.collection('users').updateOne({ id: userId }, {
+      await db.collection("users").updateOne({ id: userId }, {
         $addToSet: { cartItems: productId },
       })
-      const user = await db.collection('users').findOne({ id: userId })
+      const user = await db.collection("users").findOne({ id: userId })
       if (!user) throw new NotFoundError("Could not find the user!")
-      const products = await db.collection('products').find({}).toArray()
+      const products = await db.collection("products").find({}).toArray()
       const cartItemIds = user.cartItems
       return cartItemIds.map(id => products.find(product => product.id === id))
     }

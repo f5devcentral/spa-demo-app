@@ -1,10 +1,10 @@
 
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon'
-import sinon from 'sinon'
-import { MongoClient } from 'mongodb'
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import { MongoClient } from "mongodb"
 
 const orderProducts = [
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -17,7 +17,7 @@ const user = {
 }
 const anUpdateResult = { "acknowledged": true, "matchedCount": 1, "modifiedCount": 1 }
 
-describe('GET /api/users/{userId}/cart', function () {
+describe("GET /api/users/{userId}/cart", function () {
   let stubFind
   let stubFindOne
   let stubUpdateOne
@@ -60,12 +60,12 @@ describe('GET /api/users/{userId}/cart', function () {
     sinon.restore()
   })
 
-  it('Should get the user cart', async function () {
+  it("Should get the user cart", async function () {
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .get('/api/users/12345/cart')
-      .set('Accept', 'application/json')
+      .get("/api/users/12345/cart")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -75,15 +75,15 @@ describe('GET /api/users/{userId}/cart', function () {
     expect(mockInstanceStub.close.called).to.be.true
   })
 
-  it('Should emit a 404 error if the user cart cannot be found', async function () {
+  it("Should emit a 404 error if the user cart cannot be found", async function () {
     stubFindOne = sinon.stub().resolves(
       null
     )
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .get('/api/users/123456/cart')
-      .set('Accept', 'application/json')
+      .get("/api/users/123456/cart")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(404)
@@ -91,12 +91,12 @@ describe('GET /api/users/{userId}/cart', function () {
     expect(mockConnectionStub.callCount).to.equal(1)
   })
 
-  it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
+  it("Should emit a 500 error if the mongo connect fails, and cannot close afterward", async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .get('/api/users/12345/cart')
-      .set('Accept', 'application/json')
+      .get("/api/users/12345/cart")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)
@@ -105,7 +105,7 @@ describe('GET /api/users/{userId}/cart', function () {
   })
 })
 
-describe('POST /api/users/{userId}/cart', function () {
+describe("POST /api/users/{userId}/cart", function () {
   let stubFind
   let stubFindOne
   let stubUpdateOne
@@ -148,13 +148,13 @@ describe('POST /api/users/{userId}/cart', function () {
     sinon.restore()
   })
 
-  it('Should add a product to the user cart', async function () {
+  it("Should add a product to the user cart", async function () {
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .post('/api/users/12345/cart')
-      .set('Accept', 'application/json')
-      .send({ productId: '112' })
+      .post("/api/users/12345/cart")
+      .set("Accept", "application/json")
+      .send({ productId: "112" })
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -165,14 +165,14 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(mockInstanceStub.close.called).to.be.true
   })
 
-  it('Should emit a 404 error if the user does not exist in the database', async function () {
+  it("Should emit a 404 error if the user does not exist in the database", async function () {
     stubFindOne = sinon.stub().resolves(null)
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .post('/api/users/99999/cart')
-      .set('Accept', 'application/json')
-      .send({ productId: '112' })
+      .post("/api/users/99999/cart")
+      .set("Accept", "application/json")
+      .send({ productId: "112" })
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(404)
@@ -183,13 +183,13 @@ describe('POST /api/users/{userId}/cart', function () {
     expect(mockInstanceStub.close.called).to.be.true
   })
 
-  it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
+  it("Should emit a 500 error if the mongo connect fails, and cannot close afterward", async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .post('/api/users/12345/cart')
-      .set('Accept', 'application/json')
-      .send({ productId: '112' })
+      .post("/api/users/12345/cart")
+      .set("Accept", "application/json")
+      .send({ productId: "112" })
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)

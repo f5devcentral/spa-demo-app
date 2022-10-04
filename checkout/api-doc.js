@@ -1,20 +1,20 @@
 const apiDoc = {
-  openapi: '3.0.0',
+  openapi: "3.0.0",
   servers: [
-    { url: '/api' },
+    { url: "/api" },
   ],
   info: {
-    title: 'Brewz Checkout API.',
-    version: '1.0.0'
+    title: "Brewz Checkout API.",
+    version: "1.0.0"
   },
   components: {
     schemas: {
       OrderProduct: {
-        type: 'object',
+        type: "object",
         properties: {
-          id: { type: 'string' },
+          id: { type: "string" },
         },
-        required: ['id']
+        required: ["id"]
       },
       Address: {
         properties: {
@@ -38,28 +38,28 @@ const apiDoc = {
         type: "object"
       },
       Order: {
-        type: 'object',
+        type: "object",
         properties: {
           products: {
-            type: 'array',
+            type: "array",
             items: {
-              $ref: '#/components/schemas/OrderProduct'
+              $ref: "#/components/schemas/OrderProduct"
             }
           },
           shippingAddress: {
-            $ref: '#/components/schemas/Address'
+            $ref: "#/components/schemas/Address"
           },
           userId: {
-            type: 'string'
+            type: "string"
           }
         },
-        required: ['products', 'shippingAddress']
+        required: ["products", "shippingAddress"]
       },
       ServiceStatus: {
-        type: 'object',
+        type: "object",
         properties: {
-          host: { type: 'string' },
-          latency: { type: 'string' }
+          host: { type: "string" },
+          latency: { type: "string" }
         }
       }
     }

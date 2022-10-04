@@ -1,10 +1,10 @@
-import axios from 'axios'
-import { MongoClient } from 'mongodb'
+import axios from "axios"
+import { MongoClient } from "mongodb"
 import locatorService from "./locatorService.js"
 
 const statsService = {
 
-    mongoDbName: 'vue-db',
+    mongoDbName: "vue-db",
 
     async getDatabaseStats() {
         let client
@@ -13,7 +13,7 @@ const statsService = {
             const db_start = new Date()
             client = await getMongoDbConnection()
             const db = client.db(this.mongoDbName)
-            await db.collection('products').find({})
+            await db.collection("products").find({})
             payload["host"] = `mongodb://${locatorService.getService("database").url}:27017`
             payload["latency"] = new Date() - db_start
             return payload

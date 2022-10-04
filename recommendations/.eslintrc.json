@@ -1,16 +1,23 @@
 {
-    "env": {
-        "node": true,
-        "es2017": true,
-        "mocha": true
-    },
-    "extends": "eslint:recommended",
-    "overrides": [
+  "env": {
+    "node": true,
+    "es2017": true,
+    "mocha": true
+  },
+  "extends": "eslint:recommended",
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "semi": [
+      "error",
+      "never"
     ],
-    "parserOptions": {
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "rules": {
-    }
+    "quotes": [
+      "error",
+      "double"
+    ]
+  }
 }

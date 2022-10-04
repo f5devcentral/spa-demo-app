@@ -1,8 +1,7 @@
 {
   "env": {
     "node": true,
-    "es2017": true,
-    "mocha": true
+    "es2017": true
   },
   "extends": "eslint:recommended",
   "overrides": [],
@@ -18,6 +17,7 @@
     "quotes": [
       "error",
       "double"
-    ]
+    ],
+    "no-undef": "off"
   }
 }

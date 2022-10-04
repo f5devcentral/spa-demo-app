@@ -1,5 +1,5 @@
-import { RequestInvalidError } from '../helpers/customErrors.js'
-import { formatErrorAsJson } from '../helpers/utils.js'
+import { RequestInvalidError } from "../helpers/customErrors.js"
+import { formatErrorAsJson } from "../helpers/utils.js"
 
 export default function (checkoutService) {
   let operations = {
@@ -23,13 +23,13 @@ export default function (checkoutService) {
   }
 
   POST.apiDoc = {
-    summary: 'Purchase items collected in a shopping cart.',
-    operationId: 'createOrder',
+    summary: "Purchase items collected in a shopping cart.",
+    operationId: "createOrder",
     requestBody: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: {
-            $ref: '#/components/schemas/Order',
+            $ref: "#/components/schemas/Order",
           }
         }
       },
@@ -37,19 +37,19 @@ export default function (checkoutService) {
     },
     responses: {
       200: {
-        description: 'An order confirmation number.',
+        description: "An order confirmation number.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'string'
+              type: "string"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

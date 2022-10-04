@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../helpers/customErrors.js'
-import { formatErrorAsJson } from '../../helpers/utils.js'
+import { NotFoundError } from "../../helpers/customErrors.js"
+import { formatErrorAsJson } from "../../helpers/utils.js"
 
 export default function (locatorService) {
   let operations = {
@@ -24,33 +24,33 @@ export default function (locatorService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns a specific service URL.',
-    operationId: 'getService',
+    summary: "Returns a specific service URL.",
+    operationId: "getService",
     parameters: [
       {
-        name: 'serviceName',
-        in: 'path',
+        name: "serviceName",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Service Name',
+        description: "Service Name",
       }
     ],
     responses: {
       200: {
-        description: 'A single remote service.',
+        description: "A single remote service.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              $ref: '#/components/schemas/ConfigService'
+              $ref: "#/components/schemas/ConfigService"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }
@@ -78,26 +78,26 @@ export default function (locatorService) {
   }
 
   POST.apiDoc = {
-    summary: 'Set URL for service',
-    operationId: 'setServiceUrl',
+    summary: "Set URL for service",
+    operationId: "setServiceUrl",
     parameters: [
       {
-        name: 'serviceName',
-        in: 'path',
+        name: "serviceName",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Service Name',
+        description: "Service Name",
       }
     ],
     requestBody: {
       content: {
-        'application/json': {
+        "application/json": {
           schema: {
-            type: 'object',
+            type: "object",
             properties: {
               url:
-                { type: 'string' }
+                { type: "string" }
             }
           }
         }
@@ -106,19 +106,19 @@ export default function (locatorService) {
     },
     responses: {
       200: {
-        description: 'The updated service.',
+        description: "The updated service.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              $ref: '#/components/schemas/ConfigService'
+              $ref: "#/components/schemas/ConfigService"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

@@ -1,4 +1,4 @@
-import { NotFoundError } from '../helpers/customErrors.js'
+import { NotFoundError } from "../helpers/customErrors.js"
 
 const ERR_SVC_NOT_FOUND = "service not found"
 

@@ -20,33 +20,33 @@ export default function (statsService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns statistics for a specific service name.',
-    operationId: 'get_Stats',
+    summary: "Returns statistics for a specific service name.",
+    operationId: "get_Stats",
     parameters: [
       {
-        name: 'serviceName',
-        in: 'path',
+        name: "serviceName",
+        in: "path",
         schema:
-          { type: 'string' },
+          { type: "string" },
         required: true,
-        description: 'Service Name',
+        description: "Service Name",
       }
     ],
     responses: {
       200: {
-        description: 'A single remote service performance stats.',
+        description: "A single remote service performance stats.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              $ref: '#/components/schemas/ServiceStatus'
+              $ref: "#/components/schemas/ServiceStatus"
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

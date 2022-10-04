@@ -59,7 +59,7 @@ export function useMsalAuthentication(interactionType: InteractionType, request:
                         result.value = null;
                     });
                 }
-            };
+            }
             localInProgress.value = false;
         }
     }

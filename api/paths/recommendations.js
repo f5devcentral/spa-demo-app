@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { formatErrorAsJson } from '../helpers/utils.js'
+import axios from "axios"
+import { formatErrorAsJson } from "../helpers/utils.js"
 
 export default function (locatorService) {
   let operations = {
@@ -20,27 +20,27 @@ export default function (locatorService) {
   }
 
   GET.apiDoc = {
-    summary: 'Returns product recommendations.',
-    operationId: 'getRecommendations',
+    summary: "Returns product recommendations.",
+    operationId: "getRecommendations",
     parameters: [],
     responses: {
       200: {
-        description: 'A list of product recommendations.',
+        description: "A list of product recommendations.",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
-              type: 'array',
+              type: "array",
               items: {
-                $ref: '#/components/schemas/Recommendation'
+                $ref: "#/components/schemas/Recommendation"
               }
             }
           }
         }
       },
       default: {
-        description: 'An error occurred',
+        description: "An error occurred",
         content: {
-          'application/json': {
+          "application/json": {
             schema: {
               additionalProperties: true
             }

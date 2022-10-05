@@ -4,27 +4,34 @@
       <WelcomeName />
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item v-on:click="$router.push('/profile');">Profile</el-dropdown-item>
-          <el-dropdown-item v-on:click="logoutRedirect">Logout</el-dropdown-item>
+          <el-dropdown-item @click="$router.push('/profile');">
+            Profile
+          </el-dropdown-item>
+          <el-dropdown-item @click="logoutRedirect">
+            Logout
+          </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <span id="jwt" @click="showJWT">(JWT)</span>
+    <span
+      id="jwt"
+      @click="showJWT"
+    >(JWT)</span>
   </div>
 </template>
 
 <script setup lang="ts">
-import { CSSProperties, h } from 'vue';
-import { useMsal } from '../composition-api/useMsal';
-import WelcomeName from './WelcomeName.vue';
-import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser";
-import { tokenRequest } from "../authConfig";
-import { ElMessageBox } from 'element-plus'
+import { CSSProperties, h } from "vue"
+import { useMsal } from "../composition-api/useMsal"
+import WelcomeName from "./WelcomeName.vue"
+import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser"
+import { tokenRequest } from "../authConfig"
+import { ElMessageBox } from "element-plus"
 
-const { instance, inProgress } = useMsal();
+const { instance, inProgress } = useMsal()
 
 const logoutRedirect = () => {
-  instance.logoutRedirect();
+  instance.logoutRedirect()
 }
 
 const showJWT = (async () => {
@@ -32,31 +39,31 @@ const showJWT = (async () => {
     ...tokenRequest
   }).catch(async (e) => {
     if (e instanceof InteractionRequiredAuthError) {
-      await instance.acquireTokenRedirect(tokenRequest);
+      await instance.acquireTokenRedirect(tokenRequest)
     }
-    throw e;
-  });
+    throw e
+  })
   if (inProgress.value === InteractionStatus.None) {
     ElMessageBox({
-      title: 'Brewz API JSON Web Token',
+      title: "Brewz API JSON Web Token",
       customStyle: { "max-width": "90% !important", "overflow-wrap": "anywhere" } as CSSProperties,
-      message: h('div', null, [
-        h('div', { class: 'copy' }, [
-          h('button', {
+      message: h("div", null, [
+        h("div", { class: "copy" }, [
+          h("button", {
             onClick: () => {
-              copyJwtText(tokenResponse.accessToken);
+              copyJwtText(tokenResponse.accessToken)
             }
           },
             [
-              h('div', { class: 'copy-container' }, [
-                h('div', { class: 'material-icons copy-icon' }, 'content_copy'),
-                h('div', { class: 'material-icons copied' }, 'done')
+              h("div", { class: "copy-container" }, [
+                h("div", { class: "material-icons copy-icon" }, "content_copy"),
+                h("div", { class: "material-icons copied" }, "done")
               ])
             ]),
         ]),
-        h('textarea', { class: 'jwt-text', id: 'jwtText' }, tokenResponse.accessToken),
+        h("textarea", { class: "jwt-text", id: "jwtText" }, tokenResponse.accessToken),
       ]),
-      confirmButtonText: 'OK',
+      confirmButtonText: "OK",
     })
   }
 })
@@ -64,13 +71,13 @@ const showJWT = (async () => {
 const copyJwtText = (text: string) => {
   // Backward compat code for older browsers
   // @ts-ignore:next-line
-  const clipboardData = event.clipboardData || window.clipboardData || event.originalEvent?.clipboardData || navigator.clipboard;
+  const clipboardData = event.clipboardData || window.clipboardData || event.originalEvent?.clipboardData || navigator.clipboard
 
-  clipboardData.writeText(text);
+  clipboardData.writeText(text)
 
-  const element = document.querySelector('.copied') as HTMLElement
-  element.classList.add('fade-out')
-  setTimeout(() => element.classList.remove('fade-out'), 3100)
+  const element = document.querySelector(".copied") as HTMLElement
+  element.classList.add("fade-out")
+  setTimeout(() => element.classList.remove("fade-out"), 3100)
 }
 </script>
 

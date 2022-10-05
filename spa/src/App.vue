@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import NavBarComponent from "./components/NavBarComponent.vue";
+import { defineComponent } from "vue"
+import NavBarComponent from "./components/NavBarComponent.vue"
 
 export default defineComponent({
   name: "App",
@@ -16,28 +16,28 @@ export default defineComponent({
   },
   data: () => {
     return {
-      color: import.meta.env.VITE_APP_GLOBAL_COLOR || '#000',
-      backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
+      color: import.meta.env.VITE_APP_GLOBAL_COLOR || "#000",
+      backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF"
     }
   },
   async created() {
     // populate local storage with component URLs
-    const default_uri = `${window.location.protocol}//${window.location.host}`;
-    localStorage.spa_url = default_uri || null;
-    localStorage.api_url = localStorage.api_url || default_uri || null;
-    localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null;
-    localStorage.inventory_url = localStorage.inventory_url || default_uri || null;
-    localStorage.checkout_url = localStorage.checkout_url || default_uri || null;
-    localStorage.userId = localStorage.userId || '12345';
+    const default_uri = `${window.location.protocol}//${window.location.host}`
+    localStorage.spa_url = default_uri || null
+    localStorage.api_url = localStorage.api_url || default_uri || null
+    localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null
+    localStorage.inventory_url = localStorage.inventory_url || default_uri || null
+    localStorage.checkout_url = localStorage.checkout_url || default_uri || null
+    localStorage.userId = localStorage.userId || "12345"
   },
   beforeCreate() {
     this.$nextTick(() => {
-      const backgroundColor = import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || '#FFF'
-      const bodyElement = document.querySelector('html') as HTMLElement
-      bodyElement.style.backgroundColor = backgroundColor;
+      const backgroundColor = import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF"
+      const bodyElement = document.querySelector("html") as HTMLElement
+      bodyElement.style.backgroundColor = backgroundColor
     })
   }
-});
+})
 </script>
 
 <style>

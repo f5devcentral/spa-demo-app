@@ -1,21 +1,28 @@
 <template>
   <div class="grid-wrap">
     <ProductsGridItemComponent
-        v-for="product in products"
-        :key="product.id"
-        :product="product" />
+      v-for="product in products"
+      :key="product.id"
+      :product="product"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import ProductsGridItemComponent from './ProductsGridItemComponent.vue';
+import { defineComponent, PropType } from "vue"
+import ProductsGridItemComponent from "./ProductsGridItemComponent.vue"
+import { Product } from "../types"
 
 export default defineComponent({
-    name: 'ProductsGridComponent',
-    props: ['products'],
+    name: "ProductsGridComponent",
     components: {
         ProductsGridItemComponent,
+    },
+    props: {
+      products: {
+        type: Array as PropType<Product[]>,
+        required: true
+      }
     },
 })
 </script>

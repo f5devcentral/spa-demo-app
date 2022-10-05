@@ -1,26 +1,36 @@
 <template>
   <div class="product-item">
-    <img v-bind:src="api_url + product.imageUrl" />
-    <h3 class="product-name">{{ product.name }}</h3>
-    <p class="product-price">${{ product.price }}</p>
-    <router-link v-bind:to="'/products/' + product.id">
+    <img :src="api_url + product.imageUrl">
+    <h3 class="product-name">
+      {{ product.name }}
+    </h3>
+    <p class="product-price">
+      ${{ product.price }}
+    </p>
+    <router-link :to="'/products/' + product.id">
       <button>View Details</button>
     </router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from "vue"
+import { Product } from "../types"
 
 export default defineComponent({
   name: "ProductsGridItemComponent",
-  props: ["product"],
+  props: {
+    product: {
+      type: Object as PropType<Product>,
+      required: true
+    }
+  },
   data() {
     return {
       api_url: localStorage.api_url,
-    };
+    }
   }
-});
+})
 </script>
 
 <style scoped>

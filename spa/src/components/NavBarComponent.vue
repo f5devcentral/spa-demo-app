@@ -1,20 +1,34 @@
 <template>
   <div id="nav-bar">
-    <router-link to="/products" id="products-link">
+    <router-link
+      id="products-link"
+      to="/products"
+    >
       <h1>BREWZ</h1>
     </router-link>
-    <button v-on:click="$router.push('/cart')" class="nav-link">Shopping Cart</button>
-    <SignOutButton v-if="isAuthenticated" class="nav-link" />
-    <SignInButton v-else class="nav-link" />
+    <button
+      class="nav-link"
+      @click="$router.push('/cart')"
+    >
+      Shopping Cart
+    </button>
+    <SignOutButton
+      v-if="isAuthenticated"
+      class="nav-link"
+    />
+    <SignInButton
+      v-else
+      class="nav-link"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { useIsAuthenticated } from '../composition-api/useIsAuthenticated';
-import SignInButton from "./SignInButton.vue";
-import SignOutButton from "./SignOutButton.vue";
+import { useIsAuthenticated } from "../composition-api/useIsAuthenticated"
+import SignInButton from "./SignInButton.vue"
+import SignOutButton from "./SignOutButton.vue"
 
-const isAuthenticated = useIsAuthenticated();
+const isAuthenticated = useIsAuthenticated()
 </script>
 
 <style scoped>

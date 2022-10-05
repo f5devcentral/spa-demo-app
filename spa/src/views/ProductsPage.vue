@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+import axios from "axios"
 import { defineComponent } from "vue"
-import ProductsGridComponent from "../components/ProductsGridComponent.vue";
+import ProductsGridComponent from "../components/ProductsGridComponent.vue"
 import { Product } from "../types"
 
 export default defineComponent({
@@ -19,11 +19,11 @@ export default defineComponent({
     return {
       api_url: localStorage.api_url,
       products: [] as Product[],
-    };
+    }
   },
   async created() {
-    const result = await axios.get<Product[]>(`${localStorage.getItem("api_url")}/api/products`);
-    this.products = result.data;
+    const result = await axios.get<Product[]>(`${localStorage.getItem("api_url")}/api/products`)
+    this.products = result.data
   },
-});
+})
 </script>

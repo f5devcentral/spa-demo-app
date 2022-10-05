@@ -1,36 +1,65 @@
 <template>
-  <div id="page-wrap" v-if="product" :key="product.id">
+  <div
+    v-if="product"
+    id="page-wrap"
+    :key="product.id"
+  >
     <div id="img-wrap">
-      <img v-if="product.imageUrl" v-bind:src="api_url + product.imageUrl" />
+      <img
+        v-if="product.imageUrl"
+        :src="api_url + product.imageUrl"
+      >
     </div>
     <div id="product-details">
-      <h1 id="product-name">{{ product.name }}</h1>
-      <h3 id="product-price">${{ product.price }}</h3>
+      <h1 id="product-name">
+        {{ product.name }}
+      </h1>
+      <h3 id="product-price">
+        ${{ product.price }}
+      </h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <InventoryComponent :id="product.id" v-if="showService('inventory')" />
-      <button id="add-to-cart" v-if="!itemIsInCart && !showSuccessMessage" v-on:click="addToCart">
+      <InventoryComponent
+        v-if="showService('inventory')"
+        :id="product.id"
+      />
+      <button
+        v-if="!itemIsInCart && !showSuccessMessage"
+        id="add-to-cart"
+        @click="addToCart"
+      >
         Add to Cart
       </button>
-      <button id="add-to-cart" class="green-button" v-if="!itemIsInCart && showSuccessMessage">
+      <button
+        v-if="!itemIsInCart && showSuccessMessage"
+        id="add-to-cart"
+        class="green-button"
+      >
         Successfully added item to cart!
       </button>
-      <button id="add-to-cart" class="grey-button" v-if="itemIsInCart">
+      <button
+        v-if="itemIsInCart"
+        id="add-to-cart"
+        class="grey-button"
+      >
         Item is already in cart
       </button>
     </div>
-    <RecommendationsComponent :id="product.id" v-if="showService('recommendations')" />
+    <RecommendationsComponent
+      v-if="showService('recommendations')"
+      :id="product.id"
+    />
   </div>
   <NotFoundPage v-else />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import axios from "axios";
+import { defineComponent } from "vue"
+import axios from "axios"
 import { Product } from "../types"
-import NotFoundPage from "./NotFoundPage.vue";
-import RecommendationsComponent from "../components/RecommendationsComponent.vue";
-import InventoryComponent from "../components/InventoryComponent.vue";
+import NotFoundPage from "./NotFoundPage.vue"
+import RecommendationsComponent from "../components/RecommendationsComponent.vue"
+import InventoryComponent from "../components/InventoryComponent.vue"
 
 export default defineComponent({
   name: "ProductDetailPage",
@@ -45,27 +74,30 @@ export default defineComponent({
       cartItems: [] as Product[],
       showSuccessMessage: false,
       api_url: localStorage.api_url,
-    };
+    }
   },
   computed: {
     itemIsInCart(): boolean {
-      return this.cartItems.some((item) => item.id === this.product.id);
+      return this.cartItems.some((item) => item.id === this.product.id)
     },
   },
   watch: {
-    '$route'() {
+    "$route"() {
       this.loadProduct(this.$route.params.id as string)
     }
+  },
+  async created() {
+    await this.loadProduct(this.$route.params.id as string)
   },
   methods: {
     async addToCart() {
       await axios.post(`${this.api_url}/api/users/${localStorage.userId}/cart`, {
         productId: this.$route.params.id,
-      });
-      this.showSuccessMessage = true;
+      })
+      this.showSuccessMessage = true
       setTimeout(() => {
-        this.$router.push("/products");
-      }, 1500);
+        this.$router.push("/products")
+      }, 1500)
     },
     showService(serviceName: string): boolean {
       return localStorage.getItem(serviceName + "_url") !== null
@@ -73,19 +105,16 @@ export default defineComponent({
     async loadProduct(id: string) {
       const { data: product } = await axios.get(
         `${this.api_url}/api/products/${id}`
-      );
-      this.product = product;
+      )
+      this.product = product
 
       const { data: cartItems } = await axios.get(
         `${this.api_url}/api/users/${localStorage.userId}/cart`
-      );
-      this.cartItems = cartItems;
+      )
+      this.cartItems = cartItems
     }
   },
-  async created() {
-    await this.loadProduct(this.$route.params.id as string)
-  },
-});
+})
 </script>
 
 <style scoped>

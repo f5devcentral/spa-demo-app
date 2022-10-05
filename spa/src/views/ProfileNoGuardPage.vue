@@ -9,36 +9,36 @@
 </template>
 
 <script setup lang="ts">
-import { useMsalAuthentication } from "../composition-api/useMsalAuthentication";
-import { InteractionType } from "@azure/msal-browser";
-import { reactive, watch } from 'vue'
-import { loginRequest } from "../authConfig";
-import { callMsGraph } from "../utils/MsGraphApiCall";
+import { useMsalAuthentication } from "../composition-api/useMsalAuthentication"
+import { InteractionType } from "@azure/msal-browser"
+import { reactive, watch } from "vue"
+import { loginRequest } from "../authConfig"
+import { callMsGraph } from "../utils/MsGraphApiCall"
 
-const { result, acquireToken } = useMsalAuthentication(InteractionType.Redirect, loginRequest);
+const { result, acquireToken } = useMsalAuthentication(InteractionType.Redirect, loginRequest)
 
 const state = reactive({
   resolved: false,
   data: {
-    displayName: '',
-    jobTitle: '',
-    mail: '',
+    displayName: "",
+    jobTitle: "",
+    mail: "",
     businessPhones: [],
-    officeLocation: ''
+    officeLocation: ""
   }
-});
+})
 
 async function getGraphData() {
   if (result.value) {
-    const graphData = await callMsGraph(result.value.accessToken).catch(() => acquireToken());
-    state.data = graphData;
-    state.resolved = true;
+    const graphData = await callMsGraph(result.value.accessToken).catch(() => acquireToken())
+    state.data = graphData
+    state.resolved = true
   }
 }
 
-getGraphData();
+getGraphData()
 
 watch(result, () => {
-  getGraphData();
-});
+  getGraphData()
+})
 </script>

@@ -1,53 +1,79 @@
 <template>
-  <div class="inventory" v-if="inventoryIsActive">
+  <div
+    v-if="inventoryIsActive"
+    class="inventory"
+  >
     <div class="instore">
-      <input class="input" type="radio" name="inventory" :disabled="inventory == 0" />
-      <h3 class="input-label">In Store</h3>
-      <p v-if="inventory == 0">Sorry, we're out of stock!</p>
-      <p v-else-if="inventory >= 5">Good news, {{ inventory }} in stock!</p>
-      <p v-else>Order quick, only {{ inventory }} in stock!</p>
+      <input
+        class="input"
+        type="radio"
+        name="inventory"
+        :disabled="inventory == 0"
+      >
+      <h3 class="input-label">
+        In Store
+      </h3>
+      <p v-if="inventory == 0">
+        Sorry, we're out of stock!
+      </p>
+      <p v-else-if="inventory >= 5">
+        Good news, {{ inventory }} in stock!
+      </p>
+      <p v-else>
+        Order quick, only {{ inventory }} in stock!
+      </p>
     </div>
     <div class="delivery">
-      <input class="input" type="radio" name="inventory" />
-      <h3 class="input-label">Delivery</h3>
+      <input
+        class="input"
+        type="radio"
+        name="inventory"
+      >
+      <h3 class="input-label">
+        Delivery
+      </h3>
       <p>We'll ship it to your home</p>
     </div>
   </div>
 </template>
    
 <script lang="ts">
-import axios from "axios";
-import { defineComponent } from "vue";
-import { ProductInventory } from "../types";
+import axios from "axios"
+import { defineComponent } from "vue"
+import { ProductInventory } from "../types"
 
 export default defineComponent({
   name: "InventoryComponent",
-  props: ["id"],
-
+  props: {
+    id: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       products: [],
       inventoryIsActive: true,
       inventory: 0,
       api_url: localStorage.api_url,
-    };
+    }
   },
   async created() {
     try {
       // get data
       const { data: inventory } = await axios.get(
         `${this.api_url}/api/inventory`
-      );
+      )
       // find inventory for product
       inventory.forEach((item: ProductInventory) => {
-        if (item.id === this.id) this.inventory = item["quantity"];
-      });
+        if (item.id === this.id) this.inventory = item["quantity"]
+      })
     } catch (err) {
-      console.log(err);
-      this.inventoryIsActive = false;
+      console.log(err)
+      this.inventoryIsActive = false
     }
   },
-});
+})
 </script>
 
 <style scoped>
@@ -84,8 +110,10 @@ export default defineComponent({
 .input-label {
   display: inline;
 }
-.instore .input, .delivery .input {
-margin-left: 0px;
-margin-right: 10px;
+
+.instore .input,
+.delivery .input {
+  margin-left: 0px;
+  margin-right: 10px;
 }
 </style>

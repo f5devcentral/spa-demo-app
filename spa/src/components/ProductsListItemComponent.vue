@@ -1,28 +1,46 @@
 <template>
   <div class="product-container">
-    <img class="product-image" :src="api_url + product.imageUrl" />
+    <img
+      class="product-image"
+      :src="api_url + product.imageUrl"
+    >
     <div class="details-wrap">
       <h3>{{ product.name }}</h3>
       <p>${{ product.price }}</p>
     </div>
-    <button class="remove-button" v-if="!readOnly" v-on:click="$emit('remove-from-cart', product.id)">
+    <button
+      v-if="!readOnly"
+      class="remove-button"
+      @click="$emit('remove-from-cart', product.id)"
+    >
       Remove From Cart
     </button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from "vue"
+import { Product } from "../types"
 
 export default defineComponent({
   name: "ProductsListItemComponent",
-  props: ["product", "readOnly"],
+  props: {
+    product: {
+      type: Object as PropType<Product>,
+      required: true
+    },
+    readOnly: {
+      type: Boolean,
+      required: true
+    }
+  },
+  emits: ["remove-from-cart"],
   data() {
     return {
       api_url: localStorage.api_url,
-    };
-  },
-});
+    }
+  }
+})
 </script>
 
 <style scoped>

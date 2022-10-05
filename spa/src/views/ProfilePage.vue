@@ -9,49 +9,49 @@
 </template>
 
 <script setup lang="ts">
-import { useMsal } from "../composition-api/useMsal";
-import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser";
-import { reactive, onMounted, watch } from 'vue'
-import { loginRequest } from "../authConfig";
-import { callMsGraph } from "../utils/MsGraphApiCall";
+import { useMsal } from "../composition-api/useMsal"
+import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser"
+import { reactive, onMounted, watch } from "vue"
+import { loginRequest } from "../authConfig"
+import { callMsGraph } from "../utils/MsGraphApiCall"
 
-const { instance, inProgress } = useMsal();
+const { instance, inProgress } = useMsal()
 
 const state = reactive({
   resolved: false,
   data: {
-    displayName: '',
-    jobTitle: '',
-    mail: '',
+    displayName: "",
+    jobTitle: "",
+    mail: "",
     businessPhones: [],
-    officeLocation: ''
+    officeLocation: ""
   }
-});
+})
 
 async function getGraphData() {
   const response = await instance.acquireTokenSilent({
     ...loginRequest
   }).catch(async (e) => {
     if (e instanceof InteractionRequiredAuthError) {
-      await instance.acquireTokenRedirect(loginRequest);
+      await instance.acquireTokenRedirect(loginRequest)
     }
-    throw e;
-  });
+    throw e
+  })
   if (inProgress.value === InteractionStatus.None) {
-    const graphData = await callMsGraph(response.accessToken);
-    state.data = graphData;
-    state.resolved = true;
-    stopWatcher();
+    const graphData = await callMsGraph(response.accessToken)
+    state.data = graphData
+    state.resolved = true
+    stopWatcher()
   }
 }
 
 onMounted(() => {
-  getGraphData();
-});
+  getGraphData()
+})
 
 const stopWatcher = watch(inProgress, () => {
   if (!state.resolved) {
-    getGraphData();
+    getGraphData()
   }
-});
+})
 </script>

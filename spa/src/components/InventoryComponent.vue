@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="inventoryIsActive"
+    v-if="inventoryIsActive && id"
     class="inventory"
   >
     <div class="instore">

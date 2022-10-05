@@ -20,7 +20,7 @@
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
       <InventoryComponent
-        v-if="showService('inventory')"
+        v-if="showService('inventory') && product?.id"
         :id="product.id"
       />
       <button
@@ -46,7 +46,7 @@
       </button>
     </div>
     <RecommendationsComponent
-      v-if="showService('recommendations')"
+      v-if="showService('recommendations') && product?.id"
       :id="product.id"
     />
   </div>

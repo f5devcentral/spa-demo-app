@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="recIsActive"
+    v-if="recIsActive && id"
     class="recommendations"
   >
     <h3>Check out these similar selections</h3>

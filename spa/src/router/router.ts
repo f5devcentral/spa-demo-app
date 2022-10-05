@@ -66,6 +66,10 @@ const router = createRouter({
   routes,
 })
 
+router.afterEach(() => {
+  window.scrollTo(0, 0)
+})
+
 registerGuard(router)
 
 export default router

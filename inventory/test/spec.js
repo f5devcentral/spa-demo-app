@@ -1,10 +1,10 @@
-import 'mocha'
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon'
-import sinon from 'sinon'
-import fs from 'fs/promises'
+import "mocha"
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import fs from "fs/promises"
 
 const inventoryJSONString = `[
   { "id": "123", "quantity": 20 },
@@ -21,11 +21,11 @@ const inventoryJSONString = `[
   { "id": "334", "quantity": 11 }
 ]`
 
-describe('GET /api/api-docs', function () {
-  it('Should return the OpenAPI spec', async function () {
+describe("GET /api/api-docs", function () {
+  it("Should return the OpenAPI spec", async function () {
     const response = await request(app)
-      .get('/api/api-docs')
-      .set('Accept', 'application/json')
+      .get("/api/api-docs")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -33,18 +33,18 @@ describe('GET /api/api-docs', function () {
   })
 })
 
-describe('GET /api/inventory', function () {
+describe("GET /api/inventory", function () {
 
   afterEach(() => {
     sinon.restore()
   })
 
-  it('Should return 12 product quantities', async function () {
+  it("Should return 12 product quantities", async function () {
     const fsStub = stub(fs, "readFile").resolves(Promise.resolve(inventoryJSONString))
 
     const response = await request(app)
-      .get('/api/inventory')
-      .set('Accept', 'application/json')
+      .get("/api/inventory")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -52,12 +52,12 @@ describe('GET /api/inventory', function () {
     expect(fsStub.callCount).to.equal(1)
   })
 
-  it('Should emit a 500 error if the inventory file cannot be loaded', async function () {
+  it("Should emit a 500 error if the inventory file cannot be loaded", async function () {
     const fsStub = stub(fs, "readFile").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .get('/api/inventory')
-      .set('Accept', 'application/json')
+      .get("/api/inventory")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)
@@ -66,11 +66,11 @@ describe('GET /api/inventory', function () {
   })
 })
 
-describe('GET /api/stats', function () {
-  it('Should return an empty JSON payload', async function () {
+describe("GET /api/stats", function () {
+  it("Should return an empty JSON payload", async function () {
     const response = await request(app)
-      .get('/api/stats')
-      .set('Accept', 'application/json')
+      .get("/api/stats")
+      .set("Accept", "application/json")
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.be.empty

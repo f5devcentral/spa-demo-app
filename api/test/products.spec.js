@@ -1,10 +1,10 @@
 
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon'
-import sinon from 'sinon'
-import { MongoClient } from 'mongodb'
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import { MongoClient } from "mongodb"
 
 const allProducts = [
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -21,7 +21,7 @@ const allProducts = [
   { "_id": "334", "id": "334", "name": "Ayinger Celebrator Doppelbock", "price": "11.99", "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.", "imageUrl": "/images/ayinger.png", "averageRating": "4.3" }
 ]
 
-describe('GET /api/products', function () {
+describe("GET /api/products", function () {
   let stubFind
   let mockDb
   let mockInstanceStub
@@ -54,12 +54,12 @@ describe('GET /api/products', function () {
     sinon.restore()
   })
 
-  it('Should return 12 products', async function () {
+  it("Should return 12 products", async function () {
     mockConnectionStub = stub(MongoClient, "connect").resolves(Promise.resolve(mockInstanceStub))
 
     const response = await request(app)
-      .get('/api/products')
-      .set('Accept', 'application/json')
+      .get("/api/products")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -69,12 +69,12 @@ describe('GET /api/products', function () {
     expect(mockInstanceStub.close.called).to.be.true
   })
 
-  it('Should emit a 500 error if the mongo connect fails, and cannot close afterward', async function () {
+  it("Should emit a 500 error if the mongo connect fails, and cannot close afterward", async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .get('/api/products')
-      .set('Accept', 'application/json')
+      .get("/api/products")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)

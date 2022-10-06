@@ -1,10 +1,10 @@
-import 'mocha'
-import request from 'supertest'
-import app from '../server.js'
-import { expect } from 'chai'
-import { stub } from 'sinon'
-import sinon from 'sinon'
-import fs from 'fs/promises'
+import "mocha"
+import request from "supertest"
+import app from "../server.js"
+import { expect } from "chai"
+import { stub } from "sinon"
+import sinon from "sinon"
+import fs from "fs/promises"
 
 const allProductsJSONString = `[
   { "_id": "123", "id": "123", "name": "Elysian Space Dust IPA", "price": "10.49", "description": "Washington- American Double/Imperial IPA- 8.2% ABV. 73 IBUs. Pours a clear golden amber color with a thick white head. Aromas of pine and citrus with a bit of breadiness and tropical fruit. Flavors of tropical fruit, citrus and pine with notes of orange peel. Enjoy!", "imageUrl": "/images/elysian.png", "averageRating": "4.5" },
@@ -21,11 +21,11 @@ const allProductsJSONString = `[
   { "_id": "334", "id": "334", "name": "Ayinger Celebrator Doppelbock", "price": "11.99", "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.", "imageUrl": "/images/ayinger.png", "averageRating": "4.3" }
 ]`
 
-describe('GET /api/api-docs', function () {
-  it('Should return the OpenAPI spec', async function () {
+describe("GET /api/api-docs", function () {
+  it("Should return the OpenAPI spec", async function () {
     const response = await request(app)
-      .get('/api/api-docs')
-      .set('Accept', 'application/json')
+      .get("/api/api-docs")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -33,18 +33,18 @@ describe('GET /api/api-docs', function () {
   })
 })
 
-describe('GET /api/recommendations', function () {
+describe("GET /api/recommendations", function () {
 
   afterEach(() => {
     sinon.restore()
   })
 
-  it('Should return 3 products', async function () {
+  it("Should return 3 products", async function () {
     const fsStub = stub(fs, "readFile").resolves(Promise.resolve(allProductsJSONString))
 
     const response = await request(app)
-      .get('/api/recommendations')
-      .set('Accept', 'application/json')
+      .get("/api/recommendations")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
@@ -52,12 +52,12 @@ describe('GET /api/recommendations', function () {
     expect(fsStub.callCount).to.equal(1)
   })
 
-  it('Should emit a 500 error if the products file cannot be loaded', async function () {
+  it("Should emit a 500 error if the products file cannot be loaded", async function () {
     const fsStub = stub(fs, "readFile").rejects(new Error("Oops."))
 
     const response = await request(app)
-      .get('/api/recommendations')
-      .set('Accept', 'application/json')
+      .get("/api/recommendations")
+      .set("Accept", "application/json")
 
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)
@@ -66,11 +66,11 @@ describe('GET /api/recommendations', function () {
   })
 })
 
-describe('GET /api/stats', function () {
-  it('Should return an empty JSON payload', async function () {
+describe("GET /api/stats", function () {
+  it("Should return an empty JSON payload", async function () {
     const response = await request(app)
-      .get('/api/stats')
-      .set('Accept', 'application/json')
+      .get("/api/stats")
+      .set("Accept", "application/json")
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.be.empty

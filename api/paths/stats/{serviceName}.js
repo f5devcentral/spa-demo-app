@@ -27,7 +27,9 @@ export default function (statsService) {
         name: "serviceName",
         in: "path",
         schema:
-          { type: "string" },
+        {
+          type: "string"
+        },
         required: true,
         description: "Service Name",
       }
@@ -44,7 +46,7 @@ export default function (statsService) {
         }
       },
       default: {
-        description: "An error occurred",
+        description: "An error occurred.",
         content: {
           "application/json": {
             schema: {

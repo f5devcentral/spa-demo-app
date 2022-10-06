@@ -28,18 +28,6 @@ let mockDb
 let mockInstanceStub
 let mockConnectionStub
 
-describe("GET /api/api-docs", function () {
-  it("Should return the OpenAPI spec", async function () {
-    const response = await request(app)
-      .get("/api/api-docs")
-      .set("Accept", "application/json")
-
-    expect(response.headers["content-type"]).to.match(/json/)
-    expect(response.status).to.equal(200)
-    expect(response.body.info.title).to.equal("Brewz Checkout API.")
-  })
-})
-
 describe("POST /api/order", function () {
 
   beforeEach(() => {
@@ -117,7 +105,6 @@ describe("POST /api/order", function () {
     expect(mockInstanceStub.close.called).to.be.false
   })
 
-
   it("Should emit a 500 error if the mongo connect fails, and cannot close afterward", async function () {
     mockConnectionStub = stub(MongoClient, "connect").rejects(new Error("Oops."))
 
@@ -132,19 +119,5 @@ describe("POST /api/order", function () {
     expect(stubUpdateOne.callCount).to.equal(0)
     expect(mockConnectionStub.callCount).to.equal(1)
     expect(mockInstanceStub.close.called).to.be.false
-  })
-
-})
-
-
-
-describe("GET /api/stats", function () {
-  it("Should return an empty JSON payload", async function () {
-    const response = await request(app)
-      .get("/api/stats")
-      .set("Accept", "application/json")
-    expect(response.headers["content-type"]).to.match(/json/)
-    expect(response.status).to.equal(200)
-    expect(response.body).to.be.empty
   })
 })

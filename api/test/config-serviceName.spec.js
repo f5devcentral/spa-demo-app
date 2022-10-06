@@ -16,6 +16,7 @@ describe("GET /api/config/{serviceName}", function () {
     const response = await request(app)
       .get("/api/config/recommendations")
       .set("Accept", "application/json")
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.deep.equal({ name: "recommendations", url: "http://recommendations:8001" })
@@ -25,6 +26,7 @@ describe("GET /api/config/{serviceName}", function () {
     const response = await request(app)
       .get("/api/config/nosuchservice")
       .set("Accept", "application/json")
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(404)
     expect(response.body).to.deep.equal({ error: "service not found" })
@@ -55,6 +57,7 @@ describe("POST /api/config/{serviceName}", function () {
       .post("/api/config/inventory")
       .set("Accept", "application/json")
       .send({ url: "whatever" })
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.deep.equal({ name: "inventory", url: "whatever" })
@@ -65,6 +68,7 @@ describe("POST /api/config/{serviceName}", function () {
       .post("/api/config/inventory")
       .set("Accept", "application/json")
       .send({ url: "http://inventory:8002" })
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.deep.equal({ name: "inventory", url: "http://inventory:8002" })
@@ -75,6 +79,7 @@ describe("POST /api/config/{serviceName}", function () {
       .post("/api/config/blah")
       .set("Accept", "application/json")
       .send({ url: "whatever" })
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(404)
     expect(response.body).to.deep.equal({ error: "service not found" })

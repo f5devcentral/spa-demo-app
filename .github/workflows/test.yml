@@ -18,6 +18,7 @@ jobs:
           - api
           - inventory
           - recommendations
+          - checkout
         node:
           - 16
     steps:

@@ -12,7 +12,10 @@ const apiDoc = {
       OrderProduct: {
         type: "object",
         properties: {
-          id: { type: "string" },
+          id: {
+            type: "string",
+            example: "234"
+          },
         },
         required: ["id"]
       },
@@ -50,7 +53,8 @@ const apiDoc = {
             $ref: "#/components/schemas/Address"
           },
           userId: {
-            type: "string"
+            type: "string",
+            example: "12345"
           }
         },
         required: ["products", "shippingAddress"]
@@ -58,8 +62,23 @@ const apiDoc = {
       ServiceStatus: {
         type: "object",
         properties: {
-          host: { type: "string" },
-          latency: { type: "string" }
+          host: {
+            type: "string",
+            example: "http://api:8000",
+          },
+          latency: {
+            type: "string",
+            example: "42"
+          }
+        }
+      },
+      Error: {
+        type: "object",
+        properties: {
+          error: {
+            type: "string",
+            example: "Could not find the <entity name here>!"
+          }
         }
       }
     }

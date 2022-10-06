@@ -21,18 +21,6 @@ const inventoryJSONString = `[
   { "id": "334", "quantity": 11 }
 ]`
 
-describe("GET /api/api-docs", function () {
-  it("Should return the OpenAPI spec", async function () {
-    const response = await request(app)
-      .get("/api/api-docs")
-      .set("Accept", "application/json")
-
-    expect(response.headers["content-type"]).to.match(/json/)
-    expect(response.status).to.equal(200)
-    expect(response.body.info.title).to.equal("Brewz Inventory API.")
-  })
-})
-
 describe("GET /api/inventory", function () {
 
   afterEach(() => {
@@ -63,16 +51,5 @@ describe("GET /api/inventory", function () {
     expect(response.status).to.equal(500)
     expect(response.body).to.deep.equal({ error: "Oops." })
     expect(fsStub.callCount).to.equal(1)
-  })
-})
-
-describe("GET /api/stats", function () {
-  it("Should return an empty JSON payload", async function () {
-    const response = await request(app)
-      .get("/api/stats")
-      .set("Accept", "application/json")
-    expect(response.headers["content-type"]).to.match(/json/)
-    expect(response.status).to.equal(200)
-    expect(response.body).to.be.empty
   })
 })

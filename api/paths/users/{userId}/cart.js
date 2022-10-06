@@ -31,7 +31,9 @@ export default function (productsService) {
         name: "userId",
         in: "path",
         schema:
-          { type: "string" },
+        {
+          type: "string"
+        },
         required: true,
         description: "User Id",
       }
@@ -50,12 +52,22 @@ export default function (productsService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      404: {
+        description: "User not found.",
         content: {
           "application/json": {
             schema: {
               additionalProperties: true
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }
@@ -101,8 +113,10 @@ export default function (productsService) {
           schema: {
             type: "object",
             properties: {
-              productId:
-                { type: "string" }
+              productId: {
+                type: "string",
+                example: "234"
+              }
             }
           }
         }
@@ -123,12 +137,22 @@ export default function (productsService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      404: {
+        description: "User not found.",
         content: {
           "application/json": {
             schema: {
-              additionalProperties: true
+              $ref: "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }

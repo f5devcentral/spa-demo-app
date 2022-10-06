@@ -12,10 +12,25 @@ const apiDoc = {
       ProductInventory: {
         type: "object",
         properties: {
-          id: { type: "string" },
-          quantity: { type: "number" }
+          id: {
+            type: "string",
+            example: "345",
+          },
+          quantity: {
+            type: "number",
+            example: 10
+          }
         },
         required: ["id"]
+      },
+      Error: {
+        type: "object",
+        properties: {
+          error: {
+            type: "string",
+            example: "Could not find the <entity name here>!"
+          }
+        }
       }
     }
   },

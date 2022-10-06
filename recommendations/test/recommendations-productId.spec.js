@@ -21,18 +21,6 @@ const allProductsJSONString = `[
   { "_id": "334", "id": "334", "name": "Ayinger Celebrator Doppelbock", "price": "11.99", "description": "Germany- Doppelbock- 6.7% ABV. Ayinger Celebrator is dark amber, nearly black in color. There is a distinct maltiness in this beer, with pronounced coffee notes. There is very little of the sweetness that is frequently tasted with Doppelbocks, resulting in a well balanced brew.", "imageUrl": "/images/ayinger.png", "averageRating": "4.3" }
 ]`
 
-describe("GET /api/api-docs", function () {
-  it("Should return the OpenAPI spec", async function () {
-    const response = await request(app)
-      .get("/api/api-docs")
-      .set("Accept", "application/json")
-
-    expect(response.headers["content-type"]).to.match(/json/)
-    expect(response.status).to.equal(200)
-    expect(response.body.info.title).to.equal("Brewz Recommendations API.")
-  })
-})
-
 describe("GET /api/recommendations/{productId}", function () {
 
   afterEach(() => {
@@ -72,6 +60,7 @@ describe("GET /api/stats", function () {
     const response = await request(app)
       .get("/api/stats")
       .set("Accept", "application/json")
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body).to.be.empty

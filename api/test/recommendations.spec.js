@@ -27,6 +27,7 @@ describe("GET /api/recommendations", function () {
     const response = await request(app)
       .get("/api/recommendations")
       .set("Accept", "application/json")
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(200)
     expect(response.body.length).to.equal(3)
@@ -39,6 +40,7 @@ describe("GET /api/recommendations", function () {
     const response = await request(app)
       .get("/api/recommendations")
       .set("Accept", "application/json")
+
     expect(response.headers["content-type"]).to.match(/json/)
     expect(response.status).to.equal(500)
     expect(response.body).to.deep.equal({ error: "Oops." })

@@ -37,12 +37,12 @@ export default function (locatorService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      500: {
+        description: "An error occurred.",
         content: {
           "application/json": {
             schema: {
-              additionalProperties: true
+              $ref: "#/components/schemas/Error"
             }
           }
         }

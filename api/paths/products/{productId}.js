@@ -30,7 +30,9 @@ export default function (productsService) {
         name: "productId",
         in: "path",
         schema:
-          { type: "string" },
+        {
+          type: "string"
+        },
         required: true,
         description: "Product Id",
       }
@@ -46,12 +48,22 @@ export default function (productsService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      404: {
+        description: "Product not found.",
         content: {
           "application/json": {
             schema: {
               additionalProperties: true
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }

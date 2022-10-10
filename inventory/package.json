@@ -29,6 +29,6 @@
     "mocha": "^10.0.0",
     "nodemon": "^2.0.20",
     "sinon": "^14.0.0",
-    "supertest": "^6.2.4"
+    "supertest": "^6.3.0"
   }
 }

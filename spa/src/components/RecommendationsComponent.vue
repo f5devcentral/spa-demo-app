@@ -1,13 +1,10 @@
 <template>
-  <div
-    v-if="recIsActive && id"
-    class="recommendations"
-  >
+  <div v-if="recIsActive && id" class="recommendations">
     <h3>Check out these similar selections</h3>
     <ProductsGridComponent :products="products" />
   </div>
 </template>
-   
+
 <script lang="ts">
 import axios from "axios"
 import { defineComponent } from "vue"
@@ -21,8 +18,8 @@ export default defineComponent({
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -34,11 +31,11 @@ export default defineComponent({
   async created() {
     axios
       .get(`${this.recommendations_url}/api/recommendations/${this.id}`)
-      .then((result) => {
+      .then(result => {
         const products = result.data
         this.products = products
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
         this.recIsActive = false
       })

@@ -1,25 +1,13 @@
 <template>
   <div id="nav-bar">
-    <router-link
-      id="products-link"
-      to="/products"
-    >
+    <router-link id="products-link" to="/products">
       <h1>BREWZ</h1>
     </router-link>
-    <button
-      class="nav-link"
-      @click="$router.push('/cart')"
-    >
-      Shopping Cart
-    </button>
-    <SignOutButton
-      v-if="isAuthenticated"
-      class="nav-link"
-    />
-    <SignInButton
-      v-else
-      class="nav-link"
-    />
+    <div class="nav-link">
+      <button id="shopping-cart" @click="$router.push('/cart')">Shopping Cart</button>
+    </div>
+    <SignOutButton v-if="isAuthenticated" class="nav-link" />
+    <SignInButton v-else class="nav-link" />
   </div>
 </template>
 
@@ -34,7 +22,7 @@ const isAuthenticated = useIsAuthenticated()
 <style scoped>
 #nav-bar {
   border-bottom: 1px solid #ddd;
-  height: 75px;
+  height: 65px;
   width: 100%;
 }
 
@@ -50,12 +38,6 @@ const isAuthenticated = useIsAuthenticated()
   margin: 0;
 }
 
-.nav-link {
-  float: right;
-  margin-left: 5px;
-  margin-right: 5px;
-}
-
 .auth {
   float: right;
   padding-top: 10px;
@@ -63,5 +45,17 @@ const isAuthenticated = useIsAuthenticated()
 
 .material-icons.md-48 {
   font-size: 48px;
+}
+</style>
+
+<style>
+.nav-link {
+  float: right;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+
+.nav-link button {
+  padding: 10px;
 }
 </style>

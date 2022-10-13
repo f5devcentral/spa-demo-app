@@ -1,0 +1,56 @@
+name: Test Coverage
+"on":
+  push:
+    branches: ["main"]
+
+jobs:
+  tests:
+    name: "${{ matrix.subproject }} subproject test on Node.js v${{ matrix.node }}"
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        subproject:
+          - api
+          - inventory
+          - recommendations
+          - spa
+        node:
+          - 16
+    steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "${{ matrix.node }}"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: "Cache node_modules"
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-
+
+      - name: Install Dependencies
+        run: cd ${{ matrix.subproject }} && npm install
+
+      - name: Run All Node.js Test Coverage Tasks
+        run: cd ${{ matrix.subproject }} && npm run test:coverage
+
+      - name: Coveralls Parallel
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.subproject }}
+          parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true

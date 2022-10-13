@@ -74,21 +74,23 @@ export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
 export RECOMMENDATIONS_URL="http://recommendations:8001"
 export CHECKOUT_URL="http://checkout:8003"
-npm start
+npm dev
 ```
 
-#### Tests
+Optionally, to run the dark variant of the Brewz SPA app: `npm run dev-dark`.
+
+#### Unit Tests
 
 ```bash
 cd <service folder here>
-npm run test
+npm run test:unit
 ```
 
 #### Code Coverage Metrics
 
 ```bash
 cd <service folder here>
-npm run test-coverage
+npm run test:coverage
 ```
 
 Coverage reports will appear in each subproject's `coverage` directory.

@@ -1,54 +1,32 @@
 <template>
-  <div
-    v-if="inventoryIsActive && id"
-    class="inventory"
-  >
+  <div v-if="inventoryIsActive && id" class="inventory">
     <div class="instore">
-      <input
-        class="input"
-        type="radio"
-        name="inventory"
-        :disabled="inventory == 0"
-      >
-      <h3 class="input-label">
-        In Store
-      </h3>
-      <p v-if="inventory == 0">
-        Sorry, we're out of stock!
-      </p>
-      <p v-else-if="inventory >= 5">
-        Good news, {{ inventory }} in stock!
-      </p>
-      <p v-else>
-        Order quick, only {{ inventory }} in stock!
-      </p>
+      <input class="input" type="radio" name="inventory" :disabled="inventory == 0" />
+      <h3 class="input-label">In Store</h3>
+      <p v-if="inventory == 0">Sorry, we're out of stock!</p>
+      <p v-else-if="inventory >= 5">Good news, {{ inventory }} in stock!</p>
+      <p v-else>Order quick, only {{ inventory }} in stock!</p>
     </div>
     <div class="delivery">
-      <input
-        class="input"
-        type="radio"
-        name="inventory"
-      >
-      <h3 class="input-label">
-        Delivery
-      </h3>
+      <input class="input" type="radio" name="inventory" />
+      <h3 class="input-label">Delivery</h3>
       <p>We'll ship it to your home</p>
     </div>
   </div>
 </template>
-   
+
 <script lang="ts">
 import axios from "axios"
 import { defineComponent } from "vue"
-import { ProductInventory } from "../types"
+import type { ProductInventory } from "../types"
 
 export default defineComponent({
   name: "InventoryComponent",
   props: {
     id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -61,9 +39,7 @@ export default defineComponent({
   async created() {
     try {
       // get data
-      const { data: inventory } = await axios.get(
-        `${this.api_url}/api/inventory`
-      )
+      const { data: inventory } = await axios.get(`${this.api_url}/api/inventory`)
       // find inventory for product
       inventory.forEach((item: ProductInventory) => {
         if (item.id === this.id) this.inventory = item["quantity"]
@@ -80,8 +56,7 @@ export default defineComponent({
 .inventory {
   border-radius: 4px;
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
-  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12),
-    0.3s box-shadow,
+  transition: 0.3s transform cubic-bezier(0.155, 1.105, 0.295, 1.12), 0.3s box-shadow,
     0.3s -webkit-transform cubic-bezier(0.155, 1.105, 0.295, 1.12);
   padding: 20px;
   cursor: pointer;

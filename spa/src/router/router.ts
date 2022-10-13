@@ -1,10 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router"
+import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router"
 import CartPage from "../views/CartPage.vue"
 import ProductDetailPage from "../views/ProductDetailPage.vue"
 import ProductsPage from "../views/ProductsPage.vue"
 import NotFoundPage from "../views/NotFoundPage.vue"
 import ProfilePage from "../views/ProfilePage.vue"
-import ProfileNoGuardPage from "../views/ProfileNoGuardPage.vue"
 import FailedPage from "../views/FailedPage.vue"
 import CheckoutPage from "../views/CheckoutPage.vue"
 import { registerGuard } from "./Guard"
@@ -38,27 +37,22 @@ const routes: Array<RouteRecordRaw> = [
     name: "Profile",
     component: ProfilePage,
     meta: {
-      requiresAuth: true
-    }
+      requiresAuth: true,
+    },
   },
   {
     path: "/checkout",
     name: "Checkout",
     component: CheckoutPage,
     meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: "/profileNoGuard",
-    name: "ProfileNoGuard",
-    component: ProfileNoGuardPage
+      requiresAuth: true,
+    },
   },
   {
     path: "/failed",
     name: "Failed",
-    component: FailedPage
-  }
+    component: FailedPage,
+  },
 ]
 
 const router = createRouter({

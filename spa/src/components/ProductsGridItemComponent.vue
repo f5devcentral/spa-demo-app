@@ -1,35 +1,33 @@
 <template>
   <div class="product-item">
-    <img :src="api_url + product.imageUrl">
+    <img :src="api_url + product.imageUrl" />
     <h3 class="product-name">
       {{ product.name }}
     </h3>
-    <p class="product-price">
-      ${{ product.price }}
-    </p>
+    <p class="product-price">${{ product.price }}</p>
     <router-link :to="'/products/' + product.id">
-      <button>View Details</button>
+      <button id="view-details">View Details</button>
     </router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
-import { Product } from "../types"
+import { defineComponent, type PropType } from "vue"
+import type { Product } from "../types"
 
 export default defineComponent({
   name: "ProductsGridItemComponent",
   props: {
     product: {
       type: Object as PropType<Product>,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       api_url: localStorage.api_url,
     }
-  }
+  },
 })
 </script>
 

@@ -17,7 +17,7 @@ export default defineComponent({
   data: () => {
     return {
       color: import.meta.env.VITE_APP_GLOBAL_COLOR || "#000",
-      backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF"
+      backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF",
     }
   },
   async created() {
@@ -36,12 +36,14 @@ export default defineComponent({
       const bodyElement = document.querySelector("html") as HTMLElement
       bodyElement.style.backgroundColor = backgroundColor
     })
-  }
+  },
 })
 </script>
 
 <style>
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   color: v-bind(color);
   background-color: v-bind(backgroundColor);
 }
@@ -88,8 +90,19 @@ button {
   margin-top: 6px;
 }
 
+.bottom-room-more {
+  margin-bottom: 16px;
+}
+
+.top-room-more {
+  margin-top: 16px;
+}
+
 .bottom-room {
   margin-bottom: 6px;
 }
 
+.pointer {
+  cursor: pointer;
+}
 </style>

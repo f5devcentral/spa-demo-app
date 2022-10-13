@@ -8,7 +8,7 @@
 import axios from "axios"
 import { defineComponent } from "vue"
 import ProductsGridComponent from "../components/ProductsGridComponent.vue"
-import { Product } from "../types"
+import type { Product } from "../types"
 
 export default defineComponent({
   name: "ProductsPage",

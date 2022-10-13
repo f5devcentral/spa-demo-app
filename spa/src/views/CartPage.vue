@@ -1,18 +1,9 @@
 <template>
   <div id="page-wrap">
     <h1>Shopping Cart</h1>
-    <ProductsListComponent
-      :products="cartItems"
-      @remove-from-cart="removeFromCart($event)"
-    />
-    <h3 id="total-price">
-      Total: ${{ totalPrice }}
-    </h3>
-    <button
-      id="checkout-button"
-      :disabled="cartItems.length === 0"
-      @click="checkIfAuthenticated()"
-    >
+    <ProductsListComponent :products="cartItems" @remove-from-cart="removeFromCart($event)" />
+    <h3 id="total-price">Total: ${{ totalPrice }}</h3>
+    <button id="checkout-button" :disabled="cartItems.length === 0" @click="checkIfAuthenticated()">
       Proceed to Checkout
     </button>
   </div>
@@ -21,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import axios from "axios"
-import { Product } from "../types"
+import type { Product } from "../types"
 import ProductsListComponent from "../components/ProductsListComponent.vue"
 import { useIsAuthenticated } from "../composition-api/useIsAuthenticated"
 import { ElMessageBox } from "element-plus"
@@ -35,21 +26,18 @@ export default defineComponent({
     return {
       api_url: localStorage.api_url,
       cartItems: [] as Product[],
-      isAuthenticated: {} as any
+      isAuthenticated: {} as any,
     }
   },
   computed: {
     totalPrice() {
-      return this.cartItems
-        .reduce((sum, item: Product) => sum + Number(item.price), 0)
-        .toFixed(2)
+      return this.cartItems.reduce((sum, item: Product) => sum + Number(item.price), 0).toFixed(2)
     },
   },
   async created() {
     this.isAuthenticated = useIsAuthenticated()
     const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`)
-    const cartItems = result.data
-    this.cartItems = cartItems
+    this.cartItems = result.data
   },
   methods: {
     async removeFromCart(productId: string) {
@@ -61,14 +49,16 @@ export default defineComponent({
     checkIfAuthenticated() {
       if (this.isAuthenticated) {
         this.$router.push("/checkout")
+      } else {
+        ElMessageBox.alert(
+          "You must sign in before you can complete your purchase.",
+          "Sign In Required",
+          {
+            confirmButtonText: "OK",
+          }
+        )
       }
-      else {
-        ElMessageBox.alert("You must sign in before you can complete your purchase.", 
-        "Sign In Required", {
-          confirmButtonText: "OK"
-        })
-      }
-    }
+    },
   },
 })
 </script>

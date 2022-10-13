@@ -1,7 +1,5 @@
 <template>
-  <div class="welcome-name">
-    <span v-if="!!name">Welcome, {{ name }}</span>&nbsp;
-  </div>
+  <span v-if="!!name">Welcome, {{ name }}</span>
 </template>
 
 <script setup lang="ts">
@@ -18,11 +16,4 @@ const name = computed(() => {
   }
   return ""
 })
-
 </script>
-
-<style scoped>
-.welcome-name {
-  padding-top: 8px;
-}
-</style>

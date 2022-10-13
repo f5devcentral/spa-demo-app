@@ -1,7 +1,7 @@
 <template>
-  <button @click="loginRedirect">
-    Sign In
-  </button>
+  <div>
+    <button @click="loginRedirect">Sign In</button>
+  </div>
 </template>
 
 <script setup lang="ts">

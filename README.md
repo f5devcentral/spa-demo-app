@@ -1,12 +1,14 @@
 # Single-Page Application Demo
 
+Aggregate test coverage for all components in this repo: [![Coverage Status](https://coveralls.io/repos/github/f5devcentral/spa-demo-app/badge.svg?branch=main)](https://coveralls.io/github/f5devcentral/spa-demo-app?branch=main)
+
 This application demos a modern single-page application built on:
 
 - Vue.js (front-end)
 - Node.js (back-end)
 - MongoDB (database)
 
-This application was created to help train people on the [F5 Distributed Cloud Services](https://www.f5.com/cloud) capabilities.
+This application was created to help train people on [NGINX](https://www.nginx.com/) and the [F5 Distributed Cloud Services](https://www.f5.com/cloud) capabilities. It is featured in the [Modern Apps Jumpstart Workshop](https://github.com/f5devcentral/modern_app_jumpstart_workshop).
 
 ![Brewz Site](./assets/demo_brewz.png)
 

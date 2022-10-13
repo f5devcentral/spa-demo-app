@@ -1,4 +1,4 @@
-
+import "mocha"
 import request from "supertest"
 import app from "../server.js"
 import { expect } from "chai"

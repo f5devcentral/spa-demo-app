@@ -30,8 +30,10 @@ export default function (locatorService) {
       {
         name: "serviceName",
         in: "path",
-        schema:
-          { type: "string" },
+        schema: {
+          type: "string",
+          example: "inventory"
+        },
         required: true,
         description: "Service Name",
       }
@@ -47,12 +49,22 @@ export default function (locatorService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      404: {
+        description: "Service not found.",
         content: {
           "application/json": {
             schema: {
-              additionalProperties: true
+              $ref: "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }
@@ -96,8 +108,10 @@ export default function (locatorService) {
           schema: {
             type: "object",
             properties: {
-              url:
-                { type: "string" }
+              url: {
+                type: "string",
+                example: "http://recommendations:8001"
+              }
             }
           }
         }
@@ -115,12 +129,22 @@ export default function (locatorService) {
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      404: {
+        description: "Service not found.",
         content: {
           "application/json": {
             schema: {
-              additionalProperties: true
+              $ref: "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }

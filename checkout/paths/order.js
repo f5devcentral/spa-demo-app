@@ -41,17 +41,28 @@ export default function (checkoutService) {
         content: {
           "application/json": {
             schema: {
-              type: "string"
+              type: "string",
+              example: "KV3GS97H21"
             }
           }
         }
       },
-      default: {
-        description: "An error occurred",
+      400: {
+        description: "Incomplete request.",
         content: {
           "application/json": {
             schema: {
-              additionalProperties: true
+              $ref: "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      500: {
+        description: "An error occurred.",
+        content: {
+          "application/json": {
+            schema: {
+              $ref: "#/components/schemas/Error"
             }
           }
         }

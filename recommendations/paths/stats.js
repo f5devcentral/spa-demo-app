@@ -24,7 +24,7 @@ export default function () {
         }
       },
       default: {
-        description: "An error occurred",
+        description: "An error occurred.",
         content: {
           "application/json": {
             schema: {

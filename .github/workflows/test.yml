@@ -18,6 +18,7 @@ jobs:
           - api
           - inventory
           - recommendations
+          - checkout
           - spa
         node:
           - 16

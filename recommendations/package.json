@@ -9,7 +9,7 @@
     "dev": "npx nodemon ./server.js",
     "test-watch": "node ./node_modules/mocha/bin/mocha --watch --parallel",
     "test:unit": "node ./node_modules/mocha/bin/mocha --exit",
-    "test:coverage": "./node_modules/c8/bin/c8.js npm test"
+    "test:coverage": "./node_modules/c8/bin/c8.js npm run test:unit"
   },
   "author": "",
   "license": "ISC",

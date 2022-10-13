@@ -19,7 +19,6 @@ export interface Address {
   zip: string
 }
 
-
 export interface Order {
   products: OrderProduct[]
   shippingAddress: Address

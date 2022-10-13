@@ -1,47 +1,23 @@
 <template>
-  <div
-    v-if="product"
-    id="page-wrap"
-    :key="product.id"
-  >
+  <div v-if="product" id="page-wrap" :key="product.id">
     <div id="img-wrap">
-      <img
-        v-if="product.imageUrl"
-        :src="api_url + product.imageUrl"
-      >
+      <img v-if="product.imageUrl" :src="api_url + product.imageUrl" />
     </div>
     <div id="product-details">
       <h1 id="product-name">
         {{ product.name }}
       </h1>
-      <h3 id="product-price">
-        ${{ product.price }}
-      </h3>
+      <h3 id="product-price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <InventoryComponent
-        v-if="showService('inventory') && product?.id"
-        :id="product.id"
-      />
-      <button
-        v-if="!itemIsInCart && !showSuccessMessage"
-        id="add-to-cart"
-        @click="addToCart"
-      >
+      <InventoryComponent v-if="showService('inventory') && product?.id" :id="product.id" />
+      <button v-if="!itemIsInCart && !showSuccessMessage" id="add-to-cart" @click="addToCart">
         Add to Cart
       </button>
-      <button
-        v-if="!itemIsInCart && showSuccessMessage"
-        id="add-to-cart"
-        class="green-button"
-      >
+      <button v-if="!itemIsInCart && showSuccessMessage" id="add-to-cart" class="green-button">
         Successfully added item to cart!
       </button>
-      <button
-        v-if="itemIsInCart"
-        id="add-to-cart"
-        class="grey-button"
-      >
+      <button v-if="itemIsInCart" id="add-to-cart" class="grey-button">
         Item is already in cart
       </button>
     </div>
@@ -56,7 +32,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import axios from "axios"
-import { Product } from "../types"
+import type { Product } from "../types"
 import NotFoundPage from "./NotFoundPage.vue"
 import RecommendationsComponent from "../components/RecommendationsComponent.vue"
 import InventoryComponent from "../components/InventoryComponent.vue"
@@ -78,13 +54,13 @@ export default defineComponent({
   },
   computed: {
     itemIsInCart(): boolean {
-      return this.cartItems.some((item) => item.id === this.product.id)
+      return this.cartItems.some(item => item.id === this.product.id)
     },
   },
   watch: {
-    "$route"() {
+    $route() {
       this.loadProduct(this.$route.params.id as string)
-    }
+    },
   },
   async created() {
     await this.loadProduct(this.$route.params.id as string)
@@ -103,16 +79,14 @@ export default defineComponent({
       return localStorage.getItem(serviceName + "_url") !== null
     },
     async loadProduct(id: string) {
-      const { data: product } = await axios.get(
-        `${this.api_url}/api/products/${id}`
-      )
+      const { data: product } = await axios.get(`${this.api_url}/api/products/${id}`)
       this.product = product
 
       const { data: cartItems } = await axios.get(
         `${this.api_url}/api/users/${localStorage.userId}/cart`
       )
       this.cartItems = cartItems
-    }
+    },
   },
 })
 </script>

@@ -8,14 +8,12 @@
       @remove-from-cart="$emit('remove-from-cart', $event)"
     />
   </div>
-  <p v-else>
-    You haven't added anything to your cart yet!
-  </p>
+  <p v-else>You haven't added anything to your cart yet!</p>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue"
-import { Product } from "../types"
+import { defineComponent, type PropType } from "vue"
+import type { Product } from "../types"
 import ProductsListItemComponent from "./ProductsListItemComponent.vue"
 
 export default defineComponent({
@@ -26,12 +24,12 @@ export default defineComponent({
   props: {
     products: {
       type: Array as PropType<Product[]>,
-      required: true
+      required: true,
     },
     readOnly: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ["remove-from-cart"],
 })

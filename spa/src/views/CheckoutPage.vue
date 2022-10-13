@@ -1,28 +1,23 @@
 <template>
   <div id="page-wrap">
     <h1>Checkout</h1>
-    <ProductsListComponent
-      :products="cartItems"
-      :read-only="true"
-    />
+    <ProductsListComponent :products="cartItems" :read-only="true" />
     <div class="flex-box">
       <div>
         <h3>Shipping Address:</h3>
         <h4>
-          {{ shippingAddress.street }}<br>
+          {{ shippingAddress.street }}<br />
           {{ shippingAddress.city }}, {{ shippingAddress.state }} {{ shippingAddress.zip }}
         </h4>
       </div>
       <div>
-        <h3 id="total-price">
-          Total: ${{ totalPrice }}
-        </h3>
+        <h3 id="total-price">Total: ${{ totalPrice }}</h3>
       </div>
     </div>
     <button
-      id="checkout-button"
+      id="complete-button"
       :disabled="cartItems.length === 0"
-      @click="checkout(cartItems)"
+      @click="completePurchase(cartItems)"
     >
       Complete Purchase
     </button>
@@ -32,7 +27,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import axios from "axios"
-import { Address, Product, OrderProduct, Order } from "../types"
+import type { Address, Product, OrderProduct, Order } from "../types"
 import ProductsListComponent from "../components/ProductsListComponent.vue"
 import { ElMessageBox } from "element-plus"
 import { h } from "vue"
@@ -56,15 +51,13 @@ export default defineComponent({
         street: "801 5th Ave",
         city: "Seattle",
         state: "WA",
-        zip: "98104"
-      } as Address
+        zip: "98104",
+      } as Address,
     }
   },
   computed: {
     totalPrice() {
-      return this.cartItems
-        .reduce((sum, item: Product) => sum + Number(item.price), 0)
-        .toFixed(2)
+      return this.cartItems.reduce((sum, item: Product) => sum + Number(item.price), 0).toFixed(2)
     },
   },
   async created() {
@@ -73,42 +66,44 @@ export default defineComponent({
     this.cartItems = cartItems
   },
   methods: {
-    async removeFromCart(productId: string) {
-      const result = await axios.delete<Product[]>(
-        `${this.api_url}/api/users/${localStorage.userId}/cart/${productId}`
-      )
-      this.cartItems = result.data
-    },
     async getToken() {
-      const tokenResponse = await this.instance.acquireTokenSilent({
-        ...tokenRequest
-      }).catch(async (e) => {
-        if (e instanceof InteractionRequiredAuthError) {
-          await this.instance.acquireTokenRedirect(tokenRequest)
-        }
-        throw e
-      })
+      const tokenResponse = await this.instance
+        .acquireTokenSilent({
+          ...tokenRequest,
+        })
+        .catch(async e => {
+          if (e instanceof InteractionRequiredAuthError) {
+            await this.instance.acquireTokenRedirect(tokenRequest)
+          }
+          throw e
+        })
       if (this.inProgress === InteractionStatus.None) {
         return tokenResponse.accessToken
       }
     },
-    async checkout(items: Product[]) {
+    async completePurchase(items: Product[]) {
       try {
         const token = await this.getToken()
         if (token === undefined) {
           this.showError("getting an API token")
           return
         }
-        const orderProducts = items.map<OrderProduct>((p) => { return { id: p.id } })
-        const { data: response } = await axios.post(`${this.checkout_url}/api/order`, {
-          products: orderProducts,
-          shippingAddress: this.shippingAddress,
-          userId: localStorage.userId
-        } as Order, {
-          headers: {
-            Authorization: "Bearer " + token
-          }
+        const orderProducts = items.map<OrderProduct>(p => {
+          return { id: p.id }
         })
+        const { data: response } = await axios.post(
+          `${this.checkout_url}/api/order`,
+          {
+            products: orderProducts,
+            shippingAddress: this.shippingAddress,
+            userId: localStorage.userId,
+          } as Order,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        )
         ElMessageBox({
           title: "Purchase Complete",
           message: h("p", null, [
@@ -119,10 +114,9 @@ export default defineComponent({
           type: "success",
           confirmButtonText: "OK",
           closeOnClickModal: false,
-          callback: () => this.$router.push("/products")
+          callback: () => this.$router.push("/products"),
         })
-      }
-      catch (error) {
+      } catch (error) {
         this.showError("completing your purchase")
       }
     },
@@ -136,9 +130,9 @@ export default defineComponent({
         ]),
         type: "error",
         confirmButtonText: "OK",
-        closeOnClickModal: false
+        closeOnClickModal: false,
       })
-    }
+    },
   },
 })
 </script>
@@ -155,7 +149,7 @@ h1 {
   text-align: right;
 }
 
-#checkout-button {
+#complete-button {
   width: 100%;
 }
 

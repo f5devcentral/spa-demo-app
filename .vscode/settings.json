@@ -2,11 +2,6 @@
   "editor.tabSize": 2,
   "editor.insertSpaces": true,
   "editor.detectIndentation": false,
-  "eslint.validate": [
-    "typescript",
-    "typescriptreact",
-    "vue"
-  ],
   "spellright.language": [
     "en"
   ],

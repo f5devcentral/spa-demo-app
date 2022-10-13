@@ -24,19 +24,21 @@ const state = reactive({
     jobTitle: "",
     mail: "",
     businessPhones: [],
-    officeLocation: ""
-  }
+    officeLocation: "",
+  },
 })
 
 async function getGraphData() {
-  const response = await instance.acquireTokenSilent({
-    ...loginRequest
-  }).catch(async (e) => {
-    if (e instanceof InteractionRequiredAuthError) {
-      await instance.acquireTokenRedirect(loginRequest)
-    }
-    throw e
-  })
+  const response = await instance
+    .acquireTokenSilent({
+      ...loginRequest,
+    })
+    .catch(async e => {
+      if (e instanceof InteractionRequiredAuthError) {
+        await instance.acquireTokenRedirect(loginRequest)
+      }
+      throw e
+    })
   if (inProgress.value === InteractionStatus.None) {
     const graphData = await callMsGraph(response.accessToken)
     state.data = graphData

@@ -9,7 +9,7 @@ name: Tests
       - reopened
 
 jobs:
-  test-apis:
+  test:
     name: "${{ matrix.subproject }} subproject test on Node.js v${{ matrix.node }}"
     runs-on: ubuntu-latest
     strategy:
@@ -19,13 +19,17 @@ jobs:
           - inventory
           - recommendations
           - checkout
+          - spa
         node:
           - 16
     steps:
       - uses: actions/setup-node@v3
         with:
           node-version: "${{ matrix.node }}"
-      - uses: actions/checkout@v3
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: "Cache node_modules"
         uses: actions/cache@v3
         with:
@@ -33,7 +37,9 @@ jobs:
           key: ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ matrix.subproject }}-${{ runner.os }}-node-v${{ matrix.node }}-
+
       - name: Install Dependencies
         run: cd ${{ matrix.subproject }} && npm install
+
       - name: Run All Node.js Tests
-        run: cd ${{ matrix.subproject }} && npm run test
+        run: cd ${{ matrix.subproject }} && npm run test:unit

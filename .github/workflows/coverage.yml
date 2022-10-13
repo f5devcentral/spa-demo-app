@@ -43,6 +43,7 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           path-to-lcov: ./${{ matrix.subproject }}/coverage/lcov.info
+          base-path: ./${{ matrix.subproject }}
           github-token: ${{ secrets.github_token }}
           flag-name: run-${{ matrix.subproject }}
           parallel: true

@@ -75,7 +75,6 @@ cd <service folder here>
 export MONGO_URL="localhost"
 export INVENTORY_URL="http://localhost:8002"
 export RECOMMENDATIONS_URL="http://recommendations:8001"
-export CHECKOUT_URL="http://checkout:8003"
 npm dev
 ```
 

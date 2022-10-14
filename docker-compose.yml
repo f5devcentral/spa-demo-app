@@ -22,7 +22,6 @@ services:
       - MONGO_URL=mongodb
       - INVENTORY_URL=http://inventory:8002
       - RECOMMENDATIONS_URL=http://recommendations:8001
-      - CHECKOUT_URL=http://checkout:8003
       - IMAGE_DIRECTORY=${PRODUCT_TYPE}
     dns:
       - 10.1.1.6

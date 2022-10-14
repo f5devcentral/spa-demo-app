@@ -17,7 +17,6 @@
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
         "RECOMMENDATIONS_URL": "http://localhost:8001",
-        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -33,7 +32,6 @@
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
         "RECOMMENDATIONS_URL": "http://localhost:8001",
-        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -49,7 +47,6 @@
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
         "RECOMMENDATIONS_URL": "http://localhost:8001",
-        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {
@@ -65,7 +62,6 @@
         "MONGO_URL": "localhost",
         "INVENTORY_URL": "http://localhost:8002",
         "RECOMMENDATIONS_URL": "http://localhost:8001",
-        "CHECKOUT_URL": "http://localhost:8003"
       }
     },
     {

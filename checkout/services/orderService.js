@@ -12,7 +12,7 @@ const checkoutService = {
   async createOrder(userId, products) {
 
     if (products.length === 0) throw new RequestInvalidError(ERR_NO_PRODUCTS)
-    if (!userId)  throw new RequestInvalidError(ERR_NO_USER_ID)
+    if (!userId) throw new RequestInvalidError(ERR_NO_USER_ID)
 
     const orderId = this.generateOrderId()
     await this.emptyUserCart(userId)

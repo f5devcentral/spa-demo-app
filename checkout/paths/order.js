@@ -10,6 +10,7 @@ export default function (checkoutService) {
     try {
       const { userId, products } = req.body
       const orderId = await checkoutService.createOrder(userId, products)
+      console.log(`OrderId: ${orderId}, User: ${req.get("User")}, Email: ${req.get("Email")}`)
       res.status(200).json({ orderId: orderId })
     }
     catch (e) {

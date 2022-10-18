@@ -3,7 +3,12 @@
     <h1>Shopping Cart</h1>
     <ProductsListComponent :products="cartItems" @remove-from-cart="removeFromCart($event)" />
     <h3 id="total-price">Total: ${{ totalPrice }}</h3>
-    <button id="checkout-button" :disabled="cartItems.length === 0" @click="checkIfAuthenticated()">
+    <button
+      v-if="enableSecurity"
+      id="checkout-button"
+      :disabled="cartItems.length === 0"
+      @click="checkIfAuthenticated()"
+    >
       Proceed to Checkout
     </button>
   </div>
@@ -27,6 +32,7 @@ export default defineComponent({
       api_url: localStorage.api_url,
       cartItems: [] as Product[],
       isAuthenticated: {} as any,
+      enableSecurity: localStorage.security != undefined,
     }
   },
   computed: {

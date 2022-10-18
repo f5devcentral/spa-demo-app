@@ -13,13 +13,29 @@ npm install
 ### Compiles and hot-reloads for development
 
 ```shell
-npm run serve
+npm run dev
 ```
+
+Optionally, to run the dark variant of the Brewz SPA app: `npm run dev:dark`.
+
+To show the security features of the app (sign in, etc), you will need to manually create a `security` local storage entry in your browser's developer tools console. The entry can have any value; it just must exist.
 
 ### Compiles and minifies for production
 
 ```shell
 npm run build
+```
+
+### Run unit tests
+
+```shell
+npm run test:unit
+```
+
+### Create unit test coverage report
+
+```shell
+npm run test:coverage
 ```
 
 ### Lints and fixes files

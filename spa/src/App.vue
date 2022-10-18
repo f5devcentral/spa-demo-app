@@ -1,6 +1,6 @@
 <template>
   <div id="brewz">
-    <NavBarComponent />
+    <NavBarComponent :enableSecurity="enableSecurity" />
     <router-view :key="$route.name || '' + ($route.params.id || '')" />
   </div>
 </template>
@@ -18,6 +18,7 @@ export default defineComponent({
     return {
       color: import.meta.env.VITE_APP_GLOBAL_COLOR || "#000",
       backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF",
+      enableSecurity: localStorage.security != undefined,
     }
   },
   async created() {

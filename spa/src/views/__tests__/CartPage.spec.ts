@@ -1,4 +1,4 @@
-import { afterEach, describe, it, expect, vi } from "vitest"
+import { beforeEach, afterEach, describe, it, expect, vi } from "vitest"
 import { mount, shallowMount, RouterLinkStub, flushPromises } from "@vue/test-utils"
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
@@ -62,113 +62,164 @@ describe("CartPage", () => {
     mock.resetHistory()
   })
 
-  it("Renders properly with products", async () => {
-    isAuthenticated = true
-    mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
-
-    const wrapper = shallowMount(CartPage, {
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-      },
+  describe("with security disabled", () => {
+    beforeEach(() => {
+      localStorage.removeItem("security")
     })
 
-    await flushPromises()
+    it("Renders properly with products", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
 
-    expect(wrapper.text()).toContain("Shopping Cart")
-    expect(wrapper.text()).toContain("Total: $32.47")
-    expect(wrapper.find("#checkout-button").attributes("disabled")).toBeUndefined()
-    expect(mock.history.get.length).toBe(1)
+      const wrapper = shallowMount(CartPage, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
+      })
+
+      await flushPromises()
+
+      expect(wrapper.text()).toContain("Shopping Cart")
+      expect(wrapper.text()).toContain("Total: $32.47")
+      expect(wrapper.find("#checkout-button").exists()).toBe(false)
+      expect(mock.history.get.length).toBe(1)
+    })
+
+    it("Removes product from cart when remove button is clicked", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, [mockCartProducts[0]])
+      mock.onDelete("/api/users/12345/cart/123").reply(200, [])
+
+      const wrapper = mount(CartPage, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
+      })
+      await flushPromises()
+      await wrapper.find(".remove-button").trigger("click")
+
+      expect(mock.history.get.length).toBe(1)
+      expect(mock.history.delete.length).toBe(1)
+    })
   })
 
-  it("Redirects to checkout if user is authenticated", async () => {
-    isAuthenticated = true
-    mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
-
-    const mockRouter = {
-      push: vi.fn(),
-    }
-
-    const wrapper = shallowMount(CartPage, {
-      global: {
-        mocks: {
-          $router: mockRouter,
-        },
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-      },
+  describe("with security enabled", () => {
+    beforeEach(() => {
+      localStorage.security = ""
     })
 
-    await flushPromises()
+    it("Renders properly with products", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
 
-    wrapper.find("#checkout-button").trigger("click")
-    expect(mockRouter.push).toHaveBeenCalledWith("/checkout")
-    expect(mock.history.get.length).toBe(1)
-  })
-
-  it("Shows message if user is not authenticated", async () => {
-    isAuthenticated = false
-    mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
-
-    const mockRouter = {
-      push: vi.fn(),
-    }
-
-    const wrapper = shallowMount(CartPage, {
-      global: {
-        mocks: {
-          $router: mockRouter,
+      const wrapper = shallowMount(CartPage, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
         },
-        stubs: {
-          RouterLink: RouterLinkStub,
-        },
-      },
+      })
+
+      await flushPromises()
+
+      expect(wrapper.text()).toContain("Shopping Cart")
+      expect(wrapper.text()).toContain("Total: $32.47")
+      expect(wrapper.find("#checkout-button").attributes("disabled")).toBeUndefined()
+      expect(mock.history.get.length).toBe(1)
     })
 
-    await flushPromises()
-    wrapper.find("#checkout-button").trigger("click")
+    it("Redirects to checkout if user is authenticated", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
 
-    expect(mockRouter.push).not.toHaveBeenCalled()
-    expect(mock.history.get.length).toBe(1)
-  })
+      const mockRouter = {
+        push: vi.fn(),
+      }
 
-  it("Disables checkout button with no products", async () => {
-    isAuthenticated = true
-    mock.onGet("/api/users/12345/cart").reply(200, [])
-
-    const wrapper = shallowMount(CartPage, {
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
+      const wrapper = shallowMount(CartPage, {
+        global: {
+          mocks: {
+            $router: mockRouter,
+          },
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
         },
-      },
+      })
+
+      await flushPromises()
+
+      wrapper.find("#checkout-button").trigger("click")
+      expect(mockRouter.push).toHaveBeenCalledWith("/checkout")
+      expect(mock.history.get.length).toBe(1)
     })
 
-    await flushPromises()
+    it("Shows message if user is not authenticated", async () => {
+      isAuthenticated = false
+      mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
 
-    expect(wrapper.text()).toContain("Total: $0.00")
-    expect(wrapper.find("#checkout-button").attributes("disabled")).toBeDefined()
-    expect(mock.history.get.length).toBe(1)
-  })
+      const mockRouter = {
+        push: vi.fn(),
+      }
 
-  it("Removes product from cart when clicked remove button", async () => {
-    isAuthenticated = true
-    mock.onGet("/api/users/12345/cart").reply(200, [mockCartProducts[0]])
-    mock.onDelete("/api/users/12345/cart/123").reply(200, [])
-
-    const wrapper = mount(CartPage, {
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
+      const wrapper = shallowMount(CartPage, {
+        global: {
+          mocks: {
+            $router: mockRouter,
+          },
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
         },
-      },
-    })
-    await flushPromises()
-    await wrapper.find(".remove-button").trigger("click")
+      })
 
-    expect(mock.history.get.length).toBe(1)
-    expect(mock.history.delete.length).toBe(1)
+      await flushPromises()
+      wrapper.find("#checkout-button").trigger("click")
+
+      expect(mockRouter.push).not.toHaveBeenCalled()
+      expect(mock.history.get.length).toBe(1)
+    })
+
+    it("Disables checkout button with no products", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, [])
+
+      const wrapper = shallowMount(CartPage, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
+      })
+
+      await flushPromises()
+
+      expect(wrapper.text()).toContain("Total: $0.00")
+      expect(wrapper.find("#checkout-button").attributes("disabled")).toBeDefined()
+      expect(mock.history.get.length).toBe(1)
+    })
+
+    it("Removes product from cart when remove button is clicked", async () => {
+      isAuthenticated = true
+      mock.onGet("/api/users/12345/cart").reply(200, [mockCartProducts[0]])
+      mock.onDelete("/api/users/12345/cart/123").reply(200, [])
+
+      const wrapper = mount(CartPage, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
+      })
+      await flushPromises()
+      await wrapper.find(".remove-button").trigger("click")
+
+      expect(mock.history.get.length).toBe(1)
+      expect(mock.history.delete.length).toBe(1)
+    })
   })
 })

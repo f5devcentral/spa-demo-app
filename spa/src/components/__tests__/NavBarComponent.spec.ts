@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest"
+import { beforeEach, describe, it, expect, vi } from "vitest"
 import { mount, RouterLinkStub } from "@vue/test-utils"
 import NavBarComponent from "../NavBarComponent.vue"
 
@@ -19,32 +19,59 @@ vi.mock("../../composition-api/useIsAuthenticated", () => ({
 }))
 
 describe("NavBarComponent", () => {
-  it("Renders properly when authenticated", () => {
-    isAuthenticated = true
+  describe("with security disabled", () => {
+    it("Renders properly", () => {
+      isAuthenticated = true
 
-    const wrapper = mount(NavBarComponent, {
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
+      const wrapper = mount(NavBarComponent, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
         },
-      },
-    })
+        props: {
+          enableSecurity: false,
+        },
+      })
 
-    expect(wrapper.text()).toContain("BREWZShopping CartWelcome, bob(JWT)")
+      expect(wrapper.text()).toBe("BREWZShopping Cart")
+    })
   })
 
-  it("Renders properly when not authenticated", () => {
-    isAuthenticated = false
+  describe("with security enabled", () => {
+    it("Renders properly when authenticated", () => {
+      isAuthenticated = true
 
-    const wrapper = mount(NavBarComponent, {
-      global: {
-        stubs: {
-          RouterLink: RouterLinkStub,
+      const wrapper = mount(NavBarComponent, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
         },
-      },
+        props: {
+          enableSecurity: true,
+        },
+      })
+
+      expect(wrapper.text()).toContain("BREWZShopping CartWelcome, bob(JWT)")
     })
 
-    expect(wrapper.text()).toContain("BREWZShopping CartSign In")
+    it("Renders properly when not authenticated", () => {
+      isAuthenticated = false
+
+      const wrapper = mount(NavBarComponent, {
+        global: {
+          stubs: {
+            RouterLink: RouterLinkStub,
+          },
+        },
+        props: {
+          enableSecurity: true,
+        },
+      })
+
+      expect(wrapper.text()).toContain("BREWZShopping CartSign In")
+    })
   })
 
   it("Shopping Cart button routes to the cart page", async () => {
@@ -67,4 +94,5 @@ describe("NavBarComponent", () => {
 
     expect(mockRouter.push).toHaveBeenCalledWith("/cart")
   })
+
 })

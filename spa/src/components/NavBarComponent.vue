@@ -6,8 +6,10 @@
     <div class="nav-link">
       <button id="shopping-cart" @click="$router.push('/cart')">Shopping Cart</button>
     </div>
-    <SignOutButton v-if="isAuthenticated" class="nav-link" />
-    <SignInButton v-else class="nav-link" />
+    <template v-if="enableSecurity">
+      <SignOutButton v-if="isAuthenticated" class="nav-link" />
+      <SignInButton v-else class="nav-link" />
+    </template>
   </div>
 </template>
 
@@ -16,6 +18,12 @@ import { useIsAuthenticated } from "../composition-api/useIsAuthenticated"
 import SignInButton from "./SignInButton.vue"
 import SignOutButton from "./SignOutButton.vue"
 
+defineProps({
+  enableSecurity: {
+    type: Boolean,
+    required: true,
+  },
+})
 const isAuthenticated = useIsAuthenticated()
 </script>
 

@@ -78,7 +78,9 @@ export RECOMMENDATIONS_URL="http://recommendations:8001"
 npm dev
 ```
 
-Optionally, to run the dark variant of the Brewz SPA app: `npm run dev-dark`.
+Optionally, to run the dark variant of the Brewz SPA app: `npm run dev:dark`.
+
+To show the security features of the app (sign in, etc), you will need to manually create a `security` local storage entry in your browser's developer tools console. The entry can have any value; it just must exist.
 
 #### Unit Tests
 
@@ -100,7 +102,7 @@ Coverage reports will appear in each subproject's `coverage` directory.
 
 ```bash
 cd spa
-npm run serve
+npm run dev
 ```
 
 You will also need to update the *./spa/.env* with the correct API server URL.

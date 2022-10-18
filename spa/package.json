@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "vite --port 8081",
-    "dev-dark": "VITE_APP_GLOBAL_COLOR=#FFF VITE_APP_GLOBAL_BACKGROUND_COLOR=#000 vite --port 8081",
+    "dev:dark": "VITE_APP_GLOBAL_COLOR=#FFF VITE_APP_GLOBAL_BACKGROUND_COLOR=#000 vite --port 8081",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 8081",
     "test:unit": "vitest --environment jsdom",

@@ -1,7 +1,7 @@
 <template>
   <div v-if="product" id="page-wrap" :key="product.id">
     <div id="img-wrap">
-      <img v-if="product.imageUrl" :src="api_url + product.imageUrl" />
+      <img v-if="product.imageUrl" :src="config.apiUrl + product.imageUrl" />
     </div>
     <div id="product-details">
       <h1 id="product-name">
@@ -10,7 +10,7 @@
       <h3 id="product-price">${{ product.price }}</h3>
       <p><b>Average rating</b>: {{ product.averageRating }}</p>
       <p>{{ product.description }}</p>
-      <InventoryComponent v-if="showService('inventory') && product?.id" :id="product.id" />
+      <InventoryComponent v-if="config.inventoryUrl && product?.id" :id="product.id" />
       <button v-if="!itemIsInCart && !showSuccessMessage" id="add-to-cart" @click="addToCart">
         Add to Cart
       </button>
@@ -21,10 +21,7 @@
         Item is already in cart
       </button>
     </div>
-    <RecommendationsComponent
-      v-if="showService('recommendations') && product?.id"
-      :id="product.id"
-    />
+    <RecommendationsComponent v-if="config.recommendationsUrl && product?.id" :id="product.id" />
   </div>
   <NotFoundPage v-else />
 </template>
@@ -36,6 +33,7 @@ import type { Product } from "../types"
 import NotFoundPage from "./NotFoundPage.vue"
 import RecommendationsComponent from "../components/RecommendationsComponent.vue"
 import InventoryComponent from "../components/InventoryComponent.vue"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "ProductDetailPage",
@@ -49,7 +47,7 @@ export default defineComponent({
       product: {} as Product,
       cartItems: [] as Product[],
       showSuccessMessage: false,
-      api_url: localStorage.api_url,
+      config: {} as any,
     }
   },
   computed: {
@@ -63,11 +61,12 @@ export default defineComponent({
     },
   },
   async created() {
+    this.config = loadStorage()
     await this.loadProduct(this.$route.params.id as string)
   },
   methods: {
     async addToCart() {
-      await axios.post(`${this.api_url}/api/users/${localStorage.userId}/cart`, {
+      await axios.post(`${this.config.apiUrl}/api/users/${this.config.userId}/cart`, {
         productId: this.$route.params.id,
       })
       this.showSuccessMessage = true
@@ -75,15 +74,12 @@ export default defineComponent({
         this.$router.push("/products")
       }, 1500)
     },
-    showService(serviceName: string): boolean {
-      return localStorage.getItem(serviceName + "_url") !== null
-    },
     async loadProduct(id: string) {
-      const { data: product } = await axios.get(`${this.api_url}/api/products/${id}`)
+      const { data: product } = await axios.get(`${this.config.apiUrl}/api/products/${id}`)
       this.product = product
 
       const { data: cartItems } = await axios.get(
-        `${this.api_url}/api/users/${localStorage.userId}/cart`
+        `${this.config.apiUrl}/api/users/${this.config.userId}/cart`
       )
       this.cartItems = cartItems
     },

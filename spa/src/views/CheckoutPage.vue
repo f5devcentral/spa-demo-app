@@ -34,6 +34,7 @@ import { h } from "vue"
 import { useMsal } from "../composition-api/useMsal"
 import { InteractionRequiredAuthError, InteractionStatus } from "@azure/msal-browser"
 import { tokenRequest } from "../authConfig"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "CartPage",
@@ -44,8 +45,7 @@ export default defineComponent({
     return {
       instance: useMsal().instance,
       inProgress: useMsal().inProgress,
-      api_url: localStorage.api_url,
-      checkout_url: localStorage.checkout_url,
+      config: {} as any,
       cartItems: [] as Product[],
       shippingAddress: {
         street: "801 5th Ave",
@@ -61,7 +61,8 @@ export default defineComponent({
     },
   },
   async created() {
-    const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`)
+    this.config = loadStorage()
+    const result = await axios.get(`${this.config.apiUrl}/api/users/${this.config.userId}/cart`)
     const cartItems = result.data
     this.cartItems = cartItems
   },
@@ -92,11 +93,11 @@ export default defineComponent({
           return { id: p.id }
         })
         const { data: response } = await axios.post(
-          `${this.checkout_url}/api/order`,
+          `${this.config.checkoutUrl}/api/order`,
           {
             products: orderProducts,
             shippingAddress: this.shippingAddress,
-            userId: localStorage.userId,
+            userId: this.config.userId,
           } as Order,
           {
             headers: {

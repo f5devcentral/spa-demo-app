@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest"
+import { describe, it, expect, afterEach, vi } from "vitest"
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
 import { mount, flushPromises, RouterLinkStub } from "@vue/test-utils"
@@ -37,6 +37,12 @@ const mockRecommendationsData = [
   },
 ]
 
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "", recommendationsUrl: "" }
+  },
+}))
+
 describe("RecommendationsComponent", () => {
   const mock = new MockAdapter(axios)
 
@@ -47,9 +53,6 @@ describe("RecommendationsComponent", () => {
   it("Shows recommendations", async () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/recommendations/567").reply(200, mockRecommendationsData)
-
-    localStorage.api_url = ""
-    localStorage.recommendations_url = ""
 
     const wrapper = mount(RecommendationsComponent, {
       global: {
@@ -70,8 +73,6 @@ describe("RecommendationsComponent", () => {
   it("Shows nothing when there was an error getting recommendations", async () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/recommendations").reply(500)
-
-    localStorage.api_url = ""
 
     const wrapper = mount(RecommendationsComponent, {
       props: { id: "123" },

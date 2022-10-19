@@ -1,4 +1,4 @@
-import { describe, it, expect, afterEach } from "vitest"
+import { describe, it, expect, afterEach, vi } from "vitest"
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
 import { mount, flushPromises } from "@vue/test-utils"
@@ -55,6 +55,12 @@ const mockInventoryData = [
   },
 ]
 
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "" }
+  },
+}))
+
 describe("InventoryComponent", () => {
   const mock = new MockAdapter(axios)
 
@@ -65,8 +71,6 @@ describe("InventoryComponent", () => {
   it("Shows in stock when inventory is available", async () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/inventory").reply(200, mockInventoryData)
-
-    localStorage.api_url = ""
 
     const wrapper = mount(InventoryComponent, {
       props: { id: "123" },
@@ -82,8 +86,6 @@ describe("InventoryComponent", () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/inventory").reply(200, mockInventoryData)
 
-    localStorage.api_url = ""
-
     const wrapper = mount(InventoryComponent, {
       props: { id: "456" },
     })
@@ -98,8 +100,6 @@ describe("InventoryComponent", () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/inventory").reply(200, mockInventoryData)
 
-    localStorage.api_url = ""
-
     const wrapper = mount(InventoryComponent, {
       props: { id: "112" },
     })
@@ -113,8 +113,6 @@ describe("InventoryComponent", () => {
   it("Shows nothing when there was an error getting inventory", async () => {
     // arguments for reply are (status, data, headers)
     mock.onGet("/api/inventory").reply(500)
-
-    localStorage.api_url = ""
 
     const wrapper = mount(InventoryComponent, {
       props: { id: "112" },

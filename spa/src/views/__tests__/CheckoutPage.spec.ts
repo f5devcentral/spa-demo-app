@@ -68,9 +68,12 @@ const mockCartProducts: Product[] = [
 const mockOrderCompleteSuccess = { orderId: "HSJDU538HD" }
 
 const mock = new MockAdapter(axios)
-localStorage.api_url = ""
-localStorage.checkout_url = ""
-localStorage.userId = "12345"
+
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "", checkoutUrl: "", userId: "12345" }
+  },
+}))
 
 describe("CheckoutPage", () => {
   afterEach(() => {

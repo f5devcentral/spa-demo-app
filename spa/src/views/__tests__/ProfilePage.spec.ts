@@ -43,7 +43,11 @@ vi.mock("../../composition-api/useIsAuthenticated", () => ({
   useIsAuthenticated: () => isAuthenticated,
 }))
 
-localStorage.api_url = ""
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "" }
+  },
+}))
 
 describe("ProfilePage", () => {
   it("Renders properly with profile information", async () => {

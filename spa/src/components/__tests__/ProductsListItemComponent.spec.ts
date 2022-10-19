@@ -1,8 +1,14 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 
 import { mount } from "@vue/test-utils"
 import ProductsListItemComponent from "../ProductsListItemComponent.vue"
 import type { Product } from "../../types"
+
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "" }
+  },
+}))
 
 describe("ProductsListItemComponent", () => {
   it("Renders properly", () => {
@@ -15,7 +21,6 @@ describe("ProductsListItemComponent", () => {
       imageUrl: "/images/elysian.png",
       averageRating: "4.5",
     }
-    localStorage.api_url = ""
 
     const wrapper = mount(ProductsListItemComponent, {
       props: { product: product, readOnly: false },

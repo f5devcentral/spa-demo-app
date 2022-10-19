@@ -1,8 +1,14 @@
-import { describe, it, expect } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 import { mount, RouterLinkStub } from "@vue/test-utils"
 
 import ProductsGridItemComponent from "../ProductsGridItemComponent.vue"
 import type { Product } from "../../types"
+
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "" }
+  },
+}))
 
 describe("ProductsGridItemComponent", () => {
   it("Renders properly", () => {
@@ -16,7 +22,6 @@ describe("ProductsGridItemComponent", () => {
       imageUrl: "/images/elysian.png",
       averageRating: "4.5",
     }
-    localStorage.api_url = ""
 
     const wrapper = mount(ProductsGridItemComponent, {
       global: {

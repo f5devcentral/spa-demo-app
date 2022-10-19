@@ -54,8 +54,13 @@ const mockCartProducts: Product[] = [
   },
 ]
 const mock = new MockAdapter(axios)
-localStorage.api_url = ""
-localStorage.userId = "12345"
+
+let mockEnableSecurity = false
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "", userId: "12345", enableSecurity: mockEnableSecurity }
+  },
+}))
 
 describe("CartPage", () => {
   afterEach(() => {
@@ -63,10 +68,6 @@ describe("CartPage", () => {
   })
 
   describe("with security disabled", () => {
-    beforeEach(() => {
-      localStorage.removeItem("security")
-    })
-
     it("Renders properly with products", async () => {
       isAuthenticated = true
       mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
@@ -108,12 +109,9 @@ describe("CartPage", () => {
   })
 
   describe("with security enabled", () => {
-    beforeEach(() => {
-      localStorage.security = ""
-    })
-
     it("Renders properly with products", async () => {
       isAuthenticated = true
+      mockEnableSecurity = true
       mock.onGet("/api/users/12345/cart").reply(200, mockCartProducts)
 
       const wrapper = shallowMount(CartPage, {

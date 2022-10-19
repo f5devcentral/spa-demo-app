@@ -1,11 +1,12 @@
 <template>
   <div id="brewz">
-    <NavBarComponent :enableSecurity="enableSecurity" />
+    <NavBarComponent :enableSecurity="config.enableSecurity" />
     <router-view :key="$route.name || '' + ($route.params.id || '')" />
   </div>
 </template>
 
 <script lang="ts">
+import { loadStorage, saveStorage } from "@/utils/Storage"
 import { defineComponent } from "vue"
 import NavBarComponent from "./components/NavBarComponent.vue"
 
@@ -18,18 +19,21 @@ export default defineComponent({
     return {
       color: import.meta.env.VITE_APP_GLOBAL_COLOR || "#000",
       backgroundColor: import.meta.env.VITE_APP_GLOBAL_BACKGROUND_COLOR || "#FFF",
-      enableSecurity: localStorage.security != undefined,
+      config: {} as any,
     }
   },
   async created() {
     // populate local storage with component URLs
     const default_uri = `${window.location.protocol}//${window.location.host}`
-    localStorage.spa_url = default_uri || null
-    localStorage.api_url = localStorage.api_url || default_uri || null
-    localStorage.recommendations_url = localStorage.recommendations_url || default_uri || null
-    localStorage.inventory_url = localStorage.inventory_url || default_uri || null
-    localStorage.checkout_url = localStorage.checkout_url || default_uri || null
-    localStorage.userId = localStorage.userId || "12345"
+    this.config = loadStorage()
+    this.config.spaUrl = default_uri || null
+    this.config.apiUrl = this.config.apiUrl || default_uri || null
+    this.config.recommendationsUrl = this.config.recommendationsUrl || default_uri || null
+    this.config.inventoryUrl = this.config.inventoryUrl || default_uri || null
+    this.config.checkoutUrl = this.config.checkoutUrl || default_uri || null
+    this.config.userId = this.config.userId || "12345"
+    this.config.enableSecurity = this.config.enableSecurity || false
+    saveStorage(this.config)
   },
   beforeCreate() {
     this.$nextTick(() => {

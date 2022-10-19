@@ -4,7 +4,7 @@
     <ProductsListComponent :products="cartItems" @remove-from-cart="removeFromCart($event)" />
     <h3 id="total-price">Total: ${{ totalPrice }}</h3>
     <button
-      v-if="enableSecurity"
+      v-if="config.enableSecurity"
       id="checkout-button"
       :disabled="cartItems.length === 0"
       @click="checkIfAuthenticated()"
@@ -21,6 +21,7 @@ import type { Product } from "../types"
 import ProductsListComponent from "../components/ProductsListComponent.vue"
 import { useIsAuthenticated } from "../composition-api/useIsAuthenticated"
 import { ElMessageBox } from "element-plus"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "CartPage",
@@ -29,10 +30,9 @@ export default defineComponent({
   },
   data() {
     return {
-      api_url: localStorage.api_url,
+      config: {} as any,
       cartItems: [] as Product[],
       isAuthenticated: {} as any,
-      enableSecurity: localStorage.security != undefined,
     }
   },
   computed: {
@@ -41,14 +41,15 @@ export default defineComponent({
     },
   },
   async created() {
+    this.config = loadStorage()
     this.isAuthenticated = useIsAuthenticated()
-    const result = await axios.get(`${this.api_url}/api/users/${localStorage.userId}/cart`)
+    const result = await axios.get(`${this.config.apiUrl}/api/users/${this.config.userId}/cart`)
     this.cartItems = result.data
   },
   methods: {
     async removeFromCart(productId: string) {
       const result = await axios.delete<Product[]>(
-        `${this.api_url}/api/users/${localStorage.userId}/cart/${productId}`
+        `${this.config.apiUrl}/api/users/${this.config.userId}/cart/${productId}`
       )
       this.cartItems = result.data
     },

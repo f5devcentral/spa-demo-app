@@ -19,6 +19,7 @@
 import axios from "axios"
 import { defineComponent } from "vue"
 import type { ProductInventory } from "../types"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "InventoryComponent",
@@ -33,13 +34,14 @@ export default defineComponent({
       products: [],
       inventoryIsActive: true,
       inventory: 0,
-      api_url: localStorage.api_url,
+      config: {} as any,
     }
   },
   async created() {
     try {
+      this.config = loadStorage()
       // get data
-      const { data: inventory } = await axios.get(`${this.api_url}/api/inventory`)
+      const { data: inventory } = await axios.get(`${this.config.apiUrl}/api/inventory`)
       // find inventory for product
       inventory.forEach((item: ProductInventory) => {
         if (item.id === this.id) this.inventory = item["quantity"]

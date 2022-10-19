@@ -9,6 +9,7 @@
 import axios from "axios"
 import { defineComponent } from "vue"
 import ProductsGridComponent from "../components/ProductsGridComponent.vue"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "RecommendationsComponent",
@@ -25,12 +26,13 @@ export default defineComponent({
     return {
       products: [],
       recIsActive: true,
-      recommendations_url: localStorage.recommendations_url,
+      config: {} as any,
     }
   },
   async created() {
+    this.config = loadStorage()
     axios
-      .get(`${this.recommendations_url}/api/recommendations/${this.id}`)
+      .get(`${this.config.recommendationsUrl}/api/recommendations/${this.id}`)
       .then(result => {
         const products = result.data
         this.products = products

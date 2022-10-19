@@ -1,6 +1,6 @@
 <template>
   <div class="product-item">
-    <img :src="api_url + product.imageUrl" />
+    <img :src="config.apiUrl + product.imageUrl" />
     <h3 class="product-name">
       {{ product.name }}
     </h3>
@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue"
 import type { Product } from "../types"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "ProductsGridItemComponent",
@@ -25,8 +26,11 @@ export default defineComponent({
   },
   data() {
     return {
-      api_url: localStorage.api_url,
+      config: {} as any,
     }
+  },
+  async created() {
+    this.config = loadStorage()
   },
 })
 </script>

@@ -1,4 +1,4 @@
-import { afterEach, describe, it, expect } from "vitest"
+import { afterEach, describe, it, expect, vi } from "vitest"
 import { shallowMount, flushPromises } from "@vue/test-utils"
 import axios from "axios"
 import MockAdapter from "axios-mock-adapter"
@@ -29,7 +29,12 @@ const mockProducts: Product[] = [
 ]
 
 const mock = new MockAdapter(axios)
-localStorage.api_url = ""
+
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "" }
+  },
+}))
 
 describe("ProductsPage", () => {
   afterEach(() => {

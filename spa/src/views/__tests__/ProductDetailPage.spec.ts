@@ -45,10 +45,12 @@ const mockCartProducts: Product[] = [
 ]
 
 const mock = new MockAdapter(axios)
-localStorage.api_url = ""
-localStorage.inventory_url = ""
-localStorage.recommendations_url = ""
-localStorage.userId = "12345"
+
+vi.mock("../../utils/Storage", () => ({
+  loadStorage: () => {
+    return { apiUrl: "", inventoryUrl: "", recommendationsUrl: "", userId: "12345" }
+  },
+}))
 
 const mockRouter = {
   push: vi.fn(),

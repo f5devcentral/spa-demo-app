@@ -1,6 +1,6 @@
 <template>
   <div class="product-container">
-    <img class="product-image" :src="api_url + product.imageUrl" />
+    <img class="product-image" :src="config.apiUrl + product.imageUrl" />
     <div class="details-wrap">
       <h3>{{ product.name }}</h3>
       <p>${{ product.price }}</p>
@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent, type PropType } from "vue"
 import type { Product } from "../types"
+import { loadStorage } from "@/utils/Storage"
 
 export default defineComponent({
   name: "ProductsListItemComponent",
@@ -30,8 +31,11 @@ export default defineComponent({
   emits: ["remove-from-cart"],
   data() {
     return {
-      api_url: localStorage.api_url,
+      config: {} as any,
     }
+  },
+  async created() {
+    this.config = loadStorage()
   },
 })
 </script>

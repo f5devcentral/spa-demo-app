@@ -18,7 +18,7 @@ npm run dev
 
 Optionally, to run the dark variant of the Brewz SPA app: `npm run dev:dark`.
 
-To show the security features of the app (sign in, etc), you will need to manually create a `security` local storage entry in your browser's developer tools console. The entry can have any value; it just must exist.
+To show the security features of the app (sign in, etc), you will need to navigate to `/config` in the Brewz app, set the **Enable Security** checkbox, then refresh your browser.
 
 ### Compiles and minifies for production
 

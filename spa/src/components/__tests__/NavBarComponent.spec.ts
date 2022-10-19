@@ -1,4 +1,4 @@
-import { beforeEach, describe, it, expect, vi } from "vitest"
+import { describe, it, expect, vi } from "vitest"
 import { mount, RouterLinkStub } from "@vue/test-utils"
 import NavBarComponent from "../NavBarComponent.vue"
 
@@ -88,11 +88,13 @@ describe("NavBarComponent", () => {
           RouterLink: RouterLinkStub,
         },
       },
+      props: {
+        enableSecurity: true,
+      },
     })
 
     await wrapper.find("#shopping-cart").trigger("click")
 
     expect(mockRouter.push).toHaveBeenCalledWith("/cart")
   })
-
 })

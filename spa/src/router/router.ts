@@ -6,6 +6,7 @@ import NotFoundPage from "../views/NotFoundPage.vue"
 import ProfilePage from "../views/ProfilePage.vue"
 import FailedPage from "../views/FailedPage.vue"
 import CheckoutPage from "../views/CheckoutPage.vue"
+import ConfigPage from "../views/ConfigPage.vue"
 import { registerGuard } from "./Guard"
 
 const routes: Array<RouteRecordRaw> = [
@@ -52,6 +53,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/failed",
     name: "Failed",
     component: FailedPage,
+  },
+  {
+    path: "/config",
+    name: "Config",
+    component: ConfigPage,
   },
 ]
 

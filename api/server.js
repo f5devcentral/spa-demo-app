@@ -10,6 +10,7 @@ import ProductsService from "./services/productsService.js"
 import ApiDoc from "./api-doc.js"
 import LocatorService from "./services/locatorService.js"
 import StatsService from "./services/statsService.js"
+import { formatErrorAsJson } from "./helpers/utils.js"
 
 const LISTENER_TCP_PORT = 8000
 const imageDirectory = process.env.IMAGE_DIRECTORY || "beer"
@@ -22,7 +23,6 @@ app.use("/images", express.static(path.join(__dirname, `assets/${imageDirectory}
 
 app.listen(LISTENER_TCP_PORT, () => {
   console.log(`Server is listening on port ${LISTENER_TCP_PORT}`)
-  console.log(`path is ${ __dirname }`)
 })
 
 await initialize({
@@ -34,6 +34,11 @@ await initialize({
     statsService: StatsService,
   },
   paths: path.resolve(__dirname, "paths/"),
+  errorMiddleware: function (err, req, res, next) {
+    res.status(err.status).json(formatErrorAsJson(err))
+    console.log(err)
+    next(err)
+  },
 })
 
 // OpenAPI UI

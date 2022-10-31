@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express"
 import { initialize } from "express-openapi"
 import ApiDoc from "./api-doc.js"
 import CheckoutService from "./services/orderService.js"
+import { formatErrorAsJson } from "./helpers/utils.js"
 
 const LISTENER_TCP_PORT = 8003
 const __dirname = path.resolve()
@@ -25,6 +26,11 @@ await initialize({
     checkoutService: CheckoutService
   },
   paths: path.resolve(__dirname, "paths/"),
+  errorMiddleware: function (err, req, res, next) {
+    res.status(err.status).json(formatErrorAsJson(err))
+    console.log(err)
+    next(err)
+  },
 })
 
 // OpenAPI UI

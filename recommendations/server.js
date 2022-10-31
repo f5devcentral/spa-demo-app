@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express"
 import { initialize } from "express-openapi"
 import ApiDoc from "./api-doc.js"
 import RecommendationsService from "./services/recommendationsService.js"
+import { formatErrorAsJson } from "./helpers/utils.js"
 
 const LISTENER_TCP_PORT = 8001
 const __dirname = path.resolve()
@@ -25,6 +26,11 @@ await initialize({
     recommendationsService: RecommendationsService
   },
   paths: path.resolve(__dirname, "paths/"),
+  errorMiddleware: function (err, req, res, next) {
+    res.status(err.status).json(formatErrorAsJson(err))
+    console.log(err)
+    next(err)
+  },
 })
 
 // OpenAPI UI

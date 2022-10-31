@@ -6,6 +6,7 @@ import swaggerUi from "swagger-ui-express"
 import { initialize } from "express-openapi"
 import ApiDoc from "./api-doc.js"
 import InventoryService from "./services/inventoryService.js"
+import { formatErrorAsJson } from "./helpers/utils.js"
 
 const LISTENER_TCP_PORT = 8002
 const __dirname = path.resolve()
@@ -15,7 +16,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.listen(LISTENER_TCP_PORT, () => {
-    console.log(`Server is listening on port ${LISTENER_TCP_PORT}`)
+  console.log(`Server is listening on port ${LISTENER_TCP_PORT}`)
 })
 
 await initialize({
@@ -25,6 +26,11 @@ await initialize({
     inventoryService: InventoryService
   },
   paths: path.resolve(__dirname, "paths/"),
+  errorMiddleware: function (err, req, res, next) {
+    res.status(err.status).json(formatErrorAsJson(err))
+    console.log(err)
+    next(err)
+  },
 })
 
 // OpenAPI UI

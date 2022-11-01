@@ -62,7 +62,7 @@ const productsService = {
     try {
       client = await getMongoDbConnection()
       const db = client.db(this.mongoDbName)
-      // TODO: Validate that the product actually exists before adding it to the cart
+      await this.getProductById(productId)
       await db.collection("users").updateOne({ id: userId }, {
         $addToSet: { cartItems: productId },
       })

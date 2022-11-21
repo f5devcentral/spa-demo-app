@@ -21,7 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "express-openapi": "^12.0.2",
-    "mongodb": "^4.11.0",
+    "mongodb": "^4.12.0",
     "node-fetch": "^3.3.0",
     "swagger-ui-express": "^4.6.0"
   },

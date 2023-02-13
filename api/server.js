@@ -12,7 +12,7 @@ import LocatorService from "./services/locatorService.js"
 import StatsService from "./services/statsService.js"
 import { formatErrorAsJson } from "./helpers/utils.js"
 
-const LISTENER_TCP_PORT = 8000
+const LISTENER_TCP_PORT = process.env["API_SERVICE_PORT"] || 8000
 const imageDirectory = process.env.IMAGE_DIRECTORY || "beer"
 const __dirname = path.resolve()
 const app = express()

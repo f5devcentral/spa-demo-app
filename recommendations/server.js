@@ -8,7 +8,7 @@ import ApiDoc from "./api-doc.js"
 import RecommendationsService from "./services/recommendationsService.js"
 import { formatErrorAsJson } from "./helpers/utils.js"
 
-const LISTENER_TCP_PORT = 8001
+const LISTENER_TCP_PORT = process.env["RECOMMENDATIONS_SERVICE_PORT"] || 8001
 const __dirname = path.resolve()
 
 const app = express()

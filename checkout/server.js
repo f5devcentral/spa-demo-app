@@ -8,7 +8,7 @@ import ApiDoc from "./api-doc.js"
 import CheckoutService from "./services/orderService.js"
 import { formatErrorAsJson } from "./helpers/utils.js"
 
-const LISTENER_TCP_PORT = 8003
+const LISTENER_TCP_PORT = process.env["CHECKOUT_SERVICE_PORT"] || 8003
 const __dirname = path.resolve()
 
 const app = express()

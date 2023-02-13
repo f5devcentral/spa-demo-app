@@ -8,7 +8,7 @@ import ApiDoc from "./api-doc.js"
 import InventoryService from "./services/inventoryService.js"
 import { formatErrorAsJson } from "./helpers/utils.js"
 
-const LISTENER_TCP_PORT = 8002
+const LISTENER_TCP_PORT = process.env["INVENTORY_SERVICE_PORT"] || 8002
 const __dirname = path.resolve()
 
 const app = express()

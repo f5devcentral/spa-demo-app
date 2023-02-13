@@ -9,6 +9,7 @@
 import { loadStorage, saveStorage } from "@/utils/Storage"
 import { defineComponent } from "vue"
 import NavBarComponent from "./components/NavBarComponent.vue"
+import Tracer from "./Tracer"
 
 export default defineComponent({
   name: "App",
@@ -34,6 +35,10 @@ export default defineComponent({
     this.config.userId = this.config.userId || "12345"
     this.config.enableSecurity = this.config.enableSecurity || false
     saveStorage(this.config)
+
+    if (typeof window !== "undefined") {
+      Tracer()
+    }
   },
   beforeCreate() {
     this.$nextTick(() => {

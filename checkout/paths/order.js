@@ -1,5 +1,6 @@
 import { RequestInvalidError } from "../helpers/customErrors.js"
 import { formatErrorAsJson } from "../helpers/utils.js"
+import * as opentelemetry from "@opentelemetry/api"
 
 export default function (checkoutService) {
   let operations = {
@@ -7,10 +8,19 @@ export default function (checkoutService) {
   }
 
   async function POST(req, res) {
+    const span = opentelemetry.trace.getActiveSpan()
     try {
       const { userId, products } = req.body
+      const userName = req.get("User")
+      const userEmail = req.get("Email")
+      span.setAttributes({
+        "app.order.userId": userId,
+        "app.order.userName": userName,
+        "app.order.userEmail": userEmail,
+        "app.order.productCount": products.length,
+      })
       const orderId = await checkoutService.createOrder(userId, products)
-      console.log(`OrderId: ${orderId}, User: ${req.get("User")}, Email: ${req.get("Email")}`)
+      console.log(`OrderId: ${orderId}, User: ${userName}, Email: ${userEmail}`)
       res.status(200).json({ orderId: orderId })
     }
     catch (e) {

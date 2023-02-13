@@ -1,31 +1,26 @@
-version: "3.3"
+version: "3.9"
+x-default-logging: &logging
+  driver: "json-file"
+  options:
+    max-size: "5m"
+    max-file: "2"
+
+networks:
+  default:
+    name: spa-demo
+    driver: bridge
+
 services:
   mongodb:
     image: mongo:6
     container_name: mongodb
     ports:
-      - 27017:27017
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}"
     volumes:
       - ./mongo-seed:/docker-entrypoint-initdb.d
     restart: unless-stopped
     environment:
       - SEED_FILE=${PRODUCT_TYPE}Products.json
-
-  api:
-    build: ./api
-    container_name: api
-    ports:
-      - "8000:8000"
-    links:
-      - mongodb
-    environment:
-      - MONGO_URL=mongodb
-      - INVENTORY_URL=http://inventory:8002
-      - RECOMMENDATIONS_URL=http://recommendations:8001
-      - IMAGE_DIRECTORY=${PRODUCT_TYPE}
-    dns:
-      - 10.1.1.6
-    restart: unless-stopped
 
   spa:
     build:
@@ -33,9 +28,11 @@ services:
       args:
         VITE_APP_GLOBAL_COLOR: "#000"
         VITE_APP_GLOBAL_BACKGROUND_COLOR: "#FFF"
+        VITE_APP_OTEL_SERVICE_NAME: "spa"
+        VITE_APP_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://localhost:4318/v1/traces"
     container_name: spa
     ports:
-      - "8081:80"
+      - "${SPA_PORT}:80"
     links:
       - api
     restart: unless-stopped
@@ -46,38 +43,146 @@ services:
       args:
         VITE_APP_GLOBAL_COLOR: "#FFF"
         VITE_APP_GLOBAL_BACKGROUND_COLOR: "#000"
+        VITE_APP_OTEL_SERVICE_NAME: "spa-dark"
+        VITE_APP_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: "http://localhost:4318/v1/traces"
     container_name: spa-dark
     ports:
-      - "8082:80"
+      - "${SPA_DARK_PORT}:80"
     links:
       - api
     restart: unless-stopped
+
+  api:
+    build: ./api
+    container_name: api-service
+    ports:
+      - "${API_SERVICE_PORT}:${API_SERVICE_PORT}"
+    links:
+      - mongodb
+    dns:
+      - 10.1.1.6
+    restart: unless-stopped
+    environment:
+      - API_SERVICE_PORT
+      - MONGO_URL=mongodb
+      - INVENTORY_URL=http://${INVENTORY_SERVICE_ADDR}
+      - RECOMMENDATIONS_URL=http://${RECOMMENDATIONS_SERVICE_ADDR}
+      - IMAGE_DIRECTORY=${PRODUCT_TYPE}
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
+      - OTEL_SERVICE_NAME=core-api-service
 
   recommendations:
     build:
       context: .
       dockerfile: ./recommendations/Dockerfile
-    container_name: recs
+    container_name: recommendations-service
     ports:
-      - "8001:8001"
+      - "${RECOMMENDATIONS_SERVICE_PORT}:${RECOMMENDATIONS_SERVICE_PORT}"
     links:
       - api
+    restart: unless-stopped
     environment:
       - SEED_FILE=${PRODUCT_TYPE}Products.json
-    restart: unless-stopped
+      - RECOMMENDATIONS_SERVICE_PORT
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
+      - OTEL_SERVICE_NAME=recommendations-service
 
   inventory:
     build: ./inventory
-    container_name: inv
+    container_name: inventory-service
     ports:
-      - "8002:8002"
+      - "${INVENTORY_SERVICE_PORT}:${INVENTORY_SERVICE_PORT}"
     links:
       - api
     restart: unless-stopped
+    environment:
+      - INVENTORY_SERVICE_PORT
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
+      - OTEL_SERVICE_NAME=inventory-service
 
   checkout:
     build: ./checkout
-    container_name: checkout
+    container_name: checkout-service
     ports:
-      - "8003:8003"
+      - "${CHECKOUT_SERVICE_PORT}:${CHECKOUT_SERVICE_PORT}"
     restart: unless-stopped
+    environment:
+      - CHECKOUT_SERVICE_PORT
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT
+      - OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE
+      - OTEL_SERVICE_NAME=checkout-service
+
+  # Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: jaeger
+    command: ["--memory.max-traces", "10000", "--query.base-path", "/jaeger/ui"]
+    deploy:
+      resources:
+        limits:
+          memory: 275M
+    restart: always
+    ports:
+      - "${JAEGER_SERVICE_PORT}:${JAEGER_SERVICE_PORT}"                    # Jaeger UI
+      - "4317"                           # OTLP gRPC default port
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    logging: *logging
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:9.1.0
+    container_name: grafana
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
+    ports:
+      - "${GRAFANA_SERVICE_PORT}:${GRAFANA_SERVICE_PORT}"
+    logging: *logging
+
+  # OpenTelemetry Collector
+  otelcol:
+    image: otel/opentelemetry-collector-contrib:0.61.0
+    container_name: otel-col
+    deploy:
+      resources:
+        limits:
+          memory: 100M
+    restart: always
+    command: [ "--config=/etc/otelcol-config.yml", "--config=/etc/otelcol-config-extras.yml" ]
+    volumes:
+      - ./otelcollector/otelcol-config.yml:/etc/otelcol-config.yml
+      - ./otelcollector/otelcol-config-extras.yml:/etc/otelcol-config-extras.yml
+    ports:
+      - "4317"          # OTLP over gRPC receiver
+      - "4318:4318"     # OTLP over HTTP receiver
+      - "9464"          # Prometheus exporter
+      - "8888"          # metrics endpoint
+    depends_on:
+      - jaeger
+    logging: *logging
+
+  # Prometheus
+  prometheus:
+    image: quay.io/prometheus/prometheus:v2.34.0
+    container_name: prometheus
+    command:
+      - --web.console.templates=/etc/prometheus/consoles
+      - --web.console.libraries=/etc/prometheus/console_libraries
+      - --storage.tsdb.retention.time=1h
+      - --config.file=/etc/prometheus/prometheus-config.yaml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --web.route-prefix=/
+    volumes:
+      - ./prometheus/prometheus-config.yaml:/etc/prometheus/prometheus-config.yaml
+    ports:
+      - "${PROMETHEUS_SERVICE_PORT}:${PROMETHEUS_SERVICE_PORT}"
+    logging: *logging

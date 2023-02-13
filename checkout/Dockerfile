@@ -1,5 +1,5 @@
 # --------- Base ---------
-FROM node:16-alpine AS base
+FROM node:19-alpine AS base
 
 WORKDIR /app
 
@@ -22,4 +22,4 @@ COPY --from=builder /app/ ./
 
 USER node
 
-CMD ["node", "./server.js"]
+CMD ["node", "--import", "./tracing.js", "./server.js"]

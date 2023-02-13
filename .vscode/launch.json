@@ -12,6 +12,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/api/server.js",
+      "runtimeArgs": ["--import", "${workspaceFolder}/api/tracing.js"],
       "cwd": "${workspaceFolder}/api",
       "env": {
         "MONGO_URL": "localhost",
@@ -27,6 +28,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/inventory/server.js",
+      "runtimeArgs": ["--import", "${workspaceFolder}/inventory/tracing.js"],
       "cwd": "${workspaceFolder}/inventory",
       "env": {
         "MONGO_URL": "localhost",
@@ -42,6 +44,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/recommendations/server.js",
+      "runtimeArgs": ["--import", "${workspaceFolder}/recommendations/tracing.js"],
       "cwd": "${workspaceFolder}/recommendations",
       "env": {
         "MONGO_URL": "localhost",
@@ -57,6 +60,7 @@
         "<node_internals>/**"
       ],
       "program": "${workspaceFolder}/checkout/server.js",
+      "runtimeArgs": ["--import", "${workspaceFolder}/checkout/tracing.js"],
       "cwd": "${workspaceFolder}/checkout",
       "env": {
         "MONGO_URL": "localhost",

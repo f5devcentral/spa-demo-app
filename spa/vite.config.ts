@@ -14,7 +14,6 @@ export default defineConfig({
     proxy: {
       "^/images/.*": "http://localhost:8000",
       "/api": "http://localhost:8000",
-      "^/api/recommendations/.*": "http://localhost:8000",
     },
   },
   test: {

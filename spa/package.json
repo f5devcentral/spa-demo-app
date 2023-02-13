@@ -3,8 +3,8 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "dev": "vite --port 8081",
-    "dev:dark": "VITE_APP_GLOBAL_COLOR=#FFF VITE_APP_GLOBAL_BACKGROUND_COLOR=#000 vite --port 8081",
+    "dev": "VITE_APP_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4318/v1/traces VITE_APP_OTEL_SERVICE_NAME=spa vite --port 8081",
+    "dev:dark": "VITE_APP_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://localhost:4318/v1/traces VITE_APP_OTEL_SERVICE_NAME=spa-dark VITE_APP_GLOBAL_COLOR=#FFF VITE_APP_GLOBAL_BACKGROUND_COLOR=#000 vite --port 8081",
     "build": "run-p type-check build-only",
     "preview": "vite preview --port 8081",
     "test:unit": "vitest --environment jsdom",
@@ -18,6 +18,12 @@
   "dependencies": {
     "@azure/msal-browser": "^2.34.0",
     "axios": "^1.3.4",
+    "@opentelemetry/api": "^1.3.0",
+    "@opentelemetry/auto-instrumentations-web": "^0.31.0",
+    "@opentelemetry/context-zone": "^1.8.0",
+    "@opentelemetry/exporter-trace-otlp-http": "^0.34.0",
+    "@opentelemetry/instrumentation-document-load": "^0.31.0",
+    "@opentelemetry/sdk-trace-web": "^1.8.0",
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.3.1",
     "utility-types": "^3.10.0",

@@ -8,9 +8,9 @@ const users = JSON.parse(fs.readFileSync("/docker-entrypoint-initdb.d/initUsers.
 db = db.getSiblingDB("vue-db")
 
 db.createCollection("products")
-db.products.insert(products)
+db.products.insertMany(products)
 
 db.createCollection("users")
-db.users.insert(users)
+db.users.insertMany(users)
 
 print("END #################################################################")

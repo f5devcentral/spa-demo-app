@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^2.32.2",
-    "axios": "^1.3.2",
+    "axios": "^1.3.4",
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.2.30",
     "utility-types": "^3.10.0",

@@ -5,7 +5,9 @@
       <div class="jwt-dialog-header">
         <h4 :id="titleId" :class="titleClass">Brewz API JSON Web Token</h4>
         <el-button id="copyButton" @click="copyContent(jwtToken)" class="copy-button">
-          <el-icon class="el-icon--left"> <CopyDocument /> </el-icon>Copy to clipboard
+          <el-icon class="el-icon--left">
+            <CopyDocument />
+          </el-icon>Copy to clipboard
         </el-button>
       </div>
     </template>
@@ -75,6 +77,10 @@ const copyContent = async (content: string) => {
   cursor: pointer;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+#jwtText {
+  word-wrap: break-word;
 }
 
 .copy-button {

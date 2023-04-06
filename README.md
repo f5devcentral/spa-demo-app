@@ -84,7 +84,7 @@ To show the security features of the app (sign in, etc), you will need to naviga
 
 #### Alternative Product Catalog
 
-By default, this sample application shows beer products, but it can also be configured to show coffee instead. To do this, set a runtime environment variable on the `spa`, `api` and `recommendations` containers:
+By default, this sample application shows beer products, but it can also be configured to show coffee instead. To do this, set a runtime environment variable on the `mongodb`, `api` and `recommendations` containers:
 
 ```bash
 PRODUCT_TYPE=coffee

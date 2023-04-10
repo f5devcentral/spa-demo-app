@@ -7,6 +7,9 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
   - package-ecosystem: npm
@@ -15,6 +18,9 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
   - package-ecosystem: npm
@@ -23,6 +29,9 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
   - package-ecosystem: npm
@@ -31,6 +40,9 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
   - package-ecosystem: npm
@@ -39,5 +51,8 @@ updates:
       interval: weekly
       day: monday
       time: "00:00"
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"

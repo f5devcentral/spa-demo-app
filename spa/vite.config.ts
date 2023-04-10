@@ -23,7 +23,7 @@ export default defineConfig({
     mockReset: false,
     environment: "jsdom",
     coverage: {
-      provider: "c8",
+      provider: "istanbul",
       all: true,
       reporter: ["text", "json", "html", "lcov"],
     },

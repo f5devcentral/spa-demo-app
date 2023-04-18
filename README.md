@@ -131,6 +131,22 @@ docker-compose rm -sv container-name
 
 Then start your front-end or back-end as shown above.
 
+### NGINX
+
+To host the Brewz app, you will need a proxy such as NGINX to route the SPA requests to the correct upstream service. The following NGINX conf will accomplish this:
+
+  ```nginx
+  server {
+    listen 8080;
+    location / { proxy_pass http://127.0.0.1:8081/; }
+    location /api { proxy_pass http://127.0.0.1:8000; }
+    location /images { proxy_pass http://127.0.0.1:8000/images; }
+    location /recommendations { proxy_pass http://127.0.0.1:8001; }
+    location /inventory { proxy_pass http://127.0.0.1:8002; }
+    location /checkout { proxy_pass http://127.0.0.1:8003; }
+  }  
+  ```
+
 ## Attribution
 
 This code is based on the work of [Shaun Wassell](https://www.linkedin.com/in/shaun-wassell?trk=lil_course&lipi=urn%3Ali%3Apage%3Ad_learning_content%3BEJRJvvk4SzmhYz%2Bf1ZJBUw%3D%3D&licu=urn%3Ali%3Acontrol%3Ad_learning_content-view_on_linkedin) and his [Creating and Hosting a Full-Stack Site LinkedIn Learning course](https://www.linkedin.com/learning/vue-js-creating-and-hosting-a-full-stack-site/).

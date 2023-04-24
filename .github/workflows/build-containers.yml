@@ -28,7 +28,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for spa container
         id: meta-spa
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-spa
           tags: |
@@ -45,7 +45,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for spa-dark container
         id: meta-spa-dark
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-spa-dark
           tags: |
@@ -65,7 +65,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for api container
         id: meta-api
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-api
           tags: |
@@ -82,7 +82,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for recommendations container
         id: meta-recommendations
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-recommendations
           tags: |
@@ -100,7 +100,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for inventory container
         id: meta-inventory
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-inventory
           tags: |
@@ -117,7 +117,7 @@ jobs:
 
       - name: Extract metadata (tags, labels) for checkout container
         id: meta-checkout
-        uses: docker/metadata-action@507c2f2dc502c992ad446e3d7a5dfbe311567a96
+        uses: docker/metadata-action@c4ee3adeed93b1fa6a762f209fb01608c1a22f1e
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-checkout
           tags: |

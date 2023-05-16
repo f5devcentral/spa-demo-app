@@ -23,7 +23,7 @@
     "express-openapi": "^12.1.0",
     "mongodb": "^5.3.0",
     "node-fetch": "^3.3.1",
-    "swagger-ui-express": "^4.6.2"
+    "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
     "@types/supertest": "^2.0.12",

@@ -27,7 +27,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
-    "@tsconfig/node18": "^2.0.0",
+    "@tsconfig/node18": "^2.0.1",
     "@types/jsdom": "^21.1.1",
     "@types/node": "^18.16.9",
     "@vitejs/plugin-vue": "^4.1.0",

@@ -19,11 +19,11 @@ ENV VITE_APP_GLOBAL_COLOR $VITE_APP_GLOBAL_COLOR
 RUN npm run build
 
 # --------- Release ---------
-FROM nginx:stable-alpine as release
+FROM nginxinc/nginx-unprivileged:stable-alpine as release
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 COPY --from=builder /app/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]

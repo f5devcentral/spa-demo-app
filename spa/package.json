@@ -16,7 +16,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@azure/msal-browser": "^2.36.0",
+    "@azure/msal-browser": "^2.38.2",
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.4.0",
     "clipboard-copy": "^4.0.1",

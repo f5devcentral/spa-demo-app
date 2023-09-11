@@ -47,7 +47,7 @@
     "start-server-and-test": "^2.0.0",
     "typescript": "~5.1.6",
     "vite": "^4.3.9",
-    "vitest": "^0.32.2",
+    "vitest": "^0.34.4",
     "vitest-localstorage-mock": "^0.0.1",
     "vue-tsc": "^1.8.5"
   },

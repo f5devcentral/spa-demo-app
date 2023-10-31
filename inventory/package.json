@@ -22,7 +22,7 @@
     "swagger-ui-express": "^4.6.3"
   },
   "devDependencies": {
-    "@types/supertest": "^2.0.12",
+    "@types/supertest": "^2.0.15",
     "c8": "^7.14.0",
     "chai": "^4.3.10",
     "eslint": "^8.50.0",

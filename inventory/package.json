@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/supertest": "^2.0.15",
     "c8": "^7.14.0",
-    "chai": "^4.3.10",
+    "chai": "^4.4.0",
     "eslint": "^8.52.0",
     "mocha": "^10.2.0",
     "nodemon": "^2.0.22",

@@ -36,7 +36,7 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/test-utils": "^2.3.2",
     "@vue/tsconfig": "^0.4.0",
-    "axios-mock-adapter": "^1.21.4",
+    "axios-mock-adapter": "^1.22.0",
     "cypress": "^13.8.1",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.13.3",

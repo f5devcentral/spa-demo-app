@@ -61,7 +61,7 @@ The Product detail page contains the recommendations and inventory microservices
 ## Deploy
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ## Development

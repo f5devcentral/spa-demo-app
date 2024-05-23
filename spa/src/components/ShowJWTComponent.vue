@@ -67,7 +67,7 @@ const copyContent = async (content: string) => {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 20px;
+  height: 50px;
 }
 
 #jwt {

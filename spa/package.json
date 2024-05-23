@@ -34,7 +34,7 @@
     "@vitest/coverage-istanbul": "^0.34.6",
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.3",
-    "@vue/test-utils": "^2.3.2",
+    "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.5.1",
     "axios-mock-adapter": "^1.22.0",
     "cypress": "^13.8.1",

@@ -22,7 +22,7 @@
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.8.4",
     "utility-types": "^3.11.0",
-    "vue": "^3.4.31",
+    "vue": "^3.5.11",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {

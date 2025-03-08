@@ -1,0 +1,19 @@
+services:
+#backend-services
+  recommendations:
+    build:
+      context: .
+      dockerfile: ./recommendations/Dockerfile
+    container_name: recs
+    ports:
+      - "8001:8001"
+    environment:
+      - SEED_FILE=${PRODUCT_TYPE}Products.json
+    restart: unless-stopped
+
+  inventory:
+    build: ./inventory
+    container_name: inv
+    ports:
+      - "8002:8002"
+    restart: unless-stopped

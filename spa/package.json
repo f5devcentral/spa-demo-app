@@ -21,7 +21,7 @@
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.8.2",
     "clipboard-copy": "^4.0.1",
-    "element-plus": "^2.8.4",
+    "element-plus": "^2.9.6",
     "utility-types": "^3.11.0",
     "vue": "^3.4.31",
     "vue-router": "^4.4.0"

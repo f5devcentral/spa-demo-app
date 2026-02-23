@@ -24,7 +24,7 @@
     "element-plus": "^2.13.1",
     "utility-types": "^3.11.0",
     "vue": "^3.4.31",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.11.0",

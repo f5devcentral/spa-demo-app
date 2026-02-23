@@ -19,7 +19,7 @@
   "dependencies": {
     "@azure/msal-browser": "^2.39.0",
     "@element-plus/icons-vue": "^2.1.0",
-    "axios": "^1.12.1",
+    "axios": "^1.13.5",
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.11.2",
     "utility-types": "^3.11.0",

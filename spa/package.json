@@ -19,7 +19,7 @@
   "dependencies": {
     "@azure/msal-browser": "^2.39.0",
     "@element-plus/icons-vue": "^2.1.0",
-    "axios": "^1.13.5",
+    "axios": "^1.18.1",
     "clipboard-copy": "^4.0.1",
     "element-plus": "^2.13.1",
     "utility-types": "^3.11.0",
@@ -38,7 +38,7 @@
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
     "axios-mock-adapter": "^1.22.0",
-    "cypress": "^13.17.0",
+    "cypress": "^15.15.0",
     "eslint": "^8.57.0",
     "eslint-plugin-cypress": "^2.15.2",
     "eslint-plugin-vue": "^9.33.0",
@@ -47,7 +47,7 @@
     "prettier": "^2.8.8",
     "start-server-and-test": "^2.1.5",
     "typescript": "~5.4.5",
-    "vite": "^6.4.1",
+    "vite": "^6.4.2",
     "vitest": "^3.0.7",
     "vitest-localstorage-mock": "^0.1.2",
     "vue-tsc": "^2.2.12"

@@ -8,6 +8,11 @@ export default function (productsService) {
   async function DELETE(req, res) {
     try {
       const { userId, productId } = req.params
+      const requestingUserId = req.headers["x-user-id"]
+      if (!requestingUserId || requestingUserId !== userId) {
+        res.status(403).json(formatErrorAsJson("You are not authorized to modify this user's cart."))
+        return
+      }
       const cartItems = await productsService.deleteItemFromUserCart(userId, productId)
       res.status(200).json(cartItems)
     }
